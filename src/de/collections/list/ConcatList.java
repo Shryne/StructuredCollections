@@ -5,7 +5,7 @@ import de.collections.list.base.WithGet;
 import de.collections.list.base.WithSet;
 import de.collections.list.base.WithSize;
 
-public class ConcatList<T> implements WithGet<T>, WithSet<T>, WithSize {
+public final class ConcatList<T> implements List<T> {
     private final List<T> first;
     private final List<T> second;
 
