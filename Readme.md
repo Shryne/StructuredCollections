@@ -1,7 +1,7 @@
 # StructuredCollections
 
-![SonarQube Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=alert_status)
-[SonarQube](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=coverage)
+![SonarQube Build pass](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=alert_status)
+![SonarQube Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=coverage)
 
 ## Why?
 
