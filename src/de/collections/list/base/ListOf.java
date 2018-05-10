@@ -1,11 +1,13 @@
 package de.collections.list.base;
 
+import java.util.Arrays;
+
 // TODO: Checks
-public final class ListImpl<T> implements List<T> {
+public final class ListOf<T> implements List<T> {
     private final T[] container;
 
-    public ListImpl(T... elements) {
-        container = elements;
+    public ListOf(T... elements) {
+        container = Arrays.copyOf(elements, elements.length);
     }
 
     @Override
@@ -13,10 +15,12 @@ public final class ListImpl<T> implements List<T> {
         return container[index];
     }
 
+    /*
     @Override
     public void set(int index, T t) {
         container[index] = t;
     }
+    */
 
     @Override
     public int size() {

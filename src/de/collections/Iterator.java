@@ -1,15 +1,13 @@
-package de.collections.list;
+package de.collections;
 
 import de.collections.list.base.WithGet;
 import de.collections.list.base.WithSize;
 
-import java.util.Iterator;
-
-public class ListIterator<T, E extends WithGet<T> & WithSize> implements Iterator<T> {
+public class Iterator<T, E extends WithGet<T> & WithSize> implements java.util.Iterator<T> {
     private final E iterable;
     private int cursor = - 1;
 
-    public ListIterator(E iterable) {
+    public Iterator(E iterable) {
         this.iterable = iterable;
     }
 

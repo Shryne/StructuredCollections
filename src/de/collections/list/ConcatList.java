@@ -1,9 +1,6 @@
 package de.collections.list;
 
 import de.collections.list.base.List;
-import de.collections.list.base.WithGet;
-import de.collections.list.base.WithSet;
-import de.collections.list.base.WithSize;
 
 public final class ConcatList<T> implements List<T> {
     private final List<T> first;
@@ -20,11 +17,13 @@ public final class ConcatList<T> implements List<T> {
         return second.get(index - first.size());
     }
 
+    /*
     @Override
     public void set(int index, T t) {
         if (index < first.size()) first.set(index, t);
         second.set(index - first.size(), t);
     }
+    */
 
     @Override
     public int size() {
