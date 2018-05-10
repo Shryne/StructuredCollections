@@ -1,5 +1,7 @@
 # StructuredCollections
 
+![SonarQube Coverage](https://img.shields.io/sonar/http/sonar.petalslink.com/org.ow2.petals%3Apetals-se-ase/coverage.svg)
+
 ## Why?
 
 I started this project, because I was angry about the giant classes in the java standard library. Many of them take thousand of lines of
