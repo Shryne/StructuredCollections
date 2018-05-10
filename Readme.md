@@ -1,6 +1,6 @@
 # StructuredCollections
 
-![SonarQube Coverage](https://img.shields.io/sonar/http/sonar.petalslink.com/org.ow2.petals%3Apetals-se-ase/coverage.svg)
+![SonarQube Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=alert_status)
 
 ## Why?
 
