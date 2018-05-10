@@ -25,7 +25,7 @@ package de.collections;
 
 public final class IndexOf<T> extends Number {
     private final Iterable<T> iterable;
-    private final T elem;
+    private final transient T elem;
 
     public IndexOf(Iterable<T> iterable, T elem) {
         this.iterable = iterable;

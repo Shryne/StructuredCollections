@@ -25,7 +25,7 @@ package de.collections;
 import de.collections.list.base.WithGet;
 import de.collections.list.base.WithSize;
 
-public class Iterator<T, E extends WithGet<T> & WithSize> implements java.util.Iterator<T> {
+public final class Iterator<T, E extends WithGet<T> & WithSize> implements java.util.Iterator<T> {
     private final E iterable;
     private int cursor = - 1;
 
