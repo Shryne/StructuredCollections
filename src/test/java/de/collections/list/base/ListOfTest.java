@@ -22,22 +22,33 @@
  */
 package de.collections.list.base;
 
-import java.util.Arrays;
 
-public final class ListOf<T> implements List<T> {
-    private final T[] container;
+import org.junit.Test;
 
-    public ListOf(T... elements) {
-        container = Arrays.copyOf(elements, elements.length);
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class ListOfTest {
+    @Test
+    public void testOneElementGet() {
+        assertEquals(
+                5,
+                (int) new ListOf<>(5).get(0)
+        );
     }
 
-    @Override
-    public T get(int index) {
-        return container[index];
+    @Test
+    public void oneElementSize() {
+        assertEquals(
+                1,
+                new ListOf<>(22).size()
+        );
     }
 
-    @Override
-    public int size() {
-        return container.length;
+    @Test
+    public void noElementsEmpty() {
+        assertTrue(
+                new ListOf<>().isEmpty()
+        );
     }
 }

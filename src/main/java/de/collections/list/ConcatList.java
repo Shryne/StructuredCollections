@@ -35,17 +35,11 @@ public final class ConcatList<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (index < first.size()) return first.get(index);
+        if (index < first.size()) {
+            return first.get(index);
+        }
         return second.get(index - first.size());
     }
-
-    /*
-    @Override
-    public void set(int index, T t) {
-        if (index < first.size()) first.set(index, t);
-        second.set(index - first.size(), t);
-    }
-    */
 
     @Override
     public int size() {

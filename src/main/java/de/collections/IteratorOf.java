@@ -25,11 +25,13 @@ package de.collections;
 import de.collections.list.base.WithGet;
 import de.collections.list.base.WithSize;
 
-public final class Iterator<T, E extends WithGet<T> & WithSize> implements java.util.Iterator<T> {
+import java.util.NoSuchElementException;
+
+public final class IteratorOf<T, E extends WithGet<T> & WithSize> implements java.util.Iterator<T> {
     private final E iterable;
     private int cursor = - 1;
 
-    public Iterator(E iterable) {
+    public IteratorOf(E iterable) {
         this.iterable = iterable;
     }
 
@@ -40,6 +42,14 @@ public final class Iterator<T, E extends WithGet<T> & WithSize> implements java.
 
     @Override
     public T next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException(
+                    String.format(
+                            "The cursor (%d) needs to be smaller than the size of the iterable (%d)",
+                            cursor, iterable.size()
+                    )
+            );
+        }
         cursor++;
         return iterable.get(cursor);
     }
