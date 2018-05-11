@@ -1,5 +1,9 @@
 # StructuredCollections
 
+![SonarQube Build pass](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=alert_status)
+![SonarQube Coverage](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=coverage)
+![SonarQube Maintability](https://sonarcloud.io/api/project_badges/measure?project=de.shryne.structured-collections%3AStructuredCollections&metric=sqale_rating)
+
 ## Why?
 
 I started this project, because I was angry about the giant classes in the java standard library. Many of them take thousand of lines of
