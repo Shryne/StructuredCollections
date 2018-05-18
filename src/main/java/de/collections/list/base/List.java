@@ -22,4 +22,8 @@
  */
 package de.collections.list.base;
 
+/**
+ * All classes implementing this interface 
+ * @param <T>
+ */
 public interface List<T> extends WithGet<T>, WithSize {}

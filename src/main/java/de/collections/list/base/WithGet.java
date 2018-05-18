@@ -23,5 +23,10 @@
 package de.collections.list.base;
 
 public interface WithGet<T> {
+    /**
+     * Returns the element.
+     * @param index The index of the element to return.
+     * @return The element on the given index.
+     */
     T get(int index);
 }
