@@ -22,20 +22,39 @@
  */
 package de.collections;
 
+import de.collections.list.FilteredIterator;
+import de.collections.list.base.List;
 import de.collections.list.base.WithGet;
 import de.collections.list.base.WithSize;
 
-public final class IterableOf<T, L extends WithGet<T> & WithSize> implements java.lang.Iterable<T> {
-    private final L list;
+import java.util.Iterator;
 
-    public IterableOf(L list) {
-        this.list = list;
+/**
+ * The collection classes of the standard library implement an iterator internally,
+ * but I think it should be the other way around to reduce the size of the classes.
+ * @param <T> The element type of the elements in the iteration.
+ */
+public final class IterableOf<T> implements Iterable<T> {
+    private final Iterator<T> iterator;
+
+    /**
+     * Secondary constructor.
+     * @param collection to iterate through.
+     */
+    public <C extends WithGet<T> & WithSize> IterableOf(C collection) {
+        this(new FilteredIterator<>(collection, element -> true));
+    }
+
+    /**
+     * Primary constructor.
+     * @param iterator for the iteration.
+     */
+    public IterableOf(Iterator<T> iterator) {
+        this.iterator = iterator;
     }
 
     @Override
-    public java.util.Iterator<T> iterator() {
-        return new IteratorOf<>(
-                list
-        );
+    public Iterator<T> iterator() {
+        return iterator;
     }
 }
