@@ -43,12 +43,12 @@ public final class ListOf<T> implements List<T> {
     }
 
     /**
-     * @throws ArrayIndexOutOfBoundsException If not (0 <= index or index < size).
+     * @throws IndexOutOfBoundsException If not (0 <= index or index < size).
      */
     @Override
     public T get(int index) {
         if (!(0 <= index || index < size())) {
-            throw new ArrayIndexOutOfBoundsException(
+            throw new IndexOutOfBoundsException(
                     String.format(
                             "Has to be between 0 (inclusive) and %s (exclusive), but is: %s",
                             size(), index

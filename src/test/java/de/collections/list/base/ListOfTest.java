@@ -29,8 +29,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ListOfTest {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void zeroGetOutOfBoundsAbove() {
+        new ListOf<>().get(0);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void zeroGetOutOfBoundsBelow() {
+        new ListOf<>().get(-1);
+    }
+
     @Test
-    public void testOneElementGet() {
+    public void oneGet() {
         assertEquals(
                 5,
                 (int) new ListOf<>(5).get(0)
@@ -38,7 +48,7 @@ public class ListOfTest {
     }
 
     @Test
-    public void oneElementSize() {
+    public void oneSize() {
         assertEquals(
                 1,
                 new ListOf<>(22).size()
@@ -46,7 +56,7 @@ public class ListOfTest {
     }
 
     @Test
-    public void noElementsEmpty() {
+    public void noEmpty() {
         assertTrue(
                 new ListOf<>().isEmpty()
         );
