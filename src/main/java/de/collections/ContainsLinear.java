@@ -1,7 +1,10 @@
 package de.collections;
 
-import de.Contains;
 import de.collections.lambda.Action;
+import de.collections.list.base.WithGet;
+import de.collections.list.base.WithSize;
+
+import javax.swing.*;
 
 /**
  * Searches linear (from start to end) for the element.
@@ -12,13 +15,25 @@ public class ContainsLinear<T> implements Contains {
     private final T element;
 
     /**
+     * Secondary constructor.
+     * @param collection Where the element could be.
+     * @param element To search for.
+     * @param <C> A collection that implements WithGet and WithSize to construct an Iterable.
+     */
+    public <C extends WithGet<T> & WithSize> ContainsLinear(C collection, T element) {
+        this(new IterableOf<>(collection), element);
+    }
+
+    /**
      * Primary constructor.
-     * @param iterable The iterable where the element could be.
-     * @param element The element to search for.
+     * @param iterable Where the element could be.
+     * @param element To search for.
      */
     public ContainsLinear(Iterable<T> iterable, T element) {
         this.iterable = iterable;
         this.element = element;
+        var button = new JButton("Hallo");
+        button.setBorder(BorderFactory.createCompoundBorder());
     }
 
     @Override
