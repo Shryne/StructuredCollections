@@ -25,7 +25,7 @@ Solution: Small Interfaces. Get, set and size are inside their own interfaces an
 operations. Everything else needs to be added by decorating it.
 Example:
 
-```
+```java
 // instead of:
 new ArrayList<>(Arrays.asList(1, 2, 3, 4)).addAll(
       Arrays.asList(5, 6, 7, 8)
@@ -38,3 +38,22 @@ new ConcatList<>(
 );
 ```
 
+### 2) Null, -1, ...
+Example: indexOf. If you want to get the index of the element, but the element isn't inside the collection, you get a -1. This leads to code like this:
+```java
+final int index = list.indexOf(5);
+if (index != -1) {
+      // do my stuff.
+}
+
+// Sometimes even worse:
+try {
+      doStuff(list.indexOf(5);
+} catch (IndexOutOfBounds e) {}
+```
+That's ugly, procedural and it gives the user the flexibility to do mistakes. Alternative:
+```java
+new IndexOf(list, 5).apply(
+      index -> // gets the call only if the element is actually present
+);
+```
