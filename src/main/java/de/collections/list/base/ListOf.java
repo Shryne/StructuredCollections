@@ -22,6 +22,8 @@
  */
 package de.collections.list.base;
 
+import de.collections.IterableOf;
+
 import java.util.Arrays;
 
 /**
@@ -33,7 +35,6 @@ public final class ListOf<T> implements List<T> {
 
     /**
      * Primary constructor.
-     *
      * @param elements The elements that the list should contain. These elements will be copied, thus changes to the old
      *                 array don't affect the list. Note that changes on the elements will affect this list.
      */
@@ -61,5 +62,13 @@ public final class ListOf<T> implements List<T> {
     @Override
     public int size() {
         return container.length;
+    }
+
+    /**
+     * @return Format: List: [...]
+     */
+    @Override
+    public String toString() {
+        return "List: " + Arrays.toString(container);
     }
 }

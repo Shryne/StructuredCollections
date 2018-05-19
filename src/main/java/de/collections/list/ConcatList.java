@@ -24,6 +24,8 @@ package de.collections.list;
 
 import de.collections.list.base.List;
 
+import java.util.Arrays;
+
 public final class ConcatList<T> implements List<T> {
     private final List<T> first;
     private final List<T> second;
@@ -44,5 +46,13 @@ public final class ConcatList<T> implements List<T> {
     @Override
     public int size() {
         return first.size() + second.size();
+    }
+
+    /**
+     * @return Format: ConcatList: [firstList|secondList]
+     */
+    @Override
+    public String toString() {
+        return "ConcatList: [" + first.toString() + "|" + second.toString() + "]";
     }
 }
