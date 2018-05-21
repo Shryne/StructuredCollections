@@ -20,8 +20,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.list.base;
+package de.collections;
 
-public interface WithSet<T> {
-    void set(int index, T t);
+import de.collections.list.base.WithGet;
+import de.collections.list.base.WithSize;
+
+// TODO: What about the non index based classes?
+public interface Collection<T> extends WithGet<T>, WithSize {
 }

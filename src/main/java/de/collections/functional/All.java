@@ -20,46 +20,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+package de.collections.functional;
 
 import de.collections.lambda.Action;
 
-/**
- * Searches linear (from start to end) for the element.
- * @param <T> The type of the element and the type of the iterables contained type.
- */
-public class ContainsLinear<T> implements Contains {
-    private final Iterable<T> iterable;
-    private final T element;
+import java.util.function.Predicate;
 
-    /**
-     * Secondary constructor.
-     * @param collection Where the element could be.
-     * @param element To search for.
-     * @param <C> A collection that implements WithGet and WithSize to construct an Iterable.
-     */
-    public ContainsLinear(Collection<T> collection, T element) {
-        this(new IterableOf<>(collection), element);
-    }
+/**
+ * Checks if a collection of elements fulfill a predicate. It's equivalent to array.all { ... } in functional languages.
+ * @param <T> The type of the elements in the collection.
+ */
+public final class All<T> {
+    private final Iterable<T> iterable;
+    private final Predicate<T> predicate;
 
     /**
      * Primary constructor.
-     * @param iterable Where the element could be.
-     * @param element To search for.
+     * @param iterable with the elements.
+     * @param predicate to fulfill.
      */
-    public ContainsLinear(Iterable<T> iterable, T element) {
+    public All(Iterable<T> iterable, Predicate<T> predicate) {
         this.iterable = iterable;
-        this.element = element;
+        this.predicate = predicate;
     }
 
-    @Override
+    /**
+     * Equivalent to the call "apply(() -> {});".
+     * @return True if the collection fulfills the predicate, false otherwise.
+     */
+    public boolean value() {
+        return apply(() -> {});
+    }
+
+    /**
+     * Applies the given action if the collection fulfills the given predicate.
+     * @param action to be applied.
+     * @return True if the action has been applied, false otherwise.
+     */
     public boolean apply(Action action) {
-        for (T t : iterable) {
-            if (element.equals(t)) {
-                action.apply();
-                return true;
+        for (T element : iterable) {
+            if (!predicate.test(element)) {
+                return false;
             }
         }
-        return false;
+        action.apply();
+        return true;
     }
 }

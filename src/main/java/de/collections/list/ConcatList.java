@@ -24,17 +24,28 @@ package de.collections.list;
 
 import de.collections.list.base.List;
 
-import java.util.Arrays;
-
+/**
+ * A concatenation of two lists. This object doesn't really concatenate lists. Instead it gives a view over the two
+ * lists as if it were one.
+ * @param <T> The element type of the list.
+ */
 public final class ConcatList<T> implements List<T> {
     private final List<T> first;
     private final List<T> second;
 
+    /**
+     * Primary constructor.
+     * @param first list.
+     * @param second list.
+     */
     public ConcatList(List<T> first, List<T> second) {
         this.first = first;
         this.second = second;
     }
 
+    /**
+     * Checks whether the index belongs to the first or second list and returns the right element.
+     */
     @Override
     public T get(int index) {
         if (index < first.size()) {
@@ -43,6 +54,9 @@ public final class ConcatList<T> implements List<T> {
         return second.get(index - first.size());
     }
 
+    /**
+     * Result of the two lists size.
+     */
     @Override
     public int size() {
         return first.size() + second.size();

@@ -22,6 +22,10 @@
  */
 package de.collections.list.base;
 
+/**
+ * Offers a way to get an element based on index.
+ * @param <T> The type of the element.
+ */
 public interface WithGet<T> {
     /**
      * Returns the element.

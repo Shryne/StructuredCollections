@@ -22,8 +22,6 @@
  */
 package de.collections.list.base;
 
-import de.collections.IterableOf;
-
 import java.util.Arrays;
 
 /**

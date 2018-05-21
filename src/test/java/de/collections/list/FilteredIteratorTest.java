@@ -11,18 +11,14 @@ public class FilteredIteratorTest {
     @Test
     public void zeroFirstHasNextNot() {
         assertFalse(
-                new FilteredIterator<>(
-                        new ListOf<>()
-                ).hasNext()
+                new FilteredIterator<>().hasNext()
         );
     }
 
     @Test
     public void oneFirstHasNext() {
         assertTrue(
-                new FilteredIterator<>(
-                        new ListOf<>(5)
-                ).hasNext()
+                new FilteredIterator<>(5).hasNext()
         );
     }
 
@@ -30,9 +26,7 @@ public class FilteredIteratorTest {
     public void oneFirstNext() {
         assertEquals(
                 22,
-                (int) new FilteredIterator<>(
-                        new ListOf<>(22)
-                ).next()
+                (int) new FilteredIterator<>(22).next()
         );
     }
 

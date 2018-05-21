@@ -20,46 +20,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+package de.collections.functional;
 
-import de.collections.list.FilteredIterator;
-import de.collections.list.base.List;
-import de.collections.list.base.ListOf;
-import de.collections.list.base.WithGet;
-import de.collections.list.base.WithSize;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
 
-import java.util.Iterator;
+public class ConstructedPredicate<C, T> implements Predicate<T> {
+    private final C constructed;
+    private final BiFunction<C, T, Boolean> function;
 
-/**
- * The collection classes of the standard library implement an iterator internally,
- * but I think it should be the other way around to reduce the size of the classes.
- * @param <T> The element type of the elements in the iteration.
- */
-public final class IterableOf<T> implements Iterable<T> {
-    private final Iterator<T> iterator;
-
-    public IterableOf(T... elements) {
-        this(new ListOf<>(elements));
-    }
-
-    /**
-     * Secondary constructor.
-     * @param collection to iterate through.
-     */
-    public IterableOf(Collection<T> collection) {
-        this(new FilteredIterator<>(collection));
-    }
-
-    /**
-     * Primary constructor.
-     * @param iterator for the iteration.
-     */
-    public IterableOf(Iterator<T> iterator) {
-        this.iterator = iterator;
+    public ConstructedPredicate(C constructed, BiFunction<C, T, Boolean> function) {
+        this.constructed = constructed;
+        this.function = function;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return iterator;
+    public boolean test(T element) {
+        return function.apply(constructed, element);
     }
 }

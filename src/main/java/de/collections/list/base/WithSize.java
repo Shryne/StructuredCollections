@@ -22,8 +22,20 @@
  */
 package de.collections.list.base;
 
+/**
+ * Offers a way to get the size of a collection.
+ */
 public interface WithSize {
+    /**
+     * @return The size of the collection. This includes only elements, that are actually contained by the collection
+     * and not the capacity, that can be greater.
+     */
     int size();
+
+    /**
+     * For convenience and readability.
+     * @return Whether there are elements inside the implementing object. Equivalent to size() == 0.
+     */
     default boolean isEmpty() {
         return size() == 0;
     }
