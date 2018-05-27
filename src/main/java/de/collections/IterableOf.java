@@ -62,4 +62,12 @@ public final class IterableOf<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return iterator;
     }
+
+    /**
+     * @return format: [elements] (Unordered)
+     */
+    @Override
+    public String toString() {
+        return iterator.toString();
+    }
 }

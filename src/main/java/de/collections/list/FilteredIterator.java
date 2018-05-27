@@ -25,6 +25,7 @@ package de.collections.list;
 import de.collections.Collection;
 import de.collections.list.base.ListOf;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
@@ -94,5 +95,22 @@ public final class FilteredIterator<T> implements Iterator<T> {
         }
         cursor++;
         return collection.get(cursor);
+    }
+
+    /**
+     * @return format: element1, element2, ...
+     */
+    @Override
+    public String toString() {
+        if (!hasNext()) {
+            return "";
+        }
+        var result = new StringBuilder();
+        while (hasNext()) {
+            result.append(", ").append(next());
+        }
+        cursor = -1;
+        return result.replace(1, 3, "")
+                .toString();
     }
 }
