@@ -23,32 +23,39 @@
 package de.collections.vector;
 
 /**
- * An implementation of the vector interface. Uses an array as its base.
+ * A view of a {@link MutableVector}.
  *
  * <p>This class is immutable.</p>
  * @param <T> The type of the elements this vector can contain.
  */
 public final class VectorOf<T> implements Vector<T> {
-    private final T[] elements;
+    private final MutableVector<T> mutableVector;
+
+    /**
+     * Secondary constructor.
+     * @param elements the vector will contain.
+     */
+    public VectorOf(T... elements) {
+        this(
+                new MutableVectorOf<>(elements)
+        );
+    }
 
     /**
      * Primary constructor.
-     * @param elements the vactor will contain.
+     * @param elements the vector will contain.
      */
-    public VectorOf(T... elements) {
-        this.elements = elements;
+    public VectorOf(MutableVector<T> mutableVector) {
+        this.mutableVector = mutableVector;
     }
 
     @Override
     public T get(int index) {
-        if (!(0 <= index || index <= size())) {
-            throw new IllegalArgumentException("The index has to be between 0 and size (exclusive) but is: " + index);
-        }
-        return elements[index];
+        return mutableVector.get(index);
     }
 
     @Override
     public int size() {
-        return elements.length;
+        return mutableVector.size();
     }
 }
