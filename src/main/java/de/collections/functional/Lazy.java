@@ -20,45 +20,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+package de.collections.functional;
 
-import de.collections.lambda.Action;
+
+import java.util.function.Supplier;
 
 /**
- * Searches linear (from start to end) for the element.
- * @param <T> The type of the element and the type of the iterables contained type.
+ * A class for lazy initialization. The initialization will be applied only once. Example:
+ * <pre><code>val list = new Lazy<>(
+ *      () -> {
+ *          val list = new ArrayList<>();
+ *          list.add(15);
+ *          return list;
+ *      } // will be applied later, when the list content is actually needed.
+ * );</code></pre>
+ * @param <T> The type of the resulting value that will be created.
  */
-public class ContainsLinear<T> implements Contains {
-    private final Iterable<T> iterable;
-    private final T element;
-
-    /**
-     * Secondary constructor.
-     * @param collection Where the element could be.
-     * @param element to search for.
-     */
-    public ContainsLinear(Collection<T> collection, T element) {
-        this(new IterableOf<>(collection), element);
-    }
+public final class Lazy<T> {
+    private final Supplier<T> supplier;
+    private T value = null;
 
     /**
      * Primary constructor.
-     * @param iterable Where the element could be.
-     * @param element To search for.
+     * @param supplier Contains the information on how the element has to be created.
      */
-    public ContainsLinear(Iterable<T> iterable, T element) {
-        this.iterable = iterable;
-        this.element = element;
+    public Lazy(Supplier<T> supplier) {
+        this.supplier = supplier;
     }
 
-    @Override
-    public boolean apply(Action action) {
-        for (T t : iterable) {
-            if (element.equals(t)) {
-                action.apply();
-                return true;
-            }
+    /**
+     * Constructs the value the first time this method is called and saves it then.
+     * @return The constructed value.
+     */
+    public T value() {
+        if (value == null) {
+            value = supplier.get();
         }
-        return false;
+        return value;
     }
 }

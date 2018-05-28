@@ -80,7 +80,7 @@ public final class Sublist<T> implements List<T> {
     }
 
     /**
-     * @return format: Sublist: [...|...|...]
+     * @return format: Sublist: [...]
      */
     @Override
     public String toString() {

@@ -102,15 +102,19 @@ public final class FilteredIterator<T> implements Iterator<T> {
      */
     @Override
     public String toString() {
+        final var delimiter = ", ";
         if (!hasNext()) {
             return "";
         }
-        var result = new StringBuilder();
+        final var result = new StringBuilder();
         while (hasNext()) {
-            result.append(", ").append(next());
+            result
+                    .append(next())
+                    .append(delimiter);
         }
         cursor = -1;
-        return result.replace(1, 3, "")
+        return result
+                .replace(result.length() - delimiter.length(), result.length(), "")
                 .toString();
     }
 }

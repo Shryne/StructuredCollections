@@ -3,6 +3,7 @@ package de.collections.functional;
 import de.collections.IterableOf;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 public class AllTest {
@@ -35,7 +36,7 @@ public class AllTest {
 
     @Test
     public void oneNot() {
-        assertTrue(
+        assertFalse(
                 new All<>(
                         new IterableOf<>(5),
                         e -> e != 5
@@ -57,7 +58,7 @@ public class AllTest {
 
     @Test
     public void multipleFalseLast() {
-        assertTrue(
+        assertFalse(
                 new All<>(
                         new IterableOf<>(
                                 2, 4, 6, 8, 10, 12, 14, 16, 18, 200, 500, 33
