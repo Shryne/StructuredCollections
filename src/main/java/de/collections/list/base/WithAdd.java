@@ -23,14 +23,14 @@
 package de.collections.list.base;
 
 /**
- * Offers a way to get an element based on the index.
- * @param <T> The type of the element.
+ * An interfaces containing the functionality to add elements to the implementing class.
+ * @param <T> Type of the elements to add.
  */
-public interface WithGet<T> {
+public interface WithAdd<T> {
     /**
-     * Returns the element.
-     * @param index The index of the element to return.
-     * @return The element on the given index.
+     * Adds the element to itself.
+     * @param element to add.
+     * @param index of the element.
      */
-    T get(int index);
+    void add(T element, int index);
 }

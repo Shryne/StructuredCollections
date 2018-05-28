@@ -23,14 +23,13 @@
 package de.collections.list.base;
 
 /**
- * Offers a way to get an element based on the index.
+ * Offers a way to remove an element based on the index.
  * @param <T> The type of the element.
  */
-public interface WithGet<T> {
+public interface WithRemove<T> {
     /**
-     * Returns the element.
-     * @param index The index of the element to return.
-     * @return The element on the given index.
+     * Removes the element from itself.
+     * @param index of the element to be removed.
      */
-    T get(int index);
+    void remove(int index);
 }

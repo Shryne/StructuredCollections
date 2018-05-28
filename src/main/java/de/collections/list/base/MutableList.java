@@ -23,14 +23,6 @@
 package de.collections.list.base;
 
 /**
- * Offers a way to get an element based on the index.
- * @param <T> The type of the element.
+ * A mutable list.
  */
-public interface WithGet<T> {
-    /**
-     * Returns the element.
-     * @param index The index of the element to return.
-     * @return The element on the given index.
-     */
-    T get(int index);
-}
+public interface MutableList<T> extends WithRemove<T>, WithAdd<T>, List<T> {}
