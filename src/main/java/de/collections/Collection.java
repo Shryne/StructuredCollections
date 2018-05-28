@@ -22,9 +22,6 @@
  */
 package de.collections;
 
-import de.collections.list.base.WithGet;
-import de.collections.list.base.WithSize;
-
 // TODO: What about the non index based classes?
 public interface Collection<T> extends WithGet<T>, WithSize {
 }

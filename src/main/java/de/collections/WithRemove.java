@@ -20,12 +20,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.list.base;
-
-import de.collections.WithAdd;
-import de.collections.WithRemove;
+package de.collections;
 
 /**
- * A mutable list.
+ * Offers a way to remove an element based on the index.
+ * @param <T> The type of the element.
  */
-public interface MutableList<T> extends WithRemove<T>, WithAdd<T>, List<T> {}
+public interface WithRemove<T> {
+    /**
+     * Removes the element from itself.
+     * @param index of the element to be removed.
+     */
+    void remove(int index);
+}

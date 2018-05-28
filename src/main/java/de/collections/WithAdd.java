@@ -20,12 +20,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.list.base;
-
-import de.collections.WithAdd;
-import de.collections.WithRemove;
+package de.collections;
 
 /**
- * A mutable list.
+ * An interfaces containing the functionality to add elements to the implementing class.
+ * @param <T> Type of the elements to add.
  */
-public interface MutableList<T> extends WithRemove<T>, WithAdd<T>, List<T> {}
+public interface WithAdd<T> {
+    /**
+     * Adds the element to itself.
+     * @param element to add.
+     * @param index of the element.
+     */
+    void add(T element, int index);
+}
