@@ -41,6 +41,16 @@ public class ContainsLinearTest {
     }
 
     @Test
+    public void oneValue() {
+        assertTrue(
+                new ContainsLinear<>(
+                        new ListOf<>(0),
+                        0
+                ).value()
+        );
+    }
+
+    @Test
     public void oneApplyNot() {
         new ContainsLinear<>(
                 new ListOf<>(0),
@@ -49,6 +59,16 @@ public class ContainsLinearTest {
                 () -> assertFalse(false)
         );
         assertTrue(true);
+    }
+
+    @Test
+    public void oneValueNot() {
+        assertFalse(
+                new ContainsLinear<>(
+                        new ListOf<>(0),
+                        1
+                ).value()
+        );
     }
 
     @Test

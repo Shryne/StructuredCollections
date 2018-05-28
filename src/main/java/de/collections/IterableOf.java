@@ -23,10 +23,7 @@
 package de.collections;
 
 import de.collections.list.FilteredIterator;
-import de.collections.list.base.List;
 import de.collections.list.base.ListOf;
-import de.collections.list.base.WithGet;
-import de.collections.list.base.WithSize;
 
 import java.util.Iterator;
 

@@ -30,28 +30,29 @@ import static org.junit.Assert.assertEquals;
 public class ConcatListTest {
     @Test
     public void OneOne() {
-        assertEquals(
-                55,
-                (int) new ConcatList<>(
-                        new ListOf<>(55),
-                        new ListOf<>(23)
-                ).get(0)
+        final var list = new ConcatList<>(
+                new ListOf<>(55),
+                new ListOf<>(23)
         );
 
+        assertEquals(55, (int) list.get(0));
+        assertEquals(23, (int) list.get(1));
+        assertEquals(2, list.size());
         assertEquals(
-                23,
-                (int) new ConcatList<>(
-                        new ListOf<>(55),
-                        new ListOf<>(23)
-                ).get(1)
+                "ConcatList: [55|23]",
+                list.toString()
         );
+    }
 
+    @Test
+    public void MultipleToString() {
+        final var list = new ConcatList<>(
+                new ListOf<>(66, 22, 14),
+                new ListOf<>(4, 2)
+        );
         assertEquals(
-                2,
-                new ConcatList<>(
-                        new ListOf<>(55),
-                        new ListOf<>(23)
-                ).size()
+                "ConcatList: [66, 22, 14|4, 2]",
+                list.toString()
         );
     }
 }

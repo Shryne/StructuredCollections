@@ -39,6 +39,14 @@ public class ListOfTest {
         new ListOf<>().get(-1);
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void aboveGetOutOfBoundsAbove() {
+        var list = new ListOf<>(
+                2, 4, 5, 2, 450, 209, 32, 5
+        );
+        list.get(list.size());
+    }
+
     @Test
     public void oneGet() {
         assertEquals(
@@ -59,6 +67,26 @@ public class ListOfTest {
     public void noEmpty() {
         assertTrue(
                 new ListOf<>().isEmpty()
+        );
+    }
+
+    @Test
+    public void multipleGet() {
+        assertEquals(
+                22,
+                (int) new ListOf<>(
+                       5, 20, 12, 4, 22, 20, 123, 556
+                ).get(4)
+        );
+    }
+
+    @Test
+    public void multipleToString() {
+        assertEquals(
+                "List: [10, 55, 200, 21]",
+                new ListOf<>(
+                        10, 55, 200, 21
+                ).toString()
         );
     }
 }

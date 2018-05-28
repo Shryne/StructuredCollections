@@ -25,7 +25,6 @@ package de.collections.list;
 import de.collections.Collection;
 import de.collections.list.base.ListOf;
 
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;

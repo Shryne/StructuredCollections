@@ -22,20 +22,38 @@
  */
 package de.collections.functional;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import org.junit.Test;
 
-public class ConstructedPredicate<C, T> implements Predicate<T> {
-    private final C constructed;
-    private final BiFunction<C, T, Boolean> function;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-    public ConstructedPredicate(C constructed, BiFunction<C, T, Boolean> function) {
-        this.constructed = constructed;
-        this.function = function;
+import static org.junit.Assert.assertEquals;
+
+public class LazyTest {
+    @Test
+    public void value() {
+        assertEquals(
+                Arrays.asList(0, 1, 2, 3),
+                new Lazy<>(
+                        () -> {
+                            var list = new ArrayList<>();
+                            list.addAll(Arrays.asList(0, 1, 2, 3));
+                            return list;
+                        }
+                ).value()
+        );
     }
 
-    @Override
-    public boolean test(T element) {
-        return function.apply(constructed, element);
+    @Test
+    public void onlyOnceConstructed() throws InterruptedException {
+        final var lazy = new Lazy<>(
+                System::currentTimeMillis
+        );
+        long first = lazy.value();
+        Thread.sleep(500);
+        assertEquals(
+                first,
+                (long) lazy.value()
+        );
     }
 }
