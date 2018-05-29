@@ -57,3 +57,8 @@ new IndexOf(list, 5).apply(
       index -> // gets the call only if the element is actually present
 );
 ```
+
+### 3) Big classes
+The collection classes have around thousand lines of code and multiple classes in their inheritance hierarchy. This isn't a necessarily a problem if everything works, but if one needs or wants to look for some functionality inside them, it will be quite difficult.
+
+The classes of this library have mostly less than 100 lines per class and no implementation inheritance is used. 
