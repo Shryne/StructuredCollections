@@ -32,7 +32,7 @@ import java.util.function.Predicate;
 /**
  * A filter to iterate only through elements who fulfill the filter.
  */
-public final class FilteredIterator<T> implements Iterator<T> {
+public final class FilteredIterator<T> implements ConvertibleIterator<T> {
     private final Collection<T> collection;
     private int cursor = -1;
     private final Predicate<T> filter;

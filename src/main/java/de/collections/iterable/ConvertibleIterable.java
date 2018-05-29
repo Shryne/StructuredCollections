@@ -22,7 +22,15 @@
  */
 package de.collections.iterable;
 
+/**
+ * This interface wouldn't exist, if there would be an array interface in java => IterableAsArray.
+ * @param <T> The type of the elements of the iterable.
+ */
 public interface ConvertibleIterable<T> extends Iterable<T> {
+    /**
+     * Creates a new array and puts the elements of the iterable inside of it.
+     * @return The array with the elements.
+     */
     default T[] asArray() {
         int size = 0;
         for (T ignored : this) {

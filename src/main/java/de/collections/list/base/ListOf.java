@@ -35,18 +35,17 @@ public final class ListOf<T> implements List<T> {
 
     /**
      * Secondary constructor.
-     * @param elements The elements that the list should contain. These elements will be copied, thus changes to the old
-     *                 array don't affect the list. Note that changes on the elements will affect this list.
+     * @param elements The elements that the list should contain.
      */
     @SafeVarargs
     public ListOf(T... elements) {
-        this(
-                new MutableListOf<>(
-                        Arrays.copyOf(elements, elements.length)
-                )
-        );
+        this(new MutableListOf<>(elements));
     }
 
+    /**
+     * Primary constructor.
+     * @param mutableList that contains the elements. Based on the immutable list, this view will be created.
+     */
     public ListOf(MutableList<T> mutableList) {
         this.mutableList = mutableList;
     }

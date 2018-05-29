@@ -25,15 +25,21 @@ package de.collections.iterable;
 
 import de.collections.Collection;
 
-import java.util.Iterator;
-
-public final class RangeOf<T> implements Iterator<T> {
+/**
+ * An iterator that starts and ends on the specified indices.
+ * @param <T> The type of the elements of the iterator.
+ */
+public final class RangeOf<T> implements ConvertibleIterator<T> {
     private final Collection<T> collection;
-    private final int from;
     private final int to;
 
-    private int cursor = -1;
+    private int cursor;
 
+    /**
+     * Secondary constructor. Ends with collection.size() (exclusive).
+     * @param collection that contains the elements.
+     * @param from range start (inclusive, greater or equal to 0, smaller than to).
+     */
     public RangeOf(Collection<T> collection, int from) {
         this(collection, from, collection.size());
     }
@@ -56,7 +62,7 @@ public final class RangeOf<T> implements Iterator<T> {
             );
         }
         this.collection = collection;
-        this.from = from;
+        cursor = from + 1;
         this.to = to;
     }
 

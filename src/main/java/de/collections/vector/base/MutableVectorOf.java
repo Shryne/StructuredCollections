@@ -20,9 +20,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.vector;
+package de.collections.vector.base;
 
 import de.collections.iterable.ConvertibleIterable;
+import de.collections.iterable.ConvertibleIterator;
 import de.collections.iterable.IterableOf;
 
 import java.util.Arrays;
@@ -42,6 +43,10 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
 
     public MutableVectorOf(Vector<T> vector) {
         this(new IterableOf<>(vector));
+    }
+
+    public MutableVectorOf(ConvertibleIterator<T> iterator) {
+        this(iterator.toArray());
     }
 
     public MutableVectorOf(ConvertibleIterable<T> iterable) {

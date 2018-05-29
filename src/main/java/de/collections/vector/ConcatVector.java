@@ -23,47 +23,50 @@
 package de.collections.vector;
 
 import de.collections.functional.Lazy;
-import de.collections.iterable.ConvertibleIterable;
+import de.collections.iterable.ConvertibleIterator;
 import de.collections.iterable.IterableOf;
-
-import java.util.Iterator;
-
-public final class ConcatVector<T> implements MutableVector<T> {
-    private final Lazy<MutableVector<T>> lazyVector;
+import de.collections.vector.base.MutableVector;
+import de.collections.vector.base.MutableVectorEnvelope;
+import de.collections.vector.base.MutableVectorOf;
 
 
-    public ConcatVector(Iterator<T> front, T middle, Iterator<T> back) {
+public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
+    public ConcatVector(ConvertibleIterator<T> front, T middle, ConvertibleIterator<T> back) {
         this(
-                new IteratorAsMutableVector<>(front),
+                new MutableVectorOf<>(front),
                 middle,
-                new IteratorAsMutableVector<>(back)
+                new MutableVectorOf<>(back)
         );
     }
 
     public ConcatVector(MutableVector<T> front, T middle, MutableVector<T> back) {
-        lazyVector = new Lazy<>(
-                () -> {
-                    front.set(front.size(), middle);
-                    for (T element : new IterableOf<>(back)) {
-                        front.set(front.size(), element);
-                    }
-                    return front;
-                }
+        //noinspection unchecked
+        this(
+                new ConcatVector<>(
+                        front,
+                        new MutableVectorOf<>(middle)
+                ),
+                back
         );
     }
 
-    @Override
-    public T get(int index) {
-        return lazyVector.value().get(index);
+    public ConcatVector(ConvertibleIterator<T> first, ConvertibleIterator<T> second) {
+        this(
+                new MutableVectorOf<>(first),
+                new MutableVectorOf<>(second)
+        );
     }
 
-    @Override
-    public void set(int index, ConvertibleIterable<T> elements) {
-        lazyVector.value().set(index, elements);
-    }
-
-    @Override
-    public int size() {
-        return lazyVector.value().size();
+    public ConcatVector(MutableVector<T> first, MutableVector<T> second) {
+        super(
+                new Lazy<>(
+                        () -> {
+                            for (T element : new IterableOf<>(second)) {
+                                first.set(first.size(), element);
+                            }
+                            return first;
+                        }
+                )
+        );
     }
 }

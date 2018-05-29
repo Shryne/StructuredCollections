@@ -1,17 +1,17 @@
 /**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,12 +20,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.list.base;
+package de.collections.iterable;
 
-import de.collections.Collection;
+
+import java.util.Iterator;
 
 /**
- * An immutable list view.
- * @param <T> The type of the elements inside the list.
+ * Combines iterators to one.
+ * @param <T> The type of the elements inside of the iterator.
  */
-public interface List<T> extends Collection<T> {}
+public final class ConcatIterator<T> implements Iterator<T> {
+    private final Iterator<T> first;
+    private final Iterator<T> second;
+
+    /**
+     * Primary constructor.
+     * @param first part of the iterator.
+     * @param second part of the iterator.
+     */
+    public ConcatIterator(Iterator<T> first, Iterator<T> second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return first.hasNext() || second.hasNext();
+    }
+
+    @Override
+    public T next() {
+        if (first.hasNext()) {
+            return first.next();
+        }
+        return second.next();
+    }
+}

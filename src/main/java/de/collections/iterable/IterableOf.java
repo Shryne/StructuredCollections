@@ -35,8 +35,12 @@ import java.util.Iterator;
 public final class IterableOf<T> implements ConvertibleIterable<T> {
     private final Iterator<T> iterator;
 
+    /**
+     * Secondary constructor.
+     * @param elements to iterate through.
+     */
     public IterableOf(T... elements) {
-        this(new ListOf<>(elements));
+        this(new FilteredIterator<>(elements));
     }
 
     /**

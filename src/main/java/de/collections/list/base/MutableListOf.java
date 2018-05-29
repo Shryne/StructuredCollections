@@ -26,27 +26,39 @@ package de.collections.list.base;
 import de.collections.iterable.IterableOf;
 import de.collections.iterable.RangeOf;
 import de.collections.vector.ConcatVector;
-import de.collections.vector.MutableVector;
-import de.collections.vector.MutableVectorOf;
-import de.collections.vector.Vector;
+import de.collections.vector.base.MutableVector;
+import de.collections.vector.base.MutableVectorOf;
+import de.collections.vector.base.Vector;
 
-import java.util.Arrays;
-
+/**
+ * Implementation of the mutable list.
+ *
+ * <p>This class is not thread safe.</p>
+ * @param <T> The type of the elements this list shall contain.
+ */
 public final class MutableListOf<T> implements MutableList<T> {
     private MutableVector<T> container;
 
+    /**
+     * Secondary constructor.
+     * @param elements the list shall contain.
+     */
     public MutableListOf(T... elements) {
         this(new MutableVectorOf<>(elements));
     }
 
+    /**
+     * Secondary constructor.
+     * @param vector containing the elements for this list.
+     */
     public MutableListOf(Vector<T> vector) {
         this(new MutableVectorOf<>(vector));
     }
 
     /**
      * Primary constructor.
-     * @param elements The elements that the list should contain. These elements will be copied, thus changes to the old
-     *                 array don't affect the list. Note that changes on the elements will affect this list.
+     * @param mutableVector containing the elements for this list. If the user changes the list, the vector will be
+     *                      changed, too.
      */
     public MutableListOf(MutableVector<T> mutableVector) {
         container = mutableVector;
@@ -73,7 +85,6 @@ public final class MutableListOf<T> implements MutableList<T> {
         return container.size();
     }
 
-
     @Override
     public void add(int index, T element) {
         container = new ConcatVector<>(
@@ -85,7 +96,10 @@ public final class MutableListOf<T> implements MutableList<T> {
 
     @Override
     public void remove(int index) {
-        throw new UnsupportedOperationException();
+        container = new ConcatVector<>(
+                new RangeOf<>(container, 0, index - 1),
+                new RangeOf<>(container, index + 1)
+        );
     }
 
     /**
