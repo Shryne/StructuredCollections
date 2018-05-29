@@ -20,9 +20,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+package de.collections.iterable;
 
-import de.collections.list.FilteredIterator;
+import de.collections.Collection;
 import de.collections.list.base.ListOf;
 
 import java.util.Iterator;
@@ -32,7 +32,7 @@ import java.util.Iterator;
  * but I think it should be the other way around to reduce the size of the classes.
  * @param <T> The element type of the elements in the iteration.
  */
-public final class IterableOf<T> implements Iterable<T> {
+public final class IterableOf<T> implements ConvertibleIterable<T> {
     private final Iterator<T> iterator;
 
     public IterableOf(T... elements) {
@@ -57,6 +57,7 @@ public final class IterableOf<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
+        new ListOf<>(1);
         return iterator;
     }
 

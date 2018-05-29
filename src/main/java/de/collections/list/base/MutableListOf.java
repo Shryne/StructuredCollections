@@ -23,19 +23,33 @@
 package de.collections.list.base;
 
 
+import de.collections.iterable.IterableOf;
+import de.collections.iterable.RangeOf;
+import de.collections.vector.ConcatVector;
+import de.collections.vector.MutableVector;
+import de.collections.vector.MutableVectorOf;
+import de.collections.vector.Vector;
+
 import java.util.Arrays;
 
 public final class MutableListOf<T> implements MutableList<T> {
-    private final T[] container;
+    private MutableVector<T> container;
+
+    public MutableListOf(T... elements) {
+        this(new MutableVectorOf<>(elements));
+    }
+
+    public MutableListOf(Vector<T> vector) {
+        this(new MutableVectorOf<>(vector));
+    }
 
     /**
      * Primary constructor.
      * @param elements The elements that the list should contain. These elements will be copied, thus changes to the old
      *                 array don't affect the list. Note that changes on the elements will affect this list.
      */
-    @SafeVarargs
-    public MutableListOf(T... elements) {
-        container = Arrays.copyOf(elements, elements.length);
+    public MutableListOf(MutableVector<T> mutableVector) {
+        container = mutableVector;
     }
 
     /**
@@ -51,18 +65,22 @@ public final class MutableListOf<T> implements MutableList<T> {
                     )
             );
         }
-        return container[index];
+        return container.get(index);
     }
 
     @Override
     public int size() {
-        return container.length;
+        return container.size();
     }
 
 
     @Override
-    public void add(T element, int index) {
-        throw new UnsupportedOperationException();
+    public void add(int index, T element) {
+        container = new ConcatVector<>(
+                new RangeOf<>(container, 0, index - 1),
+                element,
+                new RangeOf<>(container, index + 1)
+        );
     }
 
     @Override
@@ -75,6 +93,6 @@ public final class MutableListOf<T> implements MutableList<T> {
      */
     @Override
     public String toString() {
-        return "MutableList: " + Arrays.toString(container);
+        return "MutableList: " + new IterableOf<>(container).toString();
     }
 }

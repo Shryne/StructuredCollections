@@ -20,17 +20,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+package de.collections.iterable;
 
-/**
- * An interfaces containing the functionality to add elements to the implementing class.
- * @param <T> Type of the elements to add.
- */
-public interface WithAdd<T> {
-    /**
-     * Adds the element to itself.
-     * @param index of the first element.
-     * @param element to add.
-     */
-    void add(int index, T element);
+public interface ConvertibleIterable<T> extends Iterable<T> {
+    default T[] asArray() {
+        int size = 0;
+        for (T ignored : this) {
+            size++;
+        }
+
+        @SuppressWarnings("unchecked")
+        final T[] result = (T[]) new Object[size];
+
+        int i = 0;
+        for (T element : this) {
+            result[i] = element;
+            i++;
+        }
+        return result;
+    }
 }

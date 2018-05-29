@@ -22,6 +22,7 @@
  */
 package de.collections.vector;
 
+import de.collections.Collection;
 import de.collections.WithGet;
 import de.collections.WithSize;
 
@@ -30,6 +31,6 @@ import de.collections.WithSize;
  *
  * @see MutableVector
  */
-public interface Vector<T> extends WithSize, WithGet<T> {
+public interface Vector<T> extends Collection<T> {
 
 }

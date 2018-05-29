@@ -1,17 +1,17 @@
 /**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- * <p>
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * <p>
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * <p>
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,38 +22,44 @@
  */
 package de.collections.vector;
 
-/**
- * A view of a {@link MutableVector}.
- *
- * <p>This class is immutable.</p>
- * @param <T> The type of the elements this vector can contain.
- */
-public final class VectorOf<T> implements Vector<T> {
-    private final MutableVector<T> mutableVector;
+import de.collections.functional.Lazy;
+import de.collections.iterable.ConvertibleIterable;
 
-    /**
-     * Secondary constructor.
-     * @param elements the vector will contain.
-     */
-    public VectorOf(T... elements) {
-        this(new MutableVectorOf<>(elements));
+import java.util.Iterator;
+
+public final class IteratorAsMutableVector<T> implements MutableVector<T> {
+    private final Lazy<MutableVector<T>> lazyMutableVector;
+
+    public IteratorAsMutableVector(Iterable<T> iterable) {
+        this(iterable.iterator());
     }
 
-    /**
-     * Primary constructor.
-     * @param elements the vector will contain.
-     */
-    public VectorOf(MutableVector<T> mutableVector) {
-        this.mutableVector = mutableVector;
+    public IteratorAsMutableVector(Iterator<T> iterator) {
+        lazyMutableVector = new Lazy<>(
+                () -> {
+                    @SuppressWarnings("unchecked")
+                    final var vector = new MutableVectorOf<T>();
+                    while (iterator.hasNext()){
+                        vector.set(vector.size(), iterator.next());
+                    }
+                    return vector;
+                }
+        );
     }
+
 
     @Override
     public T get(int index) {
-        return mutableVector.get(index);
+        return lazyMutableVector.value().get(index);
+    }
+
+    @Override
+    public void set(int index, ConvertibleIterable<T> elements) {
+        lazyMutableVector.value().set(index, elements);
     }
 
     @Override
     public int size() {
-        return mutableVector.size();
+        return lazyMutableVector.value().size();
     }
 }

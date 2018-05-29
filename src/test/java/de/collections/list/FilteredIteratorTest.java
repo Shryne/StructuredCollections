@@ -22,6 +22,7 @@
  */
 package de.collections.list;
 
+import de.collections.iterable.FilteredIterator;
 import de.collections.list.base.ListOf;
 import org.junit.Test;
 

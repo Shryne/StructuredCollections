@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.list;
+package de.collections.iterable;
 
 import de.collections.Collection;
 import de.collections.list.base.ListOf;

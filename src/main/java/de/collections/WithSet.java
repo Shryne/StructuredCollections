@@ -22,6 +22,9 @@
  */
 package de.collections;
 
+import de.collections.iterable.ConvertibleIterable;
+import de.collections.iterable.IterableOf;
+
 /**
  * Offers the functionality to set an element.
  * @param <T> Type of the element to set.
@@ -30,7 +33,12 @@ public interface WithSet<T> {
     /**
      * Sets (/replaces) the element on the given index with the given element.
      * @param index of the element.
-     * @param element that will take the place.
+     * @param elements that will take the place.
      */
-    void set(int index, T element);
+    void set(int index, ConvertibleIterable<T> elements);
+
+    default void set(int index, T element) {
+        //noinspection unchecked
+        set(index, new IterableOf<>(element));
+    }
 }

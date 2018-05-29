@@ -22,38 +22,48 @@
  */
 package de.collections.vector;
 
-/**
- * A view of a {@link MutableVector}.
- *
- * <p>This class is immutable.</p>
- * @param <T> The type of the elements this vector can contain.
- */
-public final class VectorOf<T> implements Vector<T> {
-    private final MutableVector<T> mutableVector;
+import de.collections.functional.Lazy;
+import de.collections.iterable.ConvertibleIterable;
+import de.collections.iterable.IterableOf;
 
-    /**
-     * Secondary constructor.
-     * @param elements the vector will contain.
-     */
-    public VectorOf(T... elements) {
-        this(new MutableVectorOf<>(elements));
+import java.util.Iterator;
+
+public final class ConcatVector<T> implements MutableVector<T> {
+    private final Lazy<MutableVector<T>> lazyVector;
+
+
+    public ConcatVector(Iterator<T> front, T middle, Iterator<T> back) {
+        this(
+                new IteratorAsMutableVector<>(front),
+                middle,
+                new IteratorAsMutableVector<>(back)
+        );
     }
 
-    /**
-     * Primary constructor.
-     * @param elements the vector will contain.
-     */
-    public VectorOf(MutableVector<T> mutableVector) {
-        this.mutableVector = mutableVector;
+    public ConcatVector(MutableVector<T> front, T middle, MutableVector<T> back) {
+        lazyVector = new Lazy<>(
+                () -> {
+                    front.set(front.size(), middle);
+                    for (T element : new IterableOf<>(back)) {
+                        front.set(front.size(), element);
+                    }
+                    return front;
+                }
+        );
     }
 
     @Override
     public T get(int index) {
-        return mutableVector.get(index);
+        return lazyVector.value().get(index);
+    }
+
+    @Override
+    public void set(int index, ConvertibleIterable<T> elements) {
+        lazyVector.value().set(index, elements);
     }
 
     @Override
     public int size() {
-        return mutableVector.size();
+        return lazyVector.value().size();
     }
 }

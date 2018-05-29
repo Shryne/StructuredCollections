@@ -22,27 +22,39 @@
  */
 package de.collections.vector;
 
+import de.collections.iterable.ConvertibleIterable;
+import de.collections.iterable.IterableOf;
+
 import java.util.Arrays;
 
 /**
  * A mutable vector implementation that grows in size but never shrinks.
  *
  * <p>This class is mutable and not thread safe.</p>
+ *
  * @param <T> The type of the elements this vector can contain.
  */
 public final class MutableVectorOf<T> implements MutableVector<T> {
-    private static final int DEFAULT_CAPACITY = 10;
     private static final double CAPACITY_RAISE = 1.5; // will grow by 50 %
 
-    private T[] elements;
+    private T[] container;
     private int size;
+
+    public MutableVectorOf(Vector<T> vector) {
+        this(new IterableOf<>(vector));
+    }
+
+    public MutableVectorOf(ConvertibleIterable<T> iterable) {
+        this(iterable.asArray());
+    }
 
     /**
      * Primary constructor.
+     *
      * @param elements the vactor will contain.
      */
     public MutableVectorOf(T... elements) {
-        this.elements = elements;
+        this.container = elements;
         this.size = elements.length;
     }
 
@@ -51,7 +63,7 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
         if (!(0 <= index || index <= size())) {
             throw new IllegalArgumentException("The index has to be between 0 and size (exclusive) but is: " + index);
         }
-        return elements[index];
+        return container[index];
     }
 
     /**
@@ -64,13 +76,18 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     }
 
     @Override
-    public void set(int index, T element) {
-        if (index > elements.length) {
-            elements = Arrays.copyOf(
-                    elements, (int) Math.max(elements.length * CAPACITY_RAISE, index)
+    public void set(int index, ConvertibleIterable<T> iterable) {
+        final T[] elements = iterable.asArray();
+        if (index + elements.length > elements.length) {
+            container = Arrays.copyOf(
+                    elements,
+                    Math.max(
+                            (int) (elements.length * CAPACITY_RAISE),
+                            index + elements.length
+                    )
             );
         }
-        size = Math.max(size, index + 1);
-        elements[index] = element;
+        size = Math.max(size, index + elements.length + 1);
+        System.arraycopy(elements, 0, container, index, container.length);
     }
 }

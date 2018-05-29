@@ -22,6 +22,7 @@
  */
 package de.collections;
 
+import de.collections.iterable.IterableOf;
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -22,7 +22,7 @@
  */
 package de.collections.list.base;
 
-import de.collections.IterableOf;
+import de.collections.iterable.IterableOf;
 
 import java.util.Arrays;
 
