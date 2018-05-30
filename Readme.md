@@ -66,3 +66,6 @@ The classes of this library have mostly less than 100 lines per class and no imp
 ### Things I've learned
 1) Writting secondary or primary constructor everywhere or explaining what an envelope is, is just a waste of time. It would be better to add coding guideless for such general cases.
 2) I should always write the java docs at the moment I created something new. Otherwise I will have a giant push where I just spend hours to add the documentation.
+3) Generally it's no pleasure to write comments, because there so many duplications of them.
+4) I am not sure how I should deal with comments based on internal behaivior. For example it could be interesting for the user whether an object is lazy, only once constructed or actually never really transformed (performance wice), but that's something I would maybe change afterwards and then I would've to change the comment, too.
+5) Sometimes I threw exceptions even though java would've thrown them anyway. Example: My vector is based on an array and even though an array throws an ArrayIndexOutOfBoundsException in case of an illegal index, I check for it and throw an exception myself. I think I shouldn't do it.
