@@ -63,7 +63,7 @@ The collection classes have around thousand lines of code and multiple classes i
 
 The classes of this library have mostly less than 100 lines per class and no implementation inheritance is used. 
 
-### Things I've learned
+## Things I've learned
 1) Writting secondary or primary constructor everywhere or explaining what an envelope is, is just a waste of time. It would be better to add coding guideless for such general cases.
 2) I should always write the java docs at the moment I created something new. Otherwise I will have a giant push where I just spend hours to add the documentation.
 3) Generally it's no pleasure to write comments, because there so many duplications of them.
