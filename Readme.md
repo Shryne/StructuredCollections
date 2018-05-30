@@ -69,3 +69,6 @@ The classes of this library have mostly less than 100 lines per class and no imp
 3) Generally it's no pleasure to write comments, because there so many duplications of them.
 4) I am not sure how I should deal with comments based on internal behaivior. For example it could be interesting for the user whether an object is lazy, only once constructed or actually never really transformed (performance wice), but that's something I would maybe change afterwards and then I would've to change the comment, too.
 5) Sometimes I threw exceptions even though java would've thrown them anyway. Example: My vector is based on an array and even though an array throws an ArrayIndexOutOfBoundsException in case of an illegal index, I check for it and throw an exception myself. I think I shouldn't do it.
+6) I should take care about my IDE settings. It would've helped me, if i didn't need to copy my license comments to everywhere.
+7) I should read some books about tests or look inside of github for some examples, because I feel like there is a lot duplication around it. It may be also that it just looks like duplication, but is infact non related.
+8) I should look for the matchers. Hopefully they give me more information if a tests fails. Just using asserts isn't always fun.
