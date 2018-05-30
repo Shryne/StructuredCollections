@@ -62,3 +62,7 @@ new IndexOf(list, 5).apply(
 The collection classes have around thousand lines of code and multiple classes in their inheritance hierarchy. This isn't a necessarily a problem if everything works, but if one needs or wants to look for some functionality inside them, it will be quite difficult.
 
 The classes of this library have mostly less than 100 lines per class and no implementation inheritance is used. 
+
+### Things I've learned
+1) Writting secondary or primary constructor everywhere or explaining what an envelope is, is just a waste of time. It would be better to add coding guideless for such general cases.
+2) I should always write the java docs at the moment I created something new. Otherwise I will have a giant push where I just spend hours to add the documentation.
