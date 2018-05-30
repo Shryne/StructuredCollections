@@ -24,9 +24,8 @@ package de.collections;
 
 /**
  * Offers a way to remove an element based on the index.
- * @param <T> The type of the element.
  */
-public interface WithRemove<T> {
+public interface WithRemove {
     /**
      * Removes the element from itself.
      * @param index of the element to be removed.

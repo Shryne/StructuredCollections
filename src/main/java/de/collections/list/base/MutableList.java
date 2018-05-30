@@ -28,4 +28,4 @@ import de.collections.WithRemove;
 /**
  * A mutable list.
  */
-public interface MutableList<T> extends WithRemove<T>, WithAdd<T>, List<T> {}
+public interface MutableList<T> extends WithRemove, WithAdd<T>, List<T> {}

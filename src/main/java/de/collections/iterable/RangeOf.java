@@ -25,6 +25,8 @@ package de.collections.iterable;
 
 import de.collections.Collection;
 
+import java.util.NoSuchElementException;
+
 /**
  * An iterator that starts and ends on the specified indices.
  * @param <T> The type of the elements of the iterator.
@@ -52,7 +54,7 @@ public final class RangeOf<T> implements ConvertibleIterator<T> {
      * @throws IllegalArgumentException if from or to are invalid.
      */
     public RangeOf(Collection<T> collection, int from, int to) {
-        if (!(0 <= from && from <= to) || !(0 < to && to <= collection.size())) {
+        if (from < 0 || to <= from || collection.size() <= to) {
             throw new IllegalArgumentException(
                     String.format(
                             "From needs to be between 0 and to, to needs to be greater than 0 and smaller or equal to" +
@@ -68,12 +70,27 @@ public final class RangeOf<T> implements ConvertibleIterator<T> {
 
     @Override
     public boolean hasNext() {
-        return cursor + 1 < to; // TODO: What if someone changes the bounds of the collection from outside?
+        if (to < collection.size()) {
+            throw new IllegalStateException(
+                    String.format(
+                        "The collections size has been changed. To doesn't fit anymore. Collection.size(): %d, to: %d",
+                            collection.size(), to
+                    )
+            );
+        }
+        return cursor + 1 < to;
     }
 
     @Override
     public T next() {
-        // TODO: hasNext check
+        if (!hasNext()) {
+            throw new NoSuchElementException(
+                    String.format(
+                            "RangeOf doesn't have any elements left. Collection.size(): %d, cursor: %d",
+                            collection.size(), cursor
+                    )
+            );
+        }
         cursor++;
         return collection.get(cursor);
     }

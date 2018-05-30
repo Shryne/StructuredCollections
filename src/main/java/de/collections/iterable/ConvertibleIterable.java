@@ -33,7 +33,7 @@ public interface ConvertibleIterable<T> extends Iterable<T> {
      */
     default T[] asArray() {
         int size = 0;
-        for (T ignored : this) {
+        while (iterator().hasNext()) {
             size++;
         }
 

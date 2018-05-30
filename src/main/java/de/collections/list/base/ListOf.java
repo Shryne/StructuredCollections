@@ -24,8 +24,6 @@ package de.collections.list.base;
 
 import de.collections.iterable.IterableOf;
 
-import java.util.Arrays;
-
 /**
  * A basic implementation of the list based on an array. This class is immutable.
  * @param <T> The type of the elements in the list.
