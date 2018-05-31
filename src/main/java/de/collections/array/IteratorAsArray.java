@@ -33,6 +33,7 @@ import java.util.Iterator;
  * @param <T> The type of the elements inside the iterator and array.
  */
 public final class IteratorAsArray<T> extends ArrayEnvelope<T> {
+    private static final int INITIAL_SIZE = 10;
     private static final double GROWTH_FACTOR = 1.5;
 
     /**
@@ -44,7 +45,7 @@ public final class IteratorAsArray<T> extends ArrayEnvelope<T> {
                 new Lazy<>(
                         () -> {
                             //noinspection unchecked
-                            MutableArray<T> result = new MutableArrayOf<>();
+                            MutableArray<T> result = new MutableArrayOf<T>().resize(INITIAL_SIZE);
                             int cursor = -1;
                             while (iterator.hasNext()) {
                                 if (cursor + 1 == result.size()) {
@@ -54,7 +55,7 @@ public final class IteratorAsArray<T> extends ArrayEnvelope<T> {
                                 cursor++;
                                 result.set(cursor, iterator.next());
                             }
-                            return result.resize(cursor);
+                            return result.resize(cursor + 1);
                         }
                 )
         );

@@ -21,7 +21,13 @@
  * SOFTWARE.
  */
 
-package de.collections;
+package de.collections.array;
+
+import de.collections.array.base.ArrayOf;
+import de.collections.iterable.base.FilteredIterator;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * - mutable
@@ -29,5 +35,34 @@ package de.collections;
  * @param
  * @return
  */
-public class dsasd {
+public class IteratorAsArrayTest {
+    @Test
+    public void zero() {
+        assertEquals(
+                new ArrayOf<>(),
+                new IteratorAsArray<>(
+                        new FilteredIterator<>()
+                )
+        );
+    }
+
+    @Test
+    public void one() {
+        assertEquals(
+                new ArrayOf<>("Hey"),
+                new IteratorAsArray<>(
+                        new FilteredIterator<>("Hey")
+                )
+        );
+    }
+
+    @Test
+    public void multiple() {
+        assertEquals(
+                new ArrayOf<>("A", "B", "C"),
+                new IteratorAsArray<>(
+                        new FilteredIterator<>("A", "B", "C")
+                )
+        );
+    }
 }
