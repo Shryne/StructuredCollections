@@ -22,7 +22,6 @@
  */
 package de.collections.iterable;
 
-
 import java.util.Iterator;
 
 /**

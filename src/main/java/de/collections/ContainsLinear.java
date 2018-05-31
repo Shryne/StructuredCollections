@@ -22,7 +22,7 @@
  */
 package de.collections;
 
-import de.collections.iterable.IterableOf;
+import de.collections.iterable.base.IterableOf;
 import de.collections.lambda.Action;
 
 /**

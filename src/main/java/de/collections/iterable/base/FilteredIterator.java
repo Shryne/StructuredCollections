@@ -20,18 +20,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.iterable.base;
 
 import de.collections.Collection;
 import de.collections.list.base.ListOf;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Predicate;
 
 /**
  * A filter to iterate only through elements who fulfill the filter.
  */
-public final class FilteredIterator<T> implements ConvertibleIterator<T> {
+public final class FilteredIterator<T> implements Iterator<T> {
     private final Collection<T> collection;
     private int cursor = -1;
     private final Predicate<T> filter;

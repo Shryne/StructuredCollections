@@ -20,31 +20,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.list.base;
 
-/**
- * This interface wouldn't exist, if there would be an array interface in java => IterableAsArray.
- * @param <T> The type of the elements of the iterable.
- */
-public interface ConvertibleIterable<T> extends Iterable<T> {
-    /**
-     * Creates a new array and puts the elements of the iterable inside of it.
-     * @return The array with the elements.
-     */
-    default T[] asArray() {
-        int size = 0;
-        while (iterator().hasNext()) {
-            size++;
+
+import de.collections.iterable.base.IterableOf;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class MutableListOfTest {
+    @Test
+    public void zeroAdd() {
+        final MutableList<Integer> list = new MutableListOf<>(10);
+        assertEquals(
+                10,
+                (int) list.get(0)
+        );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void zeroRemove() {
+        new MutableListOf<>().removeLast();
+    }
+
+    @Test
+    public void oneRemove() {
+        final MutableList<Integer> list = new MutableListOf<>(20);
+        list.remove(0);
+        assertTrue(list.isEmpty());
+    }
+
+    @Test
+    public void multipleAdds() {
+        final var result = new ListOf<>(5, 2, 3, 49, 12, 48, 120);
+        final var list = new MutableListOf<Integer>();
+        for (Integer element : new IterableOf<>(result)) {
+            list.add(element);
         }
-
-        @SuppressWarnings("unchecked")
-        final T[] result = (T[]) new Object[size];
-
-        int i = 0;
-        for (T element : this) {
-            result[i] = element;
-            i++;
-        }
-        return result;
+        assertEquals(result, list);
     }
 }

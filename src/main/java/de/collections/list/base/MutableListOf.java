@@ -1,17 +1,17 @@
 /**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,7 +23,7 @@
 package de.collections.list.base;
 
 
-import de.collections.iterable.IterableOf;
+import de.collections.iterable.base.IterableOf;
 import de.collections.iterable.RangeOf;
 import de.collections.vector.ConcatVector;
 import de.collections.vector.base.MutableVector;
@@ -34,6 +34,7 @@ import de.collections.vector.base.Vector;
  * Implementation of the mutable list.
  *
  * <p>This class is not thread safe.</p>
+ *
  * @param <T> The type of the elements this list shall contain.
  */
 public final class MutableListOf<T> implements MutableList<T> {
@@ -41,6 +42,7 @@ public final class MutableListOf<T> implements MutableList<T> {
 
     /**
      * Secondary constructor.
+     *
      * @param elements the list shall contain.
      */
     public MutableListOf(T... elements) {
@@ -49,6 +51,7 @@ public final class MutableListOf<T> implements MutableList<T> {
 
     /**
      * Secondary constructor.
+     *
      * @param vector containing the elements for this list.
      */
     public MutableListOf(Vector<T> vector) {
@@ -57,6 +60,7 @@ public final class MutableListOf<T> implements MutableList<T> {
 
     /**
      * Primary constructor.
+     *
      * @param mutableVector containing the elements for this list. If the user changes the list, the vector will be
      *                      changed, too.
      */
@@ -96,10 +100,41 @@ public final class MutableListOf<T> implements MutableList<T> {
 
     @Override
     public void remove(int index) {
+        if (size() <= index) {
+            throw new IllegalArgumentException(
+                    String.format(
+                            "Index (%d) is greater than the size of the collection (%d).",
+                            index, size()
+                    )
+            );
+        }
         container = new ConcatVector<>(
-                new RangeOf<>(container, 0, index - 1),
+                new RangeOf<>(container, 0, index),
                 new RangeOf<>(container, index + 1)
         );
+    }
+
+    /**
+     * The list can only be equal to other lists.
+     *
+     * @see List
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof List)) {
+            return false;
+        }
+        return new IterableOf<>(
+                (List<?>) obj
+        ).equals(new IterableOf<>(this));
+    }
+
+    @Override
+    public int hashCode() {
+        return container.hashCode();
     }
 
     /**
@@ -107,6 +142,6 @@ public final class MutableListOf<T> implements MutableList<T> {
      */
     @Override
     public String toString() {
-        return "MutableList: " + new IterableOf<>(container).toString();
+        return "List: [" + new IterableOf<>(container) + "]";
     }
 }

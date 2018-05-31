@@ -1,17 +1,17 @@
 /**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,56 +20,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
-
-import de.collections.Collection;
-import de.collections.list.base.ListOf;
-
-import java.util.Iterator;
+package de.collections.array.base;
 
 /**
- * The collection classes of the standard library implement an iterator internally,
- * but I think it should be the other way around to reduce the size of the classes.
- * @param <T> The element type of the elements in the iteration.
+ * Implementation of the array.
+ *
+ * <p>This class is mutable and not thread-safe.</p>
+ * @param <T> The type of the elements inside the array.
  */
-public final class IterableOf<T> implements ConvertibleIterable<T> {
-    private final Iterator<T> iterator;
+public final class ArrayOf<T> implements Array<T> {
+    private MutableArray<T> mutableArray;
 
     /**
      * Secondary constructor.
-     * @param elements to iterate through.
+     * @param elements the array shall contain.
      */
-    public IterableOf(T... elements) {
-        this(new FilteredIterator<>(elements));
-    }
-
-    /**
-     * Secondary constructor.
-     * @param collection to iterate through.
-     */
-    public IterableOf(Collection<T> collection) {
-        this(new FilteredIterator<>(collection));
+    public ArrayOf(T... elements) {
+        this(new MutableArrayOf<>(elements));
     }
 
     /**
      * Primary constructor.
-     * @param iterator for the iteration.
+     * @param mutableArray upon which this view is based on.
      */
-    public IterableOf(Iterator<T> iterator) {
-        this.iterator = iterator;
+    public ArrayOf(MutableArray<T> mutableArray) {
+        this.mutableArray = mutableArray;
+    }
+
+
+    @Override
+    public T get(int index) {
+        //noinspection unchecked
+        return mutableArray.get(index);
     }
 
     @Override
-    public Iterator<T> iterator() {
-        new ListOf<>(1);
-        return iterator;
+    public int size() {
+        return mutableArray.size();
     }
 
     /**
-     * @return format: [elements] (Unordered)
+     * An array is only equal to other arrays.
+     * @see Array
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return mutableArray.equals(obj);
+    }
+
+    /**
+     * @return Format: Array: [elements]
      */
     @Override
     public String toString() {
-        return iterator.toString();
+        return mutableArray.toString();
     }
 }

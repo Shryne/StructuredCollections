@@ -20,49 +20,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.vector;
 
-
-import de.collections.Collection;
 import de.collections.iterable.base.IterableOf;
+import de.collections.list.base.ListOf;
+import de.collections.list.base.MutableListOf;
+import de.collections.vector.base.MutableVectorOf;
+import org.junit.Test;
 
-import java.util.Iterator;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Combines iterables to one.
- * @param <T> The type of the elements inside of the iterables.
- */
-public final class ConcatIterable<T> implements Iterable<T> {
-    private final Iterable<T> first;
-    private final Iterable<T> second;
+public class MutableVectorTest {
+    @Test(expected = IllegalArgumentException.class)
+    public void zeroGet() {
+        new MutableVectorOf<>().get(0);
+    }
 
-    /**
-     * Secondary constructor;
-     * @param first part of the iterable.
-     * @param second part of the iterable.
-     */
-    public ConcatIterable(Collection<T> first, Collection<T> second) {
-        this(
-                new IterableOf<>(first),
-                new IterableOf<>(second)
+    @Test
+    public void oneGet() {
+        assertEquals(
+                25,
+                (int) new MutableVectorOf<>(25).get(0)
         );
     }
 
-    /**
-     * Primary constructor.
-     * @param first part of the iterable.
-     * @param second part of the iterable.
-     */
-    public ConcatIterable(Iterable<T> first, Iterable<T> second) {
-        this.first = first;
-        this.second = second;
+    @Test
+    public void zeroSetZero() {
+        var vector =  new MutableVectorOf<>();
+        vector.set(0, 25);
+        assertEquals(
+                1,
+                vector.size()
+        );
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatIterator<>(
-                first.iterator(),
-                second.iterator()
+    @Test
+    public void zeroSetFartherAway() {
+        var vector = new MutableVectorOf<Integer>();
+        vector.set(4, 12);
+        var list = new MutableListOf<Integer>();
+        for (var element : new IterableOf<>(vector)) {
+            list.add(element);
+        }
+        assertEquals(
+                new ListOf<>(0, 0, 0, 0, 12),
+                list
         );
     }
 }

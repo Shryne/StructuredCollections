@@ -1,17 +1,17 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- * <p>
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * <p>
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * <p>
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,49 +20,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
 
+package de.collections.array.base;
 
 import de.collections.Collection;
-import de.collections.iterable.base.IterableOf;
-
-import java.util.Iterator;
 
 /**
- * Combines iterables to one.
- * @param <T> The type of the elements inside of the iterables.
+ * An immutable view of an array.
+ * @see MutableArray
+ * @param <T> The type of the elements inside the array.
  */
-public final class ConcatIterable<T> implements Iterable<T> {
-    private final Iterable<T> first;
-    private final Iterable<T> second;
-
-    /**
-     * Secondary constructor;
-     * @param first part of the iterable.
-     * @param second part of the iterable.
-     */
-    public ConcatIterable(Collection<T> first, Collection<T> second) {
-        this(
-                new IterableOf<>(first),
-                new IterableOf<>(second)
-        );
-    }
-
-    /**
-     * Primary constructor.
-     * @param first part of the iterable.
-     * @param second part of the iterable.
-     */
-    public ConcatIterable(Iterable<T> first, Iterable<T> second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatIterator<>(
-                first.iterator(),
-                second.iterator()
-        );
-    }
+public interface Array<T> extends Collection<T> {
 }

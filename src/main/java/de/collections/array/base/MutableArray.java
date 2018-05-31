@@ -20,49 +20,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.array.base;
 
-
-import de.collections.Collection;
-import de.collections.iterable.base.IterableOf;
-
-import java.util.Iterator;
+import de.collections.WithSet;
 
 /**
- * Combines iterables to one.
- * @param <T> The type of the elements inside of the iterables.
+ * A wrapper for the array. This is needed because I can't just convert a Object[] to a generic array.
+ * @param <T> The type of the elements inside the array.
  */
-public final class ConcatIterable<T> implements Iterable<T> {
-    private final Iterable<T> first;
-    private final Iterable<T> second;
-
+public interface MutableArray<T> extends WithSet<T>, Array<T> {
     /**
-     * Secondary constructor;
-     * @param first part of the iterable.
-     * @param second part of the iterable.
+     * Creates an array with the given size and the elements inside this array.
+     * @param size the array shall have.
+     * @return the new array.
      */
-    public ConcatIterable(Collection<T> first, Collection<T> second) {
-        this(
-                new IterableOf<>(first),
-                new IterableOf<>(second)
-        );
-    }
-
-    /**
-     * Primary constructor.
-     * @param first part of the iterable.
-     * @param second part of the iterable.
-     */
-    public ConcatIterable(Iterable<T> first, Iterable<T> second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatIterator<>(
-                first.iterator(),
-                second.iterator()
-        );
-    }
+    MutableArray<T> resize(int size);
 }

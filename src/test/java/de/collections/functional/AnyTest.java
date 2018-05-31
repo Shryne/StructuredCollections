@@ -23,7 +23,7 @@
 package de.collections.functional;
 
 
-import de.collections.iterable.IterableOf;
+import de.collections.iterable.base.IterableOf;
 import junit.framework.TestCase;
 import org.junit.Test;
 

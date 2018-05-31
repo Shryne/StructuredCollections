@@ -22,53 +22,75 @@
  */
 package de.collections.vector.base;
 
-import de.collections.iterable.ConvertibleIterable;
-import de.collections.iterable.ConvertibleIterator;
-import de.collections.iterable.IterableOf;
+import de.collections.Collection;
+import de.collections.array.ConcatArray;
+import de.collections.array.IteratorAsArray;
+import de.collections.array.base.Array;
+import de.collections.array.base.ArrayOf;
+import de.collections.array.base.MutableArrayOf;
+import de.collections.iterable.base.IterableOf;
 
-import java.util.Arrays;
+import java.util.Iterator;
 
 /**
  * A mutable vector implementation that grows in size but never shrinks.
  *
  * <p>This class is mutable and not thread safe.</p>
- *
  * @param <T> The type of the elements this vector can contain.
  */
 public final class MutableVectorOf<T> implements MutableVector<T> {
     private static final double CAPACITY_RAISE = 1.5; // will grow by 50 %
 
-    private T[] container;
+    private Array<T> container;
     private int size;
 
-    public MutableVectorOf(Vector<T> vector) {
+    /**
+     * Secondary constructor.
+     * @param vector that contains the elements for the vector.
+     */
+    public MutableVectorOf(Collection<T> vector) {
         this(new IterableOf<>(vector));
     }
 
-    public MutableVectorOf(ConvertibleIterator<T> iterator) {
-        this(iterator.toArray());
+    /**
+     * Secondary constructor.
+     * @param iterable to create the iterator from that has the elements for the vector.
+     */
+    public MutableVectorOf(Iterable<T> iterable) {
+        this(new IteratorAsArray(iterable.iterator()));
     }
 
-    public MutableVectorOf(ConvertibleIterable<T> iterable) {
-        this(iterable.asArray());
+    /**
+     * Secondary constructor.
+     * @param iterator containing the elements for the vector.
+     */
+    public MutableVectorOf(Iterator<T> iterator) {
+        this(new IteratorAsArray<>(iterator));
+    }
+
+    /**
+     * Secondary constructor.
+     * @param elements the vector will contain.
+     */
+    public MutableVectorOf(T... elements) {
+        this(new MutableArrayOf<>(elements));
     }
 
     /**
      * Primary constructor.
-     *
-     * @param elements the vactor will contain.
+     * @param container that contains the elements for this vector.
      */
-    public MutableVectorOf(T... elements) {
-        this.container = elements;
-        this.size = elements.length;
+    public MutableVectorOf(Array<T> container) {
+        this.container = container;
+        size = container.size();
     }
 
     @Override
     public T get(int index) {
-        if (!(0 <= index || index <= size())) {
+        if (index < 0 || size <= index) {
             throw new IllegalArgumentException("The index has to be between 0 and size (exclusive) but is: " + index);
         }
-        return container[index];
+        return container.get(index);
     }
 
     /**
@@ -81,18 +103,33 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     }
 
     @Override
-    public void set(int index, ConvertibleIterable<T> iterable) {
-        final T[] elements = iterable.asArray();
-        if (index + elements.length > elements.length) {
-            container = Arrays.copyOf(
-                    elements,
-                    Math.max(
-                            (int) (elements.length * CAPACITY_RAISE),
-                            index + elements.length
-                    )
-            );
+    public void set(int index, Iterable<T> iterable) {
+        container = new ConcatArray<>(
+                container,
+                new IteratorAsArray<>(iterable.iterator())
+        );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
         }
-        size = Math.max(size, index + elements.length + 1);
-        System.arraycopy(elements, 0, container, index, container.length);
+        if (!(obj instanceof Vector)) {
+            return false;
+        }
+        //noinspection unchecked
+        return new IterableOf<T>((Vector) obj)
+                .equals(new IterableOf<>(this));
+    }
+
+    @Override
+    public int hashCode() {
+        return container.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Vector: [" + new IterableOf<>(this) + "]";
     }
 }

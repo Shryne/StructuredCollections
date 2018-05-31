@@ -22,38 +22,58 @@
  */
 package de.collections.list.base;
 
+import de.collections.functional.Lazy;
+
 /**
  * This class prevents code duplication from using decorators.
  * @param <T> The type of the elements inside the list.
  */
 public abstract class MutableListEnvelope<T> implements MutableList<T> {
-    private final MutableList<T> list;
+    private final Lazy<MutableList<T>> lazyList;
 
     /**
      * Primary constructor.
-     * @param mutableList The list to be used for the methods.
+     * @param lazyList The list to be used for the methods inside of lazy.
      */
-    public MutableListEnvelope(MutableList<T> mutableList) {
-        this.list = mutableList;
+    public MutableListEnvelope(Lazy<MutableList<T>> lazyList) {
+        this.lazyList = lazyList;
     }
 
     @Override
     public final void add(int index, T element) {
-        list.add(index, element);
+        lazyList.value().add(index, element);
     }
 
     @Override
     public final T get(int index) {
-        return list.get(index);
+        return lazyList.value().get(index);
     }
 
     @Override
     public final void remove(int index) {
-        list.remove(index);
+        lazyList.value().remove(index);
     }
 
     @Override
     public final int size() {
-        return list.size();
+        return lazyList.value().size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return lazyList.value().equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return lazyList.value().hashCode();
+    }
+
+    /**
+     * @return Format: List: [...]
+     */
+    @Override
+    public String toString() {
+        return lazyList.value().toString();
     }
 }

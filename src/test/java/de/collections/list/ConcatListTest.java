@@ -29,30 +29,84 @@ import static org.junit.Assert.assertEquals;
 
 public class ConcatListTest {
     @Test
-    public void OneOne() {
-        final var list = new ConcatList<>(
-                new ListOf<>(55),
-                new ListOf<>(23)
-        );
-
-        assertEquals(55, (int) list.get(0));
-        assertEquals(23, (int) list.get(1));
-        assertEquals(2, list.size());
+    public void OneZeroGet() {
         assertEquals(
-                "ConcatList: [55|23]",
-                list.toString()
+                12,
+                (int) new ConcatList<>(
+                        new ListOf<>(12),
+                        new ListOf<>()
+                ).get(0)
+        );
+    }
+
+    @Test
+    public void OneZeroSize() {
+        assertEquals(
+                1,
+                new ConcatList<>(
+                        new ListOf<>(12),
+                        new ListOf<>()
+                ).size()
+        );
+    }
+
+    @Test
+    public void ZeroOneGet() {
+        assertEquals(
+                5,
+                (int) new ConcatList<>(
+                        new ListOf<>(),
+                        new ListOf<>(5)
+                ).get(0)
+        );
+    }
+
+    @Test
+    public void ZeroOneSize() {
+        assertEquals(
+                1,
+                new ConcatList<>(
+                        new ListOf<>(),
+                        new ListOf<>(2)
+                ).size()
+        );
+    }
+
+    @Test
+    public void OneOneSize() {
+        assertEquals(
+                2,
+                new ConcatList<>(
+                        new ListOf<>(55),
+                        new ListOf<>(21)
+                ).size()
+        );
+    }
+
+    @Test
+    public void OneOneGet() {
+        final var list = new ConcatList<>(
+                new ListOf<>(22),
+                new ListOf<>(-42)
+        );
+        assertEquals(
+                22,
+                (int) list.get(0)
+        );
+        assertEquals(
+                -42,
+                (int) list.get(1)
         );
     }
 
     @Test
     public void MultipleToString() {
-        final var list = new ConcatList<>(
-                new ListOf<>(66, 22, 14),
-                new ListOf<>(4, 2)
-        );
         assertEquals(
-                "ConcatList: [66, 22, 14|4, 2]",
-                list.toString()
+                "List: [66, 22, 14, 4, 2]",
+                new ConcatList<>(
+                        new ListOf<>(66, 22, 14),
+                        new ListOf<>(4, 2)
+                ).toString()
         );
     }
 }

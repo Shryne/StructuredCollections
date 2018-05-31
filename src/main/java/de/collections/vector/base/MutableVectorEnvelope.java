@@ -24,11 +24,18 @@ package de.collections.vector.base;
 
 
 import de.collections.functional.Lazy;
-import de.collections.iterable.ConvertibleIterable;
 
-public class MutableVectorEnvelope<T> implements MutableVector<T> {
+/**
+ * An envelope for the MutableVector to get rid of the code duplication from the decorators.
+ * @param <T> The type of the elements of the vector.
+ */
+public abstract class MutableVectorEnvelope<T> implements MutableVector<T> {
     private final Lazy<MutableVector<T>> lazyVector;
 
+    /**
+     * Primary constructor.
+     * @param lazyVector that contains the functionality inside of Lazy.
+     */
     public MutableVectorEnvelope(Lazy<MutableVector<T>> lazyVector) {
         this.lazyVector = lazyVector;
     }
@@ -39,7 +46,7 @@ public class MutableVectorEnvelope<T> implements MutableVector<T> {
     }
 
     @Override
-    public final void set(int index, ConvertibleIterable<T> elements) {
+    public final void set(int index, Iterable<T> elements) {
         lazyVector.value().set(index, elements);
     }
 

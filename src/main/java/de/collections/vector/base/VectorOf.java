@@ -41,7 +41,7 @@ public final class VectorOf<T> implements Vector<T> {
 
     /**
      * Primary constructor.
-     * @param elements the vector will contain.
+     * @param mutableVector that contains the elements for this vector.
      */
     public VectorOf(MutableVector<T> mutableVector) {
         this.mutableVector = mutableVector;
@@ -55,5 +55,20 @@ public final class VectorOf<T> implements Vector<T> {
     @Override
     public int size() {
         return mutableVector.size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return mutableVector.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return mutableVector.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return mutableVector.toString();
     }
 }

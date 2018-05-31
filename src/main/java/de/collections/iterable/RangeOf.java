@@ -25,13 +25,14 @@ package de.collections.iterable;
 
 import de.collections.Collection;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  * An iterator that starts and ends on the specified indices.
  * @param <T> The type of the elements of the iterator.
  */
-public final class RangeOf<T> implements ConvertibleIterator<T> {
+public final class RangeOf<T> implements Iterator<T> {
     private final Collection<T> collection;
     private final int to;
 
@@ -49,35 +50,21 @@ public final class RangeOf<T> implements ConvertibleIterator<T> {
     /**
      * Primary constructor.
      * @param collection that contains the elements.
-     * @param from range start (inclusive, greater or equal to 0, smaller than to).
-     * @param to range end (exclusive, greater than 0 and from, smaller or equal to collection.size()).
+     * @param from range start (inclusive, greater or equal to 0).
+     * @param to range end (exclusive).
      * @throws IllegalArgumentException if from or to are invalid.
      */
     public RangeOf(Collection<T> collection, int from, int to) {
-        if (from < 0 || to <= from || collection.size() <= to) {
-            throw new IllegalArgumentException(
-                    String.format(
-                            "From needs to be between 0 and to, to needs to be greater than 0 and smaller or equal to" +
-                                    "the size of the collection. From: %d, to: %d, collection.size(): %d",
-                            from, to, collection.size()
-                    )
-            );
+        if (from < 0) {
+            throw new IllegalArgumentException("From needs to be greater than 0. From: " + from);
         }
         this.collection = collection;
-        cursor = from + 1;
-        this.to = to;
+        cursor = from - 1;
+        this.to = Math.min(to, collection.size());
     }
 
     @Override
     public boolean hasNext() {
-        if (to < collection.size()) {
-            throw new IllegalStateException(
-                    String.format(
-                        "The collections size has been changed. To doesn't fit anymore. Collection.size(): %d, to: %d",
-                            collection.size(), to
-                    )
-            );
-        }
         return cursor + 1 < to;
     }
 

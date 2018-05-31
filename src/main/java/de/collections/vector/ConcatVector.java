@@ -23,15 +23,26 @@
 package de.collections.vector;
 
 import de.collections.functional.Lazy;
-import de.collections.iterable.ConvertibleIterator;
-import de.collections.iterable.IterableOf;
+import de.collections.iterable.ConcatIterable;
 import de.collections.vector.base.MutableVector;
 import de.collections.vector.base.MutableVectorEnvelope;
 import de.collections.vector.base.MutableVectorOf;
+import de.collections.vector.base.Vector;
 
+import java.util.Iterator;
 
+/**
+ * Combines vectors to one.
+ * @param <T> The type of the elements of the vectors.
+ */
 public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
-    public ConcatVector(ConvertibleIterator<T> front, T middle, ConvertibleIterator<T> back) {
+    /**
+     * Secondary constructor.
+     * @param front part of the iterator.
+     * @param middle part of the iterator.
+     * @param back part of the iterator.
+     */
+    public ConcatVector(Iterator<T> front, T middle, Iterator<T> back) {
         this(
                 new MutableVectorOf<>(front),
                 middle,
@@ -39,6 +50,24 @@ public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
         );
     }
 
+    /**
+     * Secondary constructor.
+     * @param front part of the iterator.
+     * @param back part of the iterator.
+     */
+    public ConcatVector(Vector<T> front, Vector<T> back) {
+        this(
+                new MutableVectorOf<>(front),
+                new MutableVectorOf<>(back)
+        );
+    }
+
+    /**
+     * Secondary constructor.
+     * @param front part of the iterator.
+     * @param middle part of the iterator.
+     * @param back part of the iterator.
+     */
     public ConcatVector(MutableVector<T> front, T middle, MutableVector<T> back) {
         //noinspection unchecked
         this(
@@ -50,21 +79,33 @@ public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
         );
     }
 
-    public ConcatVector(ConvertibleIterator<T> first, ConvertibleIterator<T> second) {
+    /**
+     * Secondary constructor.
+     * @param first part of the iterator.
+     * @param second part of the iterator.
+     */
+    public ConcatVector(Iterator<T> first, Iterator<T> second) {
         this(
                 new MutableVectorOf<>(first),
                 new MutableVectorOf<>(second)
         );
     }
 
+    /**
+     * Primary constructor.
+     * @param first part of the vector.
+     * @param second part of the vector.
+     */
     public ConcatVector(MutableVector<T> first, MutableVector<T> second) {
         super(
                 new Lazy<>(
                         () -> {
-                            for (T element : new IterableOf<>(second)) {
-                                first.set(first.size(), element);
+                            //noinspection unchecked
+                            final var vector = new MutableVectorOf<T>();
+                            for (T element : new ConcatIterable<>(first, second)) {
+                                vector.set(vector.size(), element);
                             }
-                            return first;
+                            return vector;
                         }
                 )
         );

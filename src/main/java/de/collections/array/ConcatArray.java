@@ -20,49 +20,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.array;
 
-
-import de.collections.Collection;
-import de.collections.iterable.base.IterableOf;
-
-import java.util.Iterator;
+import de.collections.array.base.Array;
+import de.collections.array.base.ArrayEnvelope;
+import de.collections.array.base.MutableArrayOf;
+import de.collections.functional.Lazy;
+import de.collections.iterable.ConcatIterable;
 
 /**
- * Combines iterables to one.
- * @param <T> The type of the elements inside of the iterables.
+ * Represents the concatenation of arrays.
+ * @param <T> The type of the elements inside the array.
  */
-public final class ConcatIterable<T> implements Iterable<T> {
-    private final Iterable<T> first;
-    private final Iterable<T> second;
-
-    /**
-     * Secondary constructor;
-     * @param first part of the iterable.
-     * @param second part of the iterable.
-     */
-    public ConcatIterable(Collection<T> first, Collection<T> second) {
-        this(
-                new IterableOf<>(first),
-                new IterableOf<>(second)
-        );
-    }
-
+public class ConcatArray<T> extends ArrayEnvelope<T> {
     /**
      * Primary constructor.
-     * @param first part of the iterable.
-     * @param second part of the iterable.
+     * @param first part of the array.
+     * @param second part of the array.
      */
-    public ConcatIterable(Iterable<T> first, Iterable<T> second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return new ConcatIterator<>(
-                first.iterator(),
-                second.iterator()
+    public ConcatArray(Array<T> first, Array<T> second) {
+        super(
+                new Lazy<>(
+                        () -> {
+                            //noinspection unchecked
+                            var result = new MutableArrayOf<T>().resize(first.size() + second.size());
+                            result.set(0, new ConcatIterable<>(first, second));
+                            return result;
+                        }
+                )
         );
     }
 }

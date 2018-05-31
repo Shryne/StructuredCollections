@@ -22,8 +22,6 @@
  */
 package de.collections.list.base;
 
-import de.collections.iterable.IterableOf;
-
 /**
  * A basic implementation of the list based on an array. This class is immutable.
  * @param <T> The type of the elements in the list.
@@ -61,11 +59,21 @@ public final class ListOf<T> implements List<T> {
         return mutableList.size();
     }
 
+    @Override
+    public int hashCode() {
+        return mutableList.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return mutableList.equals(obj);
+    }
+
     /**
      * @return Format: List: [...]
      */
     @Override
     public String toString() {
-        return "List: [" + new IterableOf<>(mutableList) + "]";
+        return mutableList.toString();
     }
 }

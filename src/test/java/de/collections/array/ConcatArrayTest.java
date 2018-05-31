@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,62 +20,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.list;
 
-import de.collections.iterable.FilteredIterator;
-import de.collections.list.base.ListOf;
+package de.collections.array;
+
+import de.collections.array.base.ArrayOf;
 import org.junit.Test;
 
-import java.util.NoSuchElementException;
-
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
-public class FilteredIteratorTest {
+public class ConcatArrayTest {
     @Test
-    public void zeroFirstHasNextNot() {
-        assertFalse(
-                new FilteredIterator<>().hasNext()
-        );
-    }
-
-    @Test
-    public void oneFirstHasNext() {
-        assertTrue(
-                new FilteredIterator<>(5).hasNext()
-        );
-    }
-
-    @Test
-    public void oneFirstNext() {
+    public void zeroZero() {
         assertEquals(
-                22,
-                (int) new FilteredIterator<>(22).next()
+                new ArrayOf<>(),
+                new ConcatArray<>(
+                        new ArrayOf<>(),
+                        new ArrayOf<>()
+                )
         );
     }
 
     @Test
-    public void multipleFalseFilterHasNext() {
-        assertFalse(
-                new FilteredIterator<>(
-                        new ListOf<>(0, 1, 2, 3, 4, 5),
-                        element -> false
-                ).hasNext()
+    public void oneZero() {
+        assertEquals(
+                new ArrayOf<>(15),
+                new ConcatArray<>(
+                        new ArrayOf<>(15),
+                        new ArrayOf<>()
+                )
         );
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void zeroOutOfBoundsNext() {
-        new FilteredIterator<>().next();
+    @Test
+    public void zeroOne() {
+        assertEquals(
+                new ArrayOf<>(15),
+                new ConcatArray<>(
+                        new ArrayOf<>(),
+                        new ArrayOf<>(15)
+                )
+        );
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void multipleOutOfBoundsNext() {
-        final var iterator = new FilteredIterator<>(1, 2, 3, 4, 5);
-        while (iterator.hasNext()) {
-            iterator.next();
-        }
-        iterator.next();
+    @Test
+    public void oneOne() {
+        assertEquals(
+                new ArrayOf<>(2, -3),
+                new ConcatArray<>(
+                        new ArrayOf<>(2),
+                        new ArrayOf<>(-3)
+                )
+        );
+    }
+
+    @Test
+    public void multiple() {
+        assertEquals(
+                new ArrayOf<>(0, 5, 23, -3, 54, 5, 5),
+                new ConcatArray<>(
+                        new ArrayOf<>(0, 5, 23),
+                        new ArrayOf<>(-3, 54, 5, 5)
+                )
+        );
     }
 }

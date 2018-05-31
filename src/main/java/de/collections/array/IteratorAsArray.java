@@ -20,44 +20,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.vector;
+package de.collections.array;
 
+import de.collections.array.base.*;
 import de.collections.functional.Lazy;
-import de.collections.vector.base.MutableVectorEnvelope;
-import de.collections.vector.base.MutableVectorOf;
 
 import java.util.Iterator;
 
 /**
- * A conversion from an iterator to a mutable vector. The elements will be taken once from the iterator and this
- * operation will mutate the iterator.
- *
- * This class is mutable and not thread-safe.
- * @see Iterator#next()
- * @param <T> The type of the elements of the iterator (and thus of the vector).
+ * An iterator that is converted to an array. Note that the operation of constructing the array will probably involve
+ * some resizing of the underlying array, because an iterator doesn't know his size.
+ * @param <T> The type of the elements inside the iterator and array.
  */
-public final class IteratorAsMutableVector<T> extends MutableVectorEnvelope<T> {
-    /**
-     * Secondary constructor.
-     * @param iterable that offers the iterator.
-     */
-    public IteratorAsMutableVector(Iterable<T> iterable) {
-        this(iterable.iterator());
-    }
+public final class IteratorAsArray<T> extends ArrayEnvelope<T> {
+    private static final double GROWTH_FACTOR = 1.5;
 
     /**
      * Primary constructor.
-     * @param iterator that will be converted to the vector.
+     * @param iterator containing the elements.
      */
-    public IteratorAsMutableVector(Iterator<T> iterator) {
+    public IteratorAsArray(Iterator<T> iterator) {
         super(
                 new Lazy<>(
                         () -> {
-                            @SuppressWarnings("unchecked") final var vector = new MutableVectorOf<T>();
+                            //noinspection unchecked
+                            MutableArray<T> result = new MutableArrayOf<>();
+                            int cursor = -1;
                             while (iterator.hasNext()) {
-                                vector.set(vector.size(), iterator.next());
+                                if (cursor + 1 == result.size()) {
+                                    //noinspection unchecked
+                                    result = result.resize((int) (result.size() * GROWTH_FACTOR));
+                                }
+                                cursor++;
+                                result.set(cursor, iterator.next());
                             }
-                            return vector;
+                            return result.resize(cursor);
                         }
                 )
         );

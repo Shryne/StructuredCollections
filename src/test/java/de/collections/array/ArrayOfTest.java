@@ -1,17 +1,17 @@
 /**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,38 +20,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.list.base;
+package de.collections.array;
 
-
+import de.collections.array.base.ArrayOf;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
 
-public class ListOfTest {
+public class ArrayOfTest {
     @Test(expected = IllegalArgumentException.class)
-    public void zeroGetOutOfBoundsAbove() {
-        new ListOf<>().get(0);
+    public void zeroGet() {
+        new ArrayOf<>().get(0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void zeroGetOutOfBoundsBelow() {
-        new ListOf<>().get(-1);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void aboveGetOutOfBoundsAbove() {
-        var list = new ListOf<>(
-                2, 4, 5, 2, 450, 209, 32, 5
+    @Test
+    public void zeroSize() {
+        assertEquals(
+                0,
+                new ArrayOf<>().size()
         );
-        list.get(list.size());
     }
 
     @Test
     public void oneGet() {
         assertEquals(
-                5,
-                (int) new ListOf<>(5).get(0)
+                10,
+                (int) new ArrayOf<>(10).get(0)
         );
     }
 
@@ -59,34 +56,39 @@ public class ListOfTest {
     public void oneSize() {
         assertEquals(
                 1,
-                new ListOf<>(22).size()
+                new ArrayOf<>(524).size()
         );
     }
 
     @Test
-    public void noEmpty() {
-        assertTrue(
-                new ListOf<>().isEmpty()
-        );
-    }
-
-    @Test
-    public void multipleGet() {
+    public void oneEquals() {
         assertEquals(
-                22,
-                (int) new ListOf<>(
-                       5, 20, 12, 4, 22, 20, 123, 556
-                ).get(4)
+                new ArrayOf<>(5),
+                new ArrayOf<>(5)
         );
     }
 
     @Test
-    public void multipleToString() {
+    public void oneEqualsNot() {
+        assertThat(
+                new ArrayOf<>(23),
+                not(equalTo(new ArrayOf<>(35)))
+        );
+    }
+
+    @Test
+    public void multipleEquals() {
         assertEquals(
-                "List: [10, 55, 200, 21]",
-                new ListOf<>(
-                        10, 55, 200, 21
-                ).toString()
+                new ArrayOf<>(5, 10, -10, 23, 54),
+                new ArrayOf<>(5, 10, -10, 23, 54)
+        );
+    }
+
+    @Test
+    public void multipleEqualsNot() {
+        assertThat(
+                new ArrayOf<>(5, 0, 29, 12),
+                not(equalTo(new ArrayOf<>(5, 0, 29, -5)))
         );
     }
 }

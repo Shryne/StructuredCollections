@@ -20,49 +20,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.array.base;
 
 
-import de.collections.Collection;
-import de.collections.iterable.base.IterableOf;
-
-import java.util.Iterator;
+import de.collections.functional.Lazy;
 
 /**
- * Combines iterables to one.
- * @param <T> The type of the elements inside of the iterables.
+ * A class to get rid of the code duplication that occurs using the decorator pattern.
+ * @param <T> The type of the elements of the array.
  */
-public final class ConcatIterable<T> implements Iterable<T> {
-    private final Iterable<T> first;
-    private final Iterable<T> second;
-
-    /**
-     * Secondary constructor;
-     * @param first part of the iterable.
-     * @param second part of the iterable.
-     */
-    public ConcatIterable(Collection<T> first, Collection<T> second) {
-        this(
-                new IterableOf<>(first),
-                new IterableOf<>(second)
-        );
-    }
+public abstract class ArrayEnvelope<T> implements Array<T> {
+    private final Lazy<? extends Array<T>> lazyArray;
 
     /**
      * Primary constructor.
-     * @param first part of the iterable.
-     * @param second part of the iterable.
+     * @param lazyArray that has the functionality for this class.
      */
-    public ConcatIterable(Iterable<T> first, Iterable<T> second) {
-        this.first = first;
-        this.second = second;
+    public ArrayEnvelope(Lazy<? extends Array<T>> lazyArray) {
+        this.lazyArray = lazyArray;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new ConcatIterator<>(
-                first.iterator(),
-                second.iterator()
-        );
+    public final T get(int index) {
+        return lazyArray.value().get(index);
+    }
+
+    @Override
+    public final int size() {
+        return lazyArray.value().size();
+    }
+
+    @Override
+    public final boolean equals(Object obj) {
+        return lazyArray.value().equals(obj);
+    }
+
+    @Override
+    public final int hashCode() {
+        return lazyArray.value().hashCode();
+    }
+
+    @Override
+    public final String toString() {
+        return lazyArray.value().toString();
     }
 }

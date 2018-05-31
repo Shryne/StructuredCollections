@@ -22,7 +22,7 @@
  */
 package de.collections.functional;
 
-import de.collections.iterable.IterableOf;
+import de.collections.iterable.base.IterableOf;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertFalse;
