@@ -72,3 +72,5 @@ The classes of this library have mostly less than 100 lines per class and no imp
 6) I should take care about my IDE settings. It would've helped me, if i didn't need to copy my license comments to everywhere.
 7) I should read some books about tests or look inside of github for some examples, because I feel like there is a lot duplication around it. It may be also that it just looks like duplication, but is infact non related.
 8) I should look for the matchers. Hopefully they give me more information if a tests fails. Just using asserts isn't always fun.
+9) At the beginning I often thought that I couldn't do certain things, because it would cost to much performance. This hindered me enormously. Later when I started to ignore that and thought more about just doing it the design, I got better and noticed, how certain decisions were even better than I expected.
+10) Generally it helps a lot creating really small classes. Making them bigger afterwards is easy and that's something that happens anyway in most software projects, but keeping them small is difficult. If they are actually small, testing, locality, decoration and the whole design will get much better.
