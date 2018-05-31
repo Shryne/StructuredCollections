@@ -62,3 +62,15 @@ new IndexOf(list, 5).apply(
 The collection classes have around thousand lines of code and multiple classes in their inheritance hierarchy. This isn't a necessarily a problem if everything works, but if one needs or wants to look for some functionality inside them, it will be quite difficult.
 
 The classes of this library have mostly less than 100 lines per class and no implementation inheritance is used. 
+
+## Things I've learned
+1) Writting secondary or primary constructor everywhere or explaining what an envelope is, is just a waste of time. It would be better to add coding guideless for such general cases.
+2) I should always write the java docs at the moment I created something new. Otherwise I will have a giant push where I just spend hours to add the documentation.
+3) Generally it's no pleasure to write comments, because there so many duplications of them.
+4) I am not sure how I should deal with comments based on internal behaivior. For example it could be interesting for the user whether an object is lazy, only once constructed or actually never really transformed (performance wice), but that's something I would maybe change afterwards and then I would've to change the comment, too.
+5) Sometimes I threw exceptions even though java would've thrown them anyway. Example: My vector is based on an array and even though an array throws an ArrayIndexOutOfBoundsException in case of an illegal index, I check for it and throw an exception myself. I think I shouldn't do it.
+6) I should take care about my IDE settings. It would've helped me, if i didn't need to copy my license comments to everywhere.
+7) I should read some books about tests or look inside of github for some examples, because I feel like there is a lot duplication around it. It may be also that it just looks like duplication, but is infact non related.
+8) I should look for the matchers. Hopefully they give me more information if a tests fails. Just using asserts isn't always fun.
+9) At the beginning I often thought that I couldn't do certain things, because it would cost to much performance. This hindered me enormously. Later when I started to ignore that and thought more about just doing it the design, I got better and noticed, how certain decisions were even better than I expected.
+10) Generally it helps a lot creating really small classes. Making them bigger afterwards is easy and that's something that happens anyway in most software projects, but keeping them small is difficult. If they are actually small, testing, locality, decoration and the whole design will get much better.
