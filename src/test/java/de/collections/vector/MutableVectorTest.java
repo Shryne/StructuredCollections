@@ -24,7 +24,6 @@ package de.collections.vector;
 
 import de.collections.iterable.base.IterableOf;
 import de.collections.list.base.ListOf;
-import de.collections.list.base.MutableListOf;
 import de.collections.vector.base.MutableVectorOf;
 import org.junit.Test;
 
@@ -46,7 +45,7 @@ public class MutableVectorTest {
 
     @Test
     public void zeroSetZero() {
-        var vector =  new MutableVectorOf<>();
+        var vector = new MutableVectorOf<>();
         vector.set(0, 25);
         assertEquals(
                 1,
@@ -58,13 +57,9 @@ public class MutableVectorTest {
     public void zeroSetFartherAway() {
         var vector = new MutableVectorOf<Integer>();
         vector.set(4, 12);
-        var list = new MutableListOf<Integer>();
-        for (var element : new IterableOf<>(vector)) {
-            list.add(element);
-        }
         assertEquals(
                 new ListOf<>(0, 0, 0, 0, 12),
-                list
+                new ListOf<>(new IterableOf<>(vector))
         );
     }
 }

@@ -26,6 +26,7 @@ package de.collections.list.base;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ListOfTest {
@@ -48,6 +49,14 @@ public class ListOfTest {
     }
 
     @Test
+    public void zeroSize() {
+        assertEquals(
+                0,
+                new ListOf<>().size()
+        );
+    }
+
+    @Test
     public void oneGet() {
         assertEquals(
                 5,
@@ -64,9 +73,16 @@ public class ListOfTest {
     }
 
     @Test
-    public void noEmpty() {
+    public void zeroEmpty() {
         assertTrue(
                 new ListOf<>().isEmpty()
+        );
+    }
+
+    @Test
+    public void notEmpty() {
+        assertFalse(
+                new ListOf<>(15).isEmpty()
         );
     }
 
@@ -77,6 +93,14 @@ public class ListOfTest {
                 (int) new ListOf<>(
                        5, 20, 12, 4, 22, 20, 123, 556
                 ).get(4)
+        );
+    }
+
+    @Test
+    public void multipleSize() {
+        assertEquals(
+                4,
+                new ListOf<>(5, 3, 7, 2).size()
         );
     }
 

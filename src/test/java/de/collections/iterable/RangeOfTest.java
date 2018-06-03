@@ -21,69 +21,77 @@
  * SOFTWARE.
  */
 
-package de.collections.array;
+package de.collections.iterable;
 
 import de.collections.array.base.ArrayOf;
-import de.collections.iterable.base.FilteredIterator;
+import de.collections.iterable.base.IterableOf;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class ConcatArrayTest {
+public class RangeOfTest {
     @Test
-    public void zeroZero() {
+    public void empty() {
         assertEquals(
-                new ArrayOf<>(),
-                new ConcatArray<>(
-                        new ArrayOf<>(),
+                new IterableOf<>(),
+                new RangeOf<>(
                         new ArrayOf<>()
                 )
         );
     }
 
     @Test
-    public void oneZero() {
+    public void multipleBelowBounds() {
         assertEquals(
-                new ArrayOf<>(15),
-                new ConcatArray<>(
-                        new ArrayOf<>(15),
-                        new ArrayOf<>()
+                new IterableOf<>(22, 23, 24, 70, 82),
+                new RangeOf<>(
+                        new ArrayOf<>(22, 23, 24, 70, 82),
+                        -5
                 )
         );
     }
 
     @Test
-    public void zeroOne() {
+    public void multipleAboveBounds() {
         assertEquals(
-                new ArrayOf<>(15),
-                new ConcatArray<>(
-                        new ArrayOf<>(),
-                        new ArrayOf<>(15)
+                new IterableOf<>(52, 53, 54),
+                new RangeOf<>(
+                        new ArrayOf<>(52, 53, 54),
+                        0, 20
                 )
         );
     }
 
     @Test
-    public void oneOne() {
+    public void multipleInBounds() {
         assertEquals(
-                new ArrayOf<>(2, -3),
-                new ConcatArray<>(
-                        new ArrayOf<>(2),
-                        new ArrayOf<>(-3)
+                new IterableOf<>(-1, -2, -3, -4),
+                new RangeOf<>(
+                        new ArrayOf<>(15, 23, 5434, -1, -2, -3, -4, 54, 23, 439),
+                        3, 7
                 )
         );
     }
 
     @Test
-    public void multiple() {
+    public void multipleAll() {
         assertEquals(
-                new ArrayOf<>(0, 5, 23, -3, 54, 5, 5),
-                new ConcatArray<>(
-                        new ArrayOf<>(0, 5, 23),
-                        new IteratorAsArray<>(
-                                new FilteredIterator<>(-3, 54, 5, 5)
-                        )
+                new IterableOf<>(1, 2, 3, 4),
+                new RangeOf<>(
+                        new ArrayOf<>(1, 2, 3, 4),
+                        0, 4
                 )
+        );
+    }
+
+    @Test
+    public void multipleStringInBounds() {
+        assertEquals(
+                "1, 2, 3, 4, 5",
+                new RangeOf<>(
+                        new ArrayOf<>(5, 23, 34, 1, 2, 3, 4, 5, 49, 20),
+                        3, 8
+                ).toString()
         );
     }
 }

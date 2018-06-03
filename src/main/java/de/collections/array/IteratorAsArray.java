@@ -32,7 +32,7 @@ import java.util.Iterator;
  * some resizing of the underlying array, because an iterator doesn't know his size.
  * @param <T> The type of the elements inside the iterator and array.
  */
-public final class IteratorAsArray<T> extends ArrayEnvelope<T> {
+public final class IteratorAsArray<T> extends MutableArrayEnvelope<T> {
     private static final int INITIAL_SIZE = 10;
     private static final double GROWTH_FACTOR = 1.5;
 

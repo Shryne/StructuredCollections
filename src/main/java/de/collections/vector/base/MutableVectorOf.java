@@ -26,7 +26,6 @@ import de.collections.Collection;
 import de.collections.array.ConcatArray;
 import de.collections.array.IteratorAsArray;
 import de.collections.array.base.Array;
-import de.collections.array.base.ArrayOf;
 import de.collections.array.base.MutableArrayOf;
 import de.collections.iterable.base.IterableOf;
 
@@ -39,17 +38,15 @@ import java.util.Iterator;
  * @param <T> The type of the elements this vector can contain.
  */
 public final class MutableVectorOf<T> implements MutableVector<T> {
-    private static final double CAPACITY_RAISE = 1.5; // will grow by 50 %
-
     private Array<T> container;
     private int size;
 
     /**
      * Secondary constructor.
-     * @param vector that contains the elements for the vector.
+     * @param collection that contains the elements for the vector.
      */
-    public MutableVectorOf(Collection<T> vector) {
-        this(new IterableOf<>(vector));
+    public MutableVectorOf(Collection<T> collection) {
+        this(new IterableOf<>(collection));
     }
 
     /**
@@ -57,7 +54,7 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
      * @param iterable to create the iterator from that has the elements for the vector.
      */
     public MutableVectorOf(Iterable<T> iterable) {
-        this(new IteratorAsArray(iterable.iterator()));
+        this(new IteratorAsArray<>(iterable.iterator()));
     }
 
     /**
@@ -72,6 +69,7 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
      * Secondary constructor.
      * @param elements the vector will contain.
      */
+    @SafeVarargs
     public MutableVectorOf(T... elements) {
         this(new MutableArrayOf<>(elements));
     }
@@ -106,7 +104,9 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     public void set(int index, Iterable<T> iterable) {
         container = new ConcatArray<>(
                 container,
-                new IteratorAsArray<>(iterable.iterator())
+                new IteratorAsArray<>(
+                        iterable.iterator()
+                )
         );
     }
 

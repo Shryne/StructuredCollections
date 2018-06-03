@@ -23,7 +23,6 @@
 package de.collections.iterable.base;
 
 import de.collections.Collection;
-import de.collections.list.base.ListOf;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -62,14 +61,11 @@ public final class IterableOf<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        new ListOf<>(1);
         return iterator;
     }
 
     /**
      * It can only be equal with another iterable.
-     * @param obj to be compared with.
-     * @return whether the objects are equal or not.
      */
     @Override
     public boolean equals(Object obj) {

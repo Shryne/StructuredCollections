@@ -27,6 +27,7 @@ import de.collections.Collection;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * An iterator that starts and ends on the specified indices.
@@ -37,6 +38,14 @@ public final class RangeOf<T> implements Iterator<T> {
     private final int to;
 
     private int cursor;
+
+    /**
+     * Secondary constructor for the full range (0 to collection.size() (exclusive)).
+     * @param collection that contains the elements.
+     */
+    public RangeOf(Collection<T> collection) {
+        this(collection, 0);
+    }
 
     /**
      * Secondary constructor. Ends with collection.size() (exclusive).
@@ -81,4 +90,41 @@ public final class RangeOf<T> implements Iterator<T> {
         cursor++;
         return collection.get(cursor);
     }
+
+    /*
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Iterable)) {
+            return false;
+        }
+        final Iterator<?> other = ((Iterable<?>) obj).iterator();
+        for (T element : this) {
+            if (!other.hasNext() || !Objects.equals(element, other.next())) {
+                return false;
+            }
+        }
+        return !other.hasNext();
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 1;
+        for (T t : this) {
+            hashCode = 31 * hashCode + Objects.hashCode(t);
+        }
+        return hashCode;
+    }
+
+    /**
+     * @return format: [elements] (Unordered)
+     */
+    /*
+    @Override
+    public String toString() {
+        return iterator().toString();
+    }
+    */
 }

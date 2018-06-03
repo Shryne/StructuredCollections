@@ -23,7 +23,7 @@
 package de.collections.array;
 
 import de.collections.array.base.Array;
-import de.collections.array.base.ArrayEnvelope;
+import de.collections.array.base.MutableArrayEnvelope;
 import de.collections.array.base.MutableArrayOf;
 import de.collections.functional.Lazy;
 import de.collections.iterable.ConcatIterable;
@@ -32,7 +32,7 @@ import de.collections.iterable.ConcatIterable;
  * Represents the concatenation of arrays.
  * @param <T> The type of the elements inside the array.
  */
-public class ConcatArray<T> extends ArrayEnvelope<T> {
+public class ConcatArray<T> extends MutableArrayEnvelope<T> {
     /**
      * Primary constructor.
      * @param first part of the array.
