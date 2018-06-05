@@ -22,22 +22,23 @@
  */
 package de.collections.iterable;
 
-import java.util.Iterator;
+import de.collections.iterable.base.IndexedIterator;
 
 /**
  * Combines iterators to one.
+ * <p>This class is mutable and not thread-safe.</p>
  * @param <T> The type of the elements inside of the iterator.
  */
-public final class ConcatIterator<T> implements Iterator<T> {
-    private final Iterator<T> first;
-    private final Iterator<T> second;
+public final class ConcatIterator<T> implements IndexedIterator<T> {
+    private final IndexedIterator<T> first;
+    private final IndexedIterator<T> second;
 
     /**
      * Primary constructor.
      * @param first part of the iterator.
      * @param second part of the iterator.
      */
-    public ConcatIterator(Iterator<T> first, Iterator<T> second) {
+    public ConcatIterator(IndexedIterator<T> first, IndexedIterator<T> second) {
         this.first = first;
         this.second = second;
     }
@@ -53,5 +54,10 @@ public final class ConcatIterator<T> implements Iterator<T> {
             return first.next();
         }
         return second.next();
+    }
+
+    @Override
+    public int nextIndex() {
+        return first.nextIndex() + second.nextIndex();
     }
 }

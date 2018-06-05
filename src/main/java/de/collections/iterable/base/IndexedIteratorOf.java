@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,48 +20,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package de.collections.iterable.base;
 
 import de.collections.Collection;
 
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
- * The collection classes of the standard library implement an iterator internally,
- * but I think it should be the other way around to reduce the size of the classes.
- * @param <T> The element type of the elements in the iteration.
+ * Implementation of the {@link ListIterator} interface.
+ *
+ * <p>This class is mutable and not thread-safe.</p>
+ * @param <T> The type of the elements of the iterator.
  */
-public final class IterableOf<T> implements IndexedIterable<T> {
-    private final IndexedIterator<T> iterator;
-
-    /**
-     * Secondary constructor.
-     * @param elements to iterate through.
-     */
-    public IterableOf(T... elements) {
-        this(new FilteredIterator<>(elements));
-    }
-
-    /**
-     * Secondary constructor.
-     * @param collection to iterate through.
-     */
-    public IterableOf(Collection<T> collection) {
-        this(new FilteredIterator<>(collection));
-    }
+public final class IndexedIteratorOf<T> implements IndexedIterator<T> {
+    private final Collection<T> collection;
+    private int cursor = -1;
 
     /**
      * Primary constructor.
-     * @param iterator for the iteration.
+     * @param collection that will be iterated.
      */
-    public IterableOf(IndexedIterator<T> iterator) {
-        this.iterator = iterator;
+    public IndexedIteratorOf(Collection<T> collection) {
+        this.collection = collection;
     }
 
     @Override
-    public IndexedIterator<T> indexedIterator() {
-        return iterator;
+    public boolean hasNext() {
+        return cursor + 1 < collection.size();
+    }
+
+    @Override
+    public T next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException(
+                    String.format(
+                        "The cursor (%d) needs to be smaller than the size of the collection (%d).",
+                            cursor, collection.size()
+                    )
+            );
+        }
+        cursor++;
+        return collection.get(cursor);
+    }
+
+    @Override
+    public int nextIndex() {
+        return cursor + 1;
     }
 
     /**
@@ -72,10 +80,12 @@ public final class IterableOf<T> implements IndexedIterable<T> {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof Iterable)) {
+        if (!(obj instanceof Iterator)) {
             return false;
         }
-        final Iterator<?> other = ((Iterable<?>) obj).iterator();
+        final Iterator<?> other = ((Iterator<?>) obj);
+        
+
         for (T element : this) {
             if (!other.hasNext() || !Objects.equals(element, other.next())) {
                 return false;

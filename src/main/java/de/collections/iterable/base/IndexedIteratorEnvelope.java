@@ -23,17 +23,34 @@
 
 package de.collections.iterable.base;
 
-import java.util.Iterator;
+import de.collections.functional.Lazy;
 
 /**
- * An alternative to the {@link java.util.ListIterator} interface. This interface just offers an index additionally to
- * the other iterator operations.
+ * The envelope of the {@link IndexedIterator} interface.
  * @param <T> The type of the elements of the iterator.
  */
-public interface IndexedIterator<T> extends Iterator<T> {
+public abstract class IndexedIteratorEnvelope<T> implements IndexedIterator<T> {
+    private final Lazy<? extends IndexedIterator<T>> lazyIterator;
+
     /**
-     * @return the index of the next element or the size of the underlying collection, if the iterator has reached the
-     * end.
+     * @param lazyIterator that contains the iterator with the functionality inside a Lazy.
      */
-    int nextIndex();
+    public IndexedIteratorEnvelope(Lazy<? extends IndexedIterator<T>> lazyIterator) {
+        this.lazyIterator = lazyIterator;
+    }
+
+    @Override
+    public int nextIndex() {
+        return lazyIterator.value().nextIndex();
+    }
+
+    @Override
+    public boolean hasNext() {
+        return lazyIterator.value().hasNext();
+    }
+
+    @Override
+    public T next() {
+        return lazyIterator.value().next();
+    }
 }

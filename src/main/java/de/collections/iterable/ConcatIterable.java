@@ -24,17 +24,17 @@ package de.collections.iterable;
 
 
 import de.collections.Collection;
+import de.collections.iterable.base.IndexedIterable;
+import de.collections.iterable.base.IndexedIterator;
 import de.collections.iterable.base.IterableOf;
-
-import java.util.Iterator;
 
 /**
  * Combines iterables to one.
  * @param <T> The type of the elements inside of the iterables.
  */
-public final class ConcatIterable<T> implements Iterable<T> {
-    private final Iterable<T> first;
-    private final Iterable<T> second;
+public final class ConcatIterable<T> implements IndexedIterable<T> {
+    private final IndexedIterable<T> first;
+    private final IndexedIterable<T> second;
 
     /**
      * Secondary constructor;
@@ -53,16 +53,16 @@ public final class ConcatIterable<T> implements Iterable<T> {
      * @param first part of the iterable.
      * @param second part of the iterable.
      */
-    public ConcatIterable(Iterable<T> first, Iterable<T> second) {
+    public ConcatIterable(IndexedIterable<T> first, IndexedIterable<T> second) {
         this.first = first;
         this.second = second;
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public IndexedIterator<T> indexedIterator() {
         return new ConcatIterator<>(
-                first.iterator(),
-                second.iterator()
+                first.indexedIterator(),
+                second.indexedIterator()
         );
     }
 }

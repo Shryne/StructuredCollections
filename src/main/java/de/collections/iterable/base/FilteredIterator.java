@@ -25,17 +25,16 @@ package de.collections.iterable.base;
 import de.collections.Collection;
 import de.collections.list.base.ListOf;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Predicate;
+import java.util.function.BiPredicate;
 
 /**
  * A filter to iterate only through elements who fulfill the filter.
  */
-public final class FilteredIterator<T> implements Iterator<T> {
+public final class FilteredIterator<T> implements IndexedIterator<T> {
     private final Collection<T> collection;
     private int cursor = -1;
-    private final Predicate<T> filter;
+    private final BiPredicate<T, Integer> filter;
 
     /**
      * Secondary constructor. Accepts all elements (no filter).
@@ -50,7 +49,7 @@ public final class FilteredIterator<T> implements Iterator<T> {
      * @param collection which is to be iterated through.
      */
     public FilteredIterator(Collection<T> collection) {
-        this(collection, element -> true);
+        this(collection, (element, index) -> true);
     }
 
     /**
@@ -58,7 +57,7 @@ public final class FilteredIterator<T> implements Iterator<T> {
      * @param collection which is to be iterated through.
      * @param filter that accepts the elements and returns true if the element should be part of the iteration.
      */
-    public FilteredIterator(Collection<T> collection, Predicate<T> filter) {
+    public FilteredIterator(Collection<T> collection, BiPredicate<T, Integer> filter) {
         this.collection = collection;
         this.filter = filter;
     }
@@ -70,7 +69,7 @@ public final class FilteredIterator<T> implements Iterator<T> {
     public boolean hasNext() {
         while (cursor + 1 < collection.size()) {
             cursor++;
-            if (filter.test(collection.get(cursor))) {
+            if (filter.test(collection.get(cursor), cursor)) {
                 cursor--;
                 return true;
             }
@@ -94,6 +93,11 @@ public final class FilteredIterator<T> implements Iterator<T> {
         }
         cursor++;
         return collection.get(cursor);
+    }
+
+    @Override
+    public int nextIndex() {
+        return cursor + 1;
     }
 
     /**

@@ -26,14 +26,14 @@ package de.collections.iterable.base;
 import java.util.Iterator;
 
 /**
- * An alternative to the {@link java.util.ListIterator} interface. This interface just offers an index additionally to
- * the other iterator operations.
- * @param <T> The type of the elements of the iterator.
+ * Contains a way to iterate through a collection.
+ * @param <T> The type of the elements inside the iterable.
  */
-public interface IndexedIterator<T> extends Iterator<T> {
-    /**
-     * @return the index of the next element or the size of the underlying collection, if the iterator has reached the
-     * end.
-     */
-    int nextIndex();
+public interface IndexedIterable<T> extends Iterable<T> {
+    IndexedIterator<T> indexedIterator();
+
+    @Override
+    default Iterator<T> iterator() {
+        return indexedIterator();
+    }
 }
