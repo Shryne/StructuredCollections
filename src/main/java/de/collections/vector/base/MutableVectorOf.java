@@ -23,9 +23,8 @@
 package de.collections.vector.base;
 
 import de.collections.Collection;
-import de.collections.array.ConcatArray;
 import de.collections.array.IteratorAsArray;
-import de.collections.array.base.Array;
+import de.collections.array.base.MutableArray;
 import de.collections.array.base.MutableArrayOf;
 import de.collections.iterable.base.IterableOf;
 
@@ -35,14 +34,19 @@ import java.util.Iterator;
  * A mutable vector implementation that grows in size but never shrinks.
  *
  * <p>This class is mutable and not thread safe.</p>
+ *
  * @param <T> The type of the elements this vector can contain.
  */
 public final class MutableVectorOf<T> implements MutableVector<T> {
-    private Array<T> container;
+    private static final double RESIZE_FACTOR = 1.5;
+    private static final int MIN_SIZE = 10;
+
+    private MutableArray<T> container;
     private int size;
 
     /**
      * Secondary constructor.
+     *
      * @param collection that contains the elements for the vector.
      */
     public MutableVectorOf(Collection<T> collection) {
@@ -51,6 +55,7 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
 
     /**
      * Secondary constructor.
+     *
      * @param iterable to create the iterator from that has the elements for the vector.
      */
     public MutableVectorOf(Iterable<T> iterable) {
@@ -59,6 +64,7 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
 
     /**
      * Secondary constructor.
+     *
      * @param iterator containing the elements for the vector.
      */
     public MutableVectorOf(Iterator<T> iterator) {
@@ -67,6 +73,7 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
 
     /**
      * Secondary constructor.
+     *
      * @param elements the vector will contain.
      */
     @SafeVarargs
@@ -76,10 +83,11 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
 
     /**
      * Primary constructor.
+     *
      * @param container that contains the elements for this vector.
      */
-    public MutableVectorOf(Array<T> container) {
-        this.container = container;
+    public MutableVectorOf(MutableArray<T> container) {
+        this.container = (container.size() < MIN_SIZE) ? container.resize(MIN_SIZE) : container;
         size = container.size();
     }
 
@@ -102,12 +110,14 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
 
     @Override
     public void set(int index, Iterable<T> iterable) {
-        container = new ConcatArray<>(
-                container,
-                new IteratorAsArray<>(
-                        iterable.iterator()
-                )
-        );
+        var iterator = iterable.iterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            if (container.size() <= index + i) {
+                container = container.resize((int) (container.size() * RESIZE_FACTOR));
+            }
+            container.set(index + i, iterator.next());
+            size = Math.max(size + 1, index + 1);
+        }
     }
 
     @Override

@@ -23,13 +23,12 @@
 package de.collections.vector;
 
 import de.collections.iterable.base.IterableOf;
-import de.collections.list.base.ListOf;
 import de.collections.vector.base.MutableVectorOf;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class MutableVectorTest {
+public class MutableVectorOfTest {
     @Test(expected = IllegalArgumentException.class)
     public void zeroGet() {
         new MutableVectorOf<>().get(0);
@@ -58,8 +57,8 @@ public class MutableVectorTest {
         var vector = new MutableVectorOf<Integer>();
         vector.set(4, 12);
         assertEquals(
-                new ListOf<>(0, 0, 0, 0, 12),
-                new ListOf<>(new IterableOf<>(vector))
+                new IterableOf<>(null, null, null, null, 12),
+                new IterableOf<>(vector)
         );
     }
 }

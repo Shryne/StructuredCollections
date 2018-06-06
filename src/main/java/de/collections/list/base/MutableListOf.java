@@ -100,10 +100,11 @@ public final class MutableListOf<T> implements MutableList<T> {
 
     @Override
     public void remove(int index) {
-        if (size() <= index) {
+        if (size() <= index || index < 0) {
             throw new IllegalArgumentException(
                     String.format(
-                            "Index (%d) is greater than the size of the collection (%d).",
+                            "Index (%d) is greater than or equal to the size of the collection (%d) or smaller than" +
+                                    " zero.",
                             index, size()
                     )
             );
