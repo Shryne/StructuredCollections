@@ -35,7 +35,7 @@ import java.util.NoSuchElementException;
  */
 public final class RangeOf<T> implements IndexedIterator<T> {
     private final Collection<T> collection;
-    private int cursor = -1;
+    private int cursor;
     private final int to;
 
     /**
@@ -61,16 +61,13 @@ public final class RangeOf<T> implements IndexedIterator<T> {
      * Primary constructor.
      *
      * @param collection that contains the elements.
-     * @param from       range start (inclusive, greater or equal to 0).
+     * @param from       range start (inclusive).
      * @param to         range end (exclusive). If range is greater than collection.size(), collection.size() will be
      *                   taken as the end of the range instead.
      * @throws IllegalArgumentException if from is invalid.
      */
     public RangeOf(Collection<T> collection, int from, int to) {
-        if (from < 0) {
-            throw new IllegalArgumentException("From needs to be greater than 0. From: " + from);
-        }
-        cursor = from;
+        cursor = Math.max(from - 1, -1);
         this.to = Math.min(collection.size(), to);
         this.collection = collection;
     }
@@ -93,5 +90,20 @@ public final class RangeOf<T> implements IndexedIterator<T> {
         }
         cursor++;
         return collection.get(cursor);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        throw new UnsupportedOperationException("Can't compare without altering the state.");
+    }
+
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("Can't calculate the hash without altering the state.");
+    }
+
+    @Override
+    public String toString() {
+        throw new UnsupportedOperationException("Can't create the string without altering the state.");
     }
 }

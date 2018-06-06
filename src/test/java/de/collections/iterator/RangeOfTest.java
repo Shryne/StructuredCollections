@@ -24,64 +24,73 @@
 package de.collections.iterator;
 
 import de.collections.array.base.ArrayOf;
-import de.collections.iterable.base.IterableOf;
-import de.collections.iterator.RangeOf;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class RangeOfTest {
     @Test
-    public void empty() {
-        assertEquals(
-                new IterableOf<>(),
+    public void emptyHasNext() {
+        assertFalse(
                 new RangeOf<>(
                         new ArrayOf<>()
-                )
+                ).hasNext()
         );
     }
 
     @Test
-    public void multipleBelowBounds() {
-        assertEquals(
-                new IterableOf<>(22, 23, 24, 70, 82),
-                new RangeOf<>(
-                        new ArrayOf<>(22, 23, 24, 70, 82),
-                        -5
-                )
+    public void multipleBelowBoundsNext() {
+        final var elements = new Integer[] {22, 23, 24, 70, 82};
+        final var iterator = new RangeOf<>(
+                new ArrayOf<>(elements),
+                -5
         );
+        for (Integer element : elements) {
+            assertEquals(element, iterator.next());
+        }
+        assertFalse(iterator.hasNext());
     }
 
     @Test
-    public void multipleAboveBounds() {
-        assertEquals(
-                new IterableOf<>(52, 53, 54),
-                new RangeOf<>(
-                        new ArrayOf<>(52, 53, 54),
-                        0, 20
-                )
+    public void multipleAboveBoundsNext() {
+        final var elements = new Integer[] {52, 53, 54};
+        final var iterator = new RangeOf<>(
+                new ArrayOf<>(elements),
+                0, 20
         );
+        for (Integer element : elements) {
+            assertEquals(element, iterator.next());
+        }
+        assertFalse(iterator.hasNext());
     }
 
     @Test
-    public void multipleInBounds() {
-        assertEquals(
-                new IterableOf<>(-1, -2, -3, -4),
-                new RangeOf<>(
-                        new ArrayOf<>(15, 23, 5434, -1, -2, -3, -4, 54, 23, 439),
-                        3, 7
-                )
+    public void multipleInBoundsNext() {
+        final var elements = new Integer[] {15, 23, 5434, -1, -2, -3, -4, 54, 23, 439};
+        final var start = 3;
+        final var end = 7;
+        final var iterator = new RangeOf<>(
+                new ArrayOf<>(elements),
+                start, end
+
         );
+        for (int i = start; i < end; i++) {
+            assertEquals(elements[i], iterator.next());
+        }
+        assertFalse(iterator.hasNext());
     }
 
     @Test
-    public void multipleAll() {
-        assertEquals(
-                new IterableOf<>(1, 2, 3, 4),
-                new RangeOf<>(
-                        new ArrayOf<>(1, 2, 3, 4),
-                        0, 4
-                )
+    public void multipleAllNext() {
+        final var elements = new Integer[] {1, 2, 3, 4};
+        final var iterator = new RangeOf<>(
+                new ArrayOf<>(elements),
+                0, 4
         );
+        for (Integer element : elements) {
+            assertEquals(element, iterator.next());
+        }
+        assertFalse(iterator.hasNext());
     }
 }
