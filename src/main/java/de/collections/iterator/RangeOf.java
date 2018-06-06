@@ -24,15 +24,20 @@ package de.collections.iterator;
 
 
 import de.collections.Collection;
-import de.collections.functional.Lazy;
-import de.collections.iterator.base.IndexedIteratorEnvelope;
+import de.collections.iterator.base.IndexedIterator;
+
+import java.util.NoSuchElementException;
 
 /**
  * An iterator that starts and ends on the specified indices.
- *
+ * <p>This class is mutable and not thread-safe.</p>
  * @param <T> The type of the elements of the iterator.
  */
-public final class RangeOf<T> extends IndexedIteratorEnvelope<T> {
+public final class RangeOf<T> implements IndexedIterator<T> {
+    private final Collection<T> collection;
+    private int cursor = -1;
+    private final int to;
+
     /**
      * Secondary constructor for the full range (0 to collection.size() (exclusive)).
      *
@@ -57,22 +62,36 @@ public final class RangeOf<T> extends IndexedIteratorEnvelope<T> {
      *
      * @param collection that contains the elements.
      * @param from       range start (inclusive, greater or equal to 0).
-     * @param to         range end (exclusive).
-     * @throws IllegalArgumentException if from or to are invalid.
+     * @param to         range end (exclusive). If range is greater than collection.size(), collection.size() will be
+     *                   taken as the end of the range instead.
+     * @throws IllegalArgumentException if from is invalid.
      */
     public RangeOf(Collection<T> collection, int from, int to) {
-        super(
-                new Lazy<>(
-                        () -> {
-                            if (from < 0) {
-                                throw new IllegalArgumentException("From needs to be greater than 0. From: " + from);
-                            }
-                            return new FilteredIterator<>(
-                                    collection,
-                                    (element, index) -> index <= from && index < Math.min(to, collection.size())
-                            );
-                        }
-                )
-        );
+        if (from < 0) {
+            throw new IllegalArgumentException("From needs to be greater than 0. From: " + from);
+        }
+        cursor = from;
+        this.to = Math.min(collection.size(), to);
+        this.collection = collection;
+    }
+
+
+    @Override
+    public int nextIndex() {
+        return cursor + 1;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return cursor + 1 < to;
+    }
+
+    @Override
+    public T next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException("There are no elements left");
+        }
+        cursor++;
+        return collection.get(cursor);
     }
 }
