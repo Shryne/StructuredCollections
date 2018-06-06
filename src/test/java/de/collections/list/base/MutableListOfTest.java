@@ -52,6 +52,23 @@ public class MutableListOfTest {
     }
 
     @Test
+    public void oneAdd() {
+        final var element = -22;
+        final var list = new MutableListOf<>(element);
+        assertEquals(element, (int) list.get(0));
+    }
+
+    @Test
+    public void twoAdds() {
+        final var result = new ListOf<>(4, 2);
+        final var list = new MutableListOf<Integer>();
+        for (Integer element : new IterableOf<>(result)) {
+            list.add(element);
+        }
+        assertEquals(result, list);
+    }
+
+    @Test
     public void multipleAdds() {
         final var result = new ListOf<>(5, 2, 3, 49, 12, 48, 120);
         final var list = new MutableListOf<Integer>();

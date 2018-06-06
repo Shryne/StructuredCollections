@@ -92,7 +92,7 @@ public final class MutableListOf<T> implements MutableList<T> {
     @Override
     public void add(int index, T element) {
         container = new ConcatVector<>(
-                new RangeOf<>(container, 0, index - 1),
+                new RangeOf<>(container, 0, index),
                 element,
                 new RangeOf<>(container, index + 1)
         );
