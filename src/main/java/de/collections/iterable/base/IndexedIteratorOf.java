@@ -24,11 +24,10 @@
 package de.collections.iterable.base;
 
 import de.collections.Collection;
+import de.collections.list.base.ListOf;
 
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 /**
  * Implementation of the {@link ListIterator} interface.
@@ -40,8 +39,11 @@ public final class IndexedIteratorOf<T> implements IndexedIterator<T> {
     private final Collection<T> collection;
     private int cursor = -1;
 
+    public IndexedIteratorOf(T... ts) {
+        this(new ListOf<>(ts));
+    }
+
     /**
-     * Primary constructor.
      * @param collection that will be iterated.
      */
     public IndexedIteratorOf(Collection<T> collection) {
@@ -72,35 +74,14 @@ public final class IndexedIteratorOf<T> implements IndexedIterator<T> {
         return cursor + 1;
     }
 
-    /**
-     * It can only be equal with another iterable.
-     */
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof Iterator)) {
-            return false;
-        }
-        final Iterator<?> other = ((Iterator<?>) obj);
-        
-
-        for (T element : this) {
-            if (!other.hasNext() || !Objects.equals(element, other.next())) {
-                return false;
-            }
-        }
-        return !other.hasNext();
+        throw new UnsupportedOperationException("Can't compare iterators without altering them.");
     }
 
     @Override
     public int hashCode() {
-        int hashCode = 1;
-        for (T t : this) {
-            hashCode = 31 * hashCode + Objects.hashCode(t);
-        }
-        return hashCode;
+        throw new UnsupportedOperationException("Can't calculate hashCode without altering the iterator.");
     }
 
     /**
@@ -108,6 +89,6 @@ public final class IndexedIteratorOf<T> implements IndexedIterator<T> {
      */
     @Override
     public String toString() {
-        return iterator().toString();
+        throw new UnsupportedOperationException("Can't transform to string without altering the iterator.");
     }
 }

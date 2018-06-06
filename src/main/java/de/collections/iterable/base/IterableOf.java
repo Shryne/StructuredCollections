@@ -23,6 +23,7 @@
 package de.collections.iterable.base;
 
 import de.collections.Collection;
+import de.collections.list.base.ListOf;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -33,35 +34,25 @@ import java.util.Objects;
  * @param <T> The element type of the elements in the iteration.
  */
 public final class IterableOf<T> implements IndexedIterable<T> {
-    private final IndexedIterator<T> iterator;
+    private final Collection<T> collection;
 
     /**
-     * Secondary constructor.
      * @param elements to iterate through.
      */
     public IterableOf(T... elements) {
-        this(new FilteredIterator<>(elements));
+        this(new ListOf<>(elements));
     }
 
     /**
-     * Secondary constructor.
      * @param collection to iterate through.
      */
     public IterableOf(Collection<T> collection) {
-        this(new FilteredIterator<>(collection));
-    }
-
-    /**
-     * Primary constructor.
-     * @param iterator for the iteration.
-     */
-    public IterableOf(IndexedIterator<T> iterator) {
-        this.iterator = iterator;
+        this.collection = collection;
     }
 
     @Override
     public IndexedIterator<T> indexedIterator() {
-        return iterator;
+        return new IndexedIteratorOf<>(collection);
     }
 
     /**
@@ -98,6 +89,19 @@ public final class IterableOf<T> implements IndexedIterable<T> {
      */
     @Override
     public String toString() {
-        return iterator().toString();
+        final var delimiter = ", ";
+        final var iterator = iterator();
+        if (!iterator.hasNext()) {
+            return "";
+        }
+        final var result = new StringBuilder();
+        while (iterator.hasNext()) {
+            result
+                    .append(iterator.next())
+                    .append(delimiter);
+        }
+        return result
+                .replace(result.length() - delimiter.length(), result.length(), "")
+                .toString();
     }
 }

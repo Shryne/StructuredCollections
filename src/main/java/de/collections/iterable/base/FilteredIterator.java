@@ -100,24 +100,21 @@ public final class FilteredIterator<T> implements IndexedIterator<T> {
         return cursor + 1;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        throw new UnsupportedOperationException("Can't compare without altering the state.");
+    }
+
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("Can't calculate the hash without altering the state.");
+    }
+
     /**
      * @return format: element1, element2, ...
      */
     @Override
     public String toString() {
-        final var delimiter = ", ";
-        if (!hasNext()) {
-            return "";
-        }
-        final var result = new StringBuilder();
-        while (hasNext()) {
-            result
-                    .append(next())
-                    .append(delimiter);
-        }
-        cursor = -1;
-        return result
-                .replace(result.length() - delimiter.length(), result.length(), "")
-                .toString();
+        throw new UnsupportedOperationException("Can't convert to string without altering the state.");
     }
 }

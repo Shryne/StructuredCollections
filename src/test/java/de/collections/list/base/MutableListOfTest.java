@@ -57,7 +57,6 @@ public class MutableListOfTest {
         final var list = new MutableListOf<Integer>();
         for (Integer element : new IterableOf<>(result)) {
             list.add(element);
-            System.out.println(list);
         }
         assertEquals(result, list);
     }

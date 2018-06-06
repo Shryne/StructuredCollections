@@ -60,7 +60,7 @@ public class FilteredIteratorTest {
         assertFalse(
                 new FilteredIterator<>(
                         new ListOf<>(0, 1, 2, 3, 4, 5),
-                        element -> false
+                        (element, index) -> false
                 ).hasNext()
         );
     }

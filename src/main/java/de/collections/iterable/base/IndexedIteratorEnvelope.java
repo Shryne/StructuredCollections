@@ -40,17 +40,32 @@ public abstract class IndexedIteratorEnvelope<T> implements IndexedIterator<T> {
     }
 
     @Override
-    public int nextIndex() {
+    public final int nextIndex() {
         return lazyIterator.value().nextIndex();
     }
 
     @Override
-    public boolean hasNext() {
+    public final boolean hasNext() {
         return lazyIterator.value().hasNext();
     }
 
     @Override
-    public T next() {
+    public final T next() {
         return lazyIterator.value().next();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return lazyIterator.value().equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return lazyIterator.value().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return lazyIterator.value().toString();
     }
 }
