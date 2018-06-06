@@ -21,10 +21,11 @@
  * SOFTWARE.
  */
 
-package de.collections.iterable;
+package de.collections.iterator;
 
 import de.collections.array.base.ArrayOf;
 import de.collections.iterable.base.IterableOf;
+import de.collections.iterator.RangeOf;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -81,17 +82,6 @@ public class RangeOfTest {
                         new ArrayOf<>(1, 2, 3, 4),
                         0, 4
                 )
-        );
-    }
-
-    @Test
-    public void multipleStringInBounds() {
-        assertEquals(
-                "1, 2, 3, 4, 5",
-                new RangeOf<>(
-                        new ArrayOf<>(5, 23, 34, 1, 2, 3, 4, 5, 49, 20),
-                        3, 8
-                ).toString()
         );
     }
 }

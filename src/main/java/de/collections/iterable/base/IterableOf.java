@@ -23,6 +23,8 @@
 package de.collections.iterable.base;
 
 import de.collections.Collection;
+import de.collections.iterator.base.IndexedIterator;
+import de.collections.iterator.base.IndexedIteratorOf;
 import de.collections.list.base.ListOf;
 
 import java.util.Iterator;

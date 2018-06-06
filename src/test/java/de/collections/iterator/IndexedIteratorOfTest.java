@@ -21,9 +21,9 @@
  * SOFTWARE.
  */
 
-package de.collections.iterable;
+package de.collections.iterator;
 
-import de.collections.iterable.base.IndexedIteratorOf;
+import de.collections.iterator.base.IndexedIteratorOf;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;

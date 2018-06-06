@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,9 +20,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable.base;
+package de.collections.iterator;
 
 import de.collections.Collection;
+import de.collections.iterator.base.IndexedIterator;
 import de.collections.list.base.ListOf;
 
 import java.util.NoSuchElementException;

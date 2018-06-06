@@ -24,7 +24,7 @@ package de.collections.list.base;
 
 
 import de.collections.iterable.base.IterableOf;
-import de.collections.iterable.RangeOf;
+import de.collections.iterator.RangeOf;
 import de.collections.vector.ConcatVector;
 import de.collections.vector.base.MutableVector;
 import de.collections.vector.base.MutableVectorOf;

@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-package de.collections.iterable.base;
+package de.collections.iterator.base;
 
 import de.collections.Collection;
 import de.collections.list.base.ListOf;

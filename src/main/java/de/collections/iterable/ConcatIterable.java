@@ -25,7 +25,8 @@ package de.collections.iterable;
 
 import de.collections.Collection;
 import de.collections.iterable.base.IndexedIterable;
-import de.collections.iterable.base.IndexedIterator;
+import de.collections.iterator.ConcatIterator;
+import de.collections.iterator.base.IndexedIterator;
 import de.collections.iterable.base.IterableOf;
 
 /**

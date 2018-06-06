@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,62 +20,50 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.iterator;
 
-import de.collections.iterable.base.FilteredIterator;
-import de.collections.list.base.ListOf;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
-public class FilteredIteratorTest {
-    @Test
-    public void zeroFirstHasNextNot() {
-        assertFalse(
-                new FilteredIterator<>().hasNext()
-        );
+public class ConcatIteratorTest {
+    @Test(expected = NoSuchElementException.class)
+    public void zero() {
+        new ConcatIterator<>(
+                new FilteredIterator<>(),
+                new FilteredIterator<>()
+        ).next();
     }
 
     @Test
-    public void oneFirstHasNext() {
-        assertTrue(
-                new FilteredIterator<>(5).hasNext()
-        );
-    }
-
-    @Test
-    public void oneFirstNext() {
+    public void one() {
         assertEquals(
-                22,
-                (int) new FilteredIterator<>(22).next()
+                5,
+                (int) new ConcatIterator<>(
+                        new FilteredIterator<>(5),
+                        new FilteredIterator<>()
+                ).next()
         );
     }
 
     @Test
-    public void multipleFalseFilterHasNext() {
-        assertFalse(
-                new FilteredIterator<>(
-                        new ListOf<>(0, 1, 2, 3, 4, 5),
-                        (element, index) -> false
-                ).hasNext()
+    public void multiple() {
+        final List<Integer> list = new ArrayList<>();
+        final var iterator = new ConcatIterator<>(
+                new FilteredIterator<>(1, 2, 3, 4, 5),
+                new FilteredIterator<>(5, 2, 3, 59)
         );
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void zeroOutOfBoundsNext() {
-        new FilteredIterator<>().next();
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void multipleOutOfBoundsNext() {
-        final var iterator = new FilteredIterator<>(1, 2, 3, 4, 5);
         while (iterator.hasNext()) {
-            iterator.next();
+            list.add(iterator.next());
         }
-        iterator.next();
+        assertEquals(
+                Arrays.asList(1, 2, 3, 4, 5, 5, 2, 3, 59),
+                list
+        );
     }
 }

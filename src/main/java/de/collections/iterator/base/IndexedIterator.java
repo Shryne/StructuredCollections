@@ -21,51 +21,19 @@
  * SOFTWARE.
  */
 
-package de.collections.iterable.base;
+package de.collections.iterator.base;
 
-import de.collections.functional.Lazy;
+import java.util.Iterator;
 
 /**
- * The envelope of the {@link IndexedIterator} interface.
+ * An alternative to the {@link java.util.ListIterator} interface. This interface just offers an index additionally to
+ * the other iterator operations.
  * @param <T> The type of the elements of the iterator.
  */
-public abstract class IndexedIteratorEnvelope<T> implements IndexedIterator<T> {
-    private final Lazy<? extends IndexedIterator<T>> lazyIterator;
-
+public interface IndexedIterator<T> extends Iterator<T> {
     /**
-     * @param lazyIterator that contains the iterator with the functionality inside a Lazy.
+     * @return the index of the next element or the size of the underlying collection, if the iterator has reached the
+     * end.
      */
-    public IndexedIteratorEnvelope(Lazy<? extends IndexedIterator<T>> lazyIterator) {
-        this.lazyIterator = lazyIterator;
-    }
-
-    @Override
-    public final int nextIndex() {
-        return lazyIterator.value().nextIndex();
-    }
-
-    @Override
-    public final boolean hasNext() {
-        return lazyIterator.value().hasNext();
-    }
-
-    @Override
-    public final T next() {
-        return lazyIterator.value().next();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return lazyIterator.value().equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return lazyIterator.value().hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return lazyIterator.value().toString();
-    }
+    int nextIndex();
 }

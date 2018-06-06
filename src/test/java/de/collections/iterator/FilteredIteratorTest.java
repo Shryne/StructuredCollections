@@ -1,17 +1,17 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- * <p>
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * <p>
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * <p>
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,51 +20,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
+package de.collections.iterator;
 
-import de.collections.iterable.base.FilteredIterator;
+import de.collections.list.base.ListOf;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.NoSuchElementException;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-public class ConcatIteratorTest {
+public class FilteredIteratorTest {
+    @Test
+    public void zeroFirstHasNextNot() {
+        assertFalse(
+                new FilteredIterator<>().hasNext()
+        );
+    }
+
+    @Test
+    public void oneFirstHasNext() {
+        assertTrue(
+                new FilteredIterator<>(5).hasNext()
+        );
+    }
+
+    @Test
+    public void oneFirstNext() {
+        assertEquals(
+                22,
+                (int) new FilteredIterator<>(22).next()
+        );
+    }
+
+    @Test
+    public void multipleFalseFilterHasNext() {
+        assertFalse(
+                new FilteredIterator<>(
+                        new ListOf<>(0, 1, 2, 3, 4, 5),
+                        (element, index) -> false
+                ).hasNext()
+        );
+    }
+
     @Test(expected = NoSuchElementException.class)
-    public void zero() {
-        new ConcatIterator<>(
-                new FilteredIterator<>(),
-                new FilteredIterator<>()
-        ).next();
+    public void zeroOutOfBoundsNext() {
+        new FilteredIterator<>().next();
     }
 
-    @Test
-    public void one() {
-        assertEquals(
-                5,
-                (int) new ConcatIterator<>(
-                        new FilteredIterator<>(5),
-                        new FilteredIterator<>()
-                ).next()
-        );
-    }
-
-    @Test
-    public void multiple() {
-        final List<Integer> list = new ArrayList<>();
-        final var iterator = new ConcatIterator<>(
-                new FilteredIterator<>(1, 2, 3, 4, 5),
-                new FilteredIterator<>(5, 2, 3, 59)
-        );
+    @Test(expected = NoSuchElementException.class)
+    public void multipleOutOfBoundsNext() {
+        final var iterator = new FilteredIterator<>(1, 2, 3, 4, 5);
         while (iterator.hasNext()) {
-            list.add(iterator.next());
+            iterator.next();
         }
-        assertEquals(
-                Arrays.asList(1, 2, 3, 4, 5, 5, 2, 3, 59),
-                list
-        );
+        iterator.next();
     }
 }

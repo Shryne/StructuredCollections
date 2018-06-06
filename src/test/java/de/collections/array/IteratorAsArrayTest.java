@@ -24,7 +24,7 @@
 package de.collections.array;
 
 import de.collections.array.base.ArrayOf;
-import de.collections.iterable.base.FilteredIterator;
+import de.collections.iterator.FilteredIterator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
