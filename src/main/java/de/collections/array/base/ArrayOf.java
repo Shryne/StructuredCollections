@@ -68,6 +68,11 @@ public final class ArrayOf<T> implements Array<T> {
         return mutableArray.equals(obj);
     }
 
+    @Override
+    public int hashCode() {
+        return mutableArray.hashCode();
+    }
+
     /**
      * @return Format: Array: [elements]
      */
