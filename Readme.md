@@ -63,6 +63,26 @@ The collection classes have around thousand lines of code and multiple classes i
 
 The classes of this library have mostly less than 100 lines per class and no implementation inheritance is used. 
 
+### 4) Lack of flexibility
+Unfortunately there aren't many constructors in the collection classes. ArrayList for example offers three: An empty for an empty list, a Collection<E> constructor to take the elements from another collection and one to specify the initial capacity.  
+What about a normal array? An ArrayList with one element? A an iterable? Why does one constructor take collections, when it uses them to get the iterator, but I can't simply construct an ArrayList with an iterable or an iterator.  
+
+In this collection, it's possible:
+```java
+new ListOf<>(); // empty list
+new ListOf<>(1); // list with one element
+new ListOf<>(
+      new IterableOf<>(5, 2, 33, 4)
+); // four elements from an iterable
+new ListOf<>(
+      new ListOf<>(...)
+); // list from another collection
+new ListOf<>(
+      new Iterator<>(...)
+); // from iterator
+```
+All the classes have multiple constructors to offer much flexibility to create the objects needed and there is at least one constructor that is able to initial every attribute.  
+
 ## Things I've learned
 1) Writting secondary or primary constructor everywhere or explaining what an envelope is, is just a waste of time. It would be better to add coding guideless for such general cases.
 2) I should always write the java docs at the moment I created something new. Otherwise I will have a giant push where I just spend hours to add the documentation.
