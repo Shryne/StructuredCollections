@@ -69,7 +69,7 @@ public class ConcatVectorTest {
         vector.set(7, 33);
         assertEquals(
                 new VectorOf<>(
-                        0, 0, 0, 0, 0, 0, 0, 33
+                        null, null, null, null, null, null, null, 33
                 ),
                 vector
         );

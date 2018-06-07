@@ -44,6 +44,11 @@ public class MutableListOfTest {
         new MutableListOf<>().removeLast();
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void zeroRemoveBelowBounds() {
+        new MutableListOf<>().remove(-1);
+    }
+
     @Test
     public void oneRemove() {
         final MutableList<Integer> list = new MutableListOf<>(20);
