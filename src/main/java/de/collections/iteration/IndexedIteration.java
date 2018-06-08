@@ -37,7 +37,7 @@ public final class IndexedIteration<T> implements Action {
 
     /**
      * @param collection to iterate through.
-     * @param consumer the action that will be applied on each iteration step. The consumer gets the current element in
+     * @param consumer The action that will be applied on each iteration step. The consumer gets the current element in
      *                 the collection with the current index and the current index.
      *                 <p>It is equivalent to this:</p>
      *                 <pre>{@code
