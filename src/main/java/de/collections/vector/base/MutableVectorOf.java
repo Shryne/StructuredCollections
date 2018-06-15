@@ -45,8 +45,6 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     private int size;
 
     /**
-     * Secondary constructor.
-     *
      * @param collection that contains the elements for the vector.
      */
     public MutableVectorOf(Collection<T> collection) {
@@ -54,8 +52,6 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     }
 
     /**
-     * Secondary constructor.
-     *
      * @param iterable to create the iterator from that has the elements for the vector.
      */
     public MutableVectorOf(Iterable<T> iterable) {
@@ -63,8 +59,6 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     }
 
     /**
-     * Secondary constructor.
-     *
      * @param iterator containing the elements for the vector.
      */
     public MutableVectorOf(Iterator<T> iterator) {
@@ -72,8 +66,6 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     }
 
     /**
-     * Secondary constructor.
-     *
      * @param elements the vector will contain.
      */
     @SafeVarargs
@@ -82,8 +74,6 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     }
 
     /**
-     * Primary constructor.
-     *
      * @param container that contains the elements for this vector.
      */
     public MutableVectorOf(MutableArray<T> container) {

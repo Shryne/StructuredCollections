@@ -35,7 +35,6 @@ public final class MutableArrayOf<T> implements MutableArray<T> {
     private final T[] container;
 
     /**
-     * Primary constructor.
      * @param elements the array shall contain.
      */
     public MutableArrayOf(T... elements) {
@@ -56,7 +55,6 @@ public final class MutableArrayOf<T> implements MutableArray<T> {
                     "The index must be lower than the size and positive. Index: " + index + ", size: " + size()
             );
         }
-        //noinspection unchecked
         return container[index];
     }
 

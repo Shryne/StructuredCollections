@@ -23,12 +23,16 @@
 package de.collections.list.base;
 
 
+import de.collections.Collection;
 import de.collections.iterable.base.IterableOf;
 import de.collections.iterator.RangeOf;
 import de.collections.vector.ConcatVector;
+import de.collections.vector.IteratorAsMutableVector;
 import de.collections.vector.base.MutableVector;
 import de.collections.vector.base.MutableVectorOf;
 import de.collections.vector.base.Vector;
+
+import java.util.Iterator;
 
 /**
  * Implementation of the mutable list.
@@ -41,8 +45,13 @@ public final class MutableListOf<T> implements MutableList<T> {
     private MutableVector<T> container;
 
     /**
-     * Secondary constructor.
-     *
+     * @param iterator that has the elements for the list.
+     */
+    public MutableListOf(Iterator<T> iterator) {
+        this(new IteratorAsMutableVector<>(iterator));
+    }
+
+    /**
      * @param elements the list shall contain.
      */
     public MutableListOf(T... elements) {
@@ -50,17 +59,13 @@ public final class MutableListOf<T> implements MutableList<T> {
     }
 
     /**
-     * Secondary constructor.
-     *
-     * @param vector containing the elements for this list.
+     * @param collection containing the elements for this list.
      */
-    public MutableListOf(Vector<T> vector) {
-        this(new MutableVectorOf<>(vector));
+    public MutableListOf(Collection<T> collection) {
+        this(new MutableVectorOf<>(collection));
     }
 
     /**
-     * Primary constructor.
-     *
      * @param mutableVector containing the elements for this list. If the user changes the list, the vector will be
      *                      changed, too.
      */
