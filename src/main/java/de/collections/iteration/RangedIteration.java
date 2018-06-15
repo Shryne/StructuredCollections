@@ -24,7 +24,6 @@
 package de.collections.iteration;
 
 import de.collections.Collection;
-import de.collections.lambda.Action;
 
 import java.util.function.BiConsumer;
 
@@ -34,32 +33,29 @@ import java.util.function.BiConsumer;
  * <p>This class is immutable and thread-safe.</p>
  * @param <T> The type of the elements inside the iteration.
  */
-public class RangedIteration<T> implements Action {
+public class RangedIteration<T> implements IndexedIteration<T> {
     private final Collection<T> collection;
-    private final BiConsumer<T, Integer> consumer;
     private final int from;
     private final int to;
 
     /**
      * @param collection to iterate through.
-     * @param consumer The action that will be applied on each iteration step.
      * @param to The end of the iteration (exclusive, needs to be smaller than collection.size()).
      * @throws IllegalArgumentException if from or to are invalid.
-     * @see IndexedIteration
+     * @see IndexedIterationOf
      */
-    public RangedIteration(Collection<T> collection, BiConsumer<T, Integer> consumer, int to) {
-        this(collection, consumer, 0, to);
+    public RangedIteration(Collection<T> collection, int to) {
+        this(collection, 0, to);
     }
 
     /**
      * @param collection to iterate through.
-     * @param consumer The action that will be applied on each iteration step.
      * @param from The start of the iteration (needs to be greater or equal to 0).
      * @param to The end of the iteration (exclusive, needs to be smaller than collection.size()).
      * @throws IllegalArgumentException if from or to are invalid.
-     * @see IndexedIteration
+     * @see IndexedIterationOf
      */
-    public RangedIteration(Collection<T> collection, BiConsumer<T, Integer> consumer, int from, int to) {
+    public RangedIteration(Collection<T> collection, int from, int to) {
         if (from < 0 || collection.size() < to) {
             throw new IllegalArgumentException(
                     "From needs to be greater than 0 and to needs to be smaller than collection.size()." +
@@ -67,13 +63,12 @@ public class RangedIteration<T> implements Action {
             );
         }
         this.collection = collection;
-        this.consumer = consumer;
         this.from = from;
         this.to = to;
     }
 
     @Override
-    public void apply() {
+    public void apply(BiConsumer<T, Integer> consumer) {
         for (int i = from; i < to; i++) {
             consumer.accept(collection.get(i), i);
         }

@@ -30,10 +30,10 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
 
-public class IndexedIterationTest {
+public class IndexedIterationOfTest {
     @Test
     public void zero() {
-        new IndexedIteration<>(
+        new IndexedIterationOf<>(
                 new ListOf<>(),
                 (e, i) -> fail()
         ).apply();
@@ -43,7 +43,7 @@ public class IndexedIterationTest {
     public void one() {
         final var expected = new ListOf<>(6);
         final var result = new MutableListOf<Integer>();
-        new IndexedIteration<>(
+        new IndexedIterationOf<>(
                 expected,
                 (e, i) -> result.add(e)
         ).apply();
@@ -57,7 +57,7 @@ public class IndexedIterationTest {
     public void two() {
         final var expected = new ListOf<>(6, -32);
         final var result = new MutableListOf<Integer>();
-        new IndexedIteration<>(
+        new IndexedIterationOf<>(
                 expected,
                 (e, i) -> result.add(e)
         ).apply();
@@ -71,7 +71,7 @@ public class IndexedIterationTest {
     public void multipleIndex() {
         final var expected = new ListOf<>(0, 1, 2, 3, 4, 5, 6, 7, 8);
         final var result = new MutableListOf<Integer>();
-        new IndexedIteration<>(
+        new IndexedIterationOf<>(
                 expected,
                 (e, i) -> result.add(i)
         ).apply();
@@ -85,7 +85,7 @@ public class IndexedIterationTest {
     public void multiple() {
         final var expected = new ListOf<>(6, -4, 2, 39, 234, 548);
         final var result = new MutableListOf<Integer>();
-        new IndexedIteration<>(
+        new IndexedIterationOf<>(
                 expected,
                 (e, i) -> result.add(e)
         ).apply();

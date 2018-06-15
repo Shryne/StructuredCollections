@@ -23,17 +23,37 @@
 
 package de.collections.iteration;
 
+import de.collections.Collection;
+
 import java.util.function.BiConsumer;
 
 /**
- * The interface of the iteration classes that are a alternative to the normal java iteration loops. Classes that
- * implement this interface must only be applied on collections that are actually indexed (e.g. list, array. Not
- * indexed: Set).
+ * An alternative to traditional loops, for each loops, iterators and iterables.
+ * <p>This class is immutable and thread-safe.</p>
  * @param <T> The type of the elements of the iteration.
  */
-public interface IndexedIteration<T> {
+public final class IndexedIterationOf<T> implements IndexedIteration<T> {
+    private final Collection<T> collection;
+
     /**
-     * @param action to be applied. The iteration will give the current element of the iteration and the index of it.
+     * @param collection to iterate through.
      */
-    void apply(BiConsumer<T, Integer> action);
+    public IndexedIterationOf(Collection<T> collection) {
+        this.collection = collection;
+    }
+
+    @Override
+    public void apply(BiConsumer<T, Integer> consumer) {
+        for (int i = 0; i < collection.size(); i++) {
+            consumer.accept(collection.get(i), i);
+        }
+    }
+
+    /**
+     * @return Format: <Classname>: <collection to iterate through>
+     */
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + ": " + collection.toString();
+    }
 }
