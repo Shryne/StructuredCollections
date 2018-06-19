@@ -22,7 +22,7 @@
  */
 package de.collections;
 
-import de.collections.list.base.ListOf;
+import de.indexed.list.base.ListOf;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

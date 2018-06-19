@@ -22,7 +22,7 @@
  */
 package de.collections.iterator;
 
-import de.collections.list.base.ListOf;
+import de.indexed.list.base.ListOf;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;

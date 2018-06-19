@@ -24,7 +24,7 @@
 package de.collections.iterator.base;
 
 import de.collections.Collection;
-import de.collections.list.base.ListOf;
+import de.indexed.list.base.ListOf;
 
 import java.util.ListIterator;
 import java.util.NoSuchElementException;

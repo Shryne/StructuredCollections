@@ -21,14 +21,14 @@
  * SOFTWARE.
  */
 
-package de.collections.array.base;
-
-import de.collections.Collection;
+package de.collections.functional;
 
 /**
- * An immutable view of an array.
- * @see MutableArray
- * @param <T> The type of the elements inside the array.
+ * A value to be received.
  */
-public interface Array<T> extends Collection<T> {
+public interface Value<T> {
+    /**
+     * @return the value.
+     */
+    T value();
 }
