@@ -22,7 +22,7 @@
  */
 package de.collections.iterator;
 
-import de.collections.Collection;
+import de.indexed.IndexedCollection;
 import de.collections.iterator.base.IndexedIterator;
 import de.indexed.list.base.ListOf;
 
@@ -33,7 +33,7 @@ import java.util.function.BiPredicate;
  * A filter to iterate only through elements who fulfill the filter.
  */
 public final class FilteredIterator<T> implements IndexedIterator<T> {
-    private final Collection<T> collection;
+    private final IndexedCollection<T> collection;
     private int cursor = -1;
     private final BiPredicate<T, Integer> filter;
 
@@ -49,7 +49,7 @@ public final class FilteredIterator<T> implements IndexedIterator<T> {
      * Secondary constructor. Accepts all elements (no filter).
      * @param collection which is to be iterated through.
      */
-    public FilteredIterator(Collection<T> collection) {
+    public FilteredIterator(IndexedCollection<T> collection) {
         this(collection, (element, index) -> true);
     }
 
@@ -58,7 +58,7 @@ public final class FilteredIterator<T> implements IndexedIterator<T> {
      * @param collection which is to be iterated through.
      * @param filter that accepts the elements and returns true if the element should be part of the iteration.
      */
-    public FilteredIterator(Collection<T> collection, BiPredicate<T, Integer> filter) {
+    public FilteredIterator(IndexedCollection<T> collection, BiPredicate<T, Integer> filter) {
         this.collection = collection;
         this.filter = filter;
     }

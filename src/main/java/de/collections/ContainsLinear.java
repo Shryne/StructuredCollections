@@ -24,6 +24,7 @@ package de.collections;
 
 import de.collections.iterable.base.IterableOf;
 import de.collections.lambda.Action;
+import de.indexed.IndexedCollection;
 
 /**
  * Searches linear (from start to end) for the element.
@@ -38,7 +39,7 @@ public class ContainsLinear<T> implements Contains {
      * @param collection Where the element could be.
      * @param element to search for.
      */
-    public ContainsLinear(Collection<T> collection, T element) {
+    public ContainsLinear(IndexedCollection<T> collection, T element) {
         this(new IterableOf<>(collection), element);
     }
 

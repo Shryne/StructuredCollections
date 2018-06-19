@@ -1,4 +1,4 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,40 +20,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.indexed.list.base;
 
-package de.collections.iteration;
-
-import de.indexed.IndexedCollection;
-
-import java.util.function.BiConsumer;
+import de.collections.functional.Lazy;
 
 /**
- * An alternative to traditional loops, for each loops, iterators and iterables.
- * <p>This class is immutable and thread-safe.</p>
- * @param <T> The type of the elements of the iteration.
+ * This class prevents code duplication from using decorators.
+ * @param <T> The type of the elements inside the list.
  */
-public final class IndexedIterationOf<T> implements IndexedIteration<T> {
-    private final IndexedCollection<T> collection;
+public abstract class MutableListEnvelope<T> implements MutableList<T> {
+    private final Lazy<MutableList<T>> lazyList;
 
     /**
-     * @param collection to iterate through.
+     * Primary constructor.
+     * @param lazyList The list to be used for the methods inside of lazy.
      */
-    public IndexedIterationOf(IndexedCollection<T> collection) {
-        this.collection = collection;
+    public MutableListEnvelope(Lazy<MutableList<T>> lazyList) {
+        this.lazyList = lazyList;
     }
 
     @Override
-    public void apply(BiConsumer<T, Integer> consumer) {
-        for (int i = 0; i < collection.size(); i++) {
-            consumer.accept(collection.get(i), i);
-        }
+    public final void add(int index, T element) {
+        lazyList.value().add(index, element);
+    }
+
+    @Override
+    public final T get(int index) {
+        return lazyList.value().get(index);
+    }
+
+    @Override
+    public final void remove(int index) {
+        lazyList.value().remove(index);
+    }
+
+    @Override
+    public final int size() {
+        return lazyList.value().size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return lazyList.value().equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return lazyList.value().hashCode();
     }
 
     /**
-     * @return Format: <Classname>: <collection to iterate through>
+     * @return Format: List: [...]
      */
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ": " + collection.toString();
+        return lazyList.value().toString();
     }
 }

@@ -23,7 +23,7 @@
 package de.collections.iterator;
 
 
-import de.collections.Collection;
+import de.indexed.IndexedCollection;
 import de.collections.iterator.base.IndexedIterator;
 
 import java.util.NoSuchElementException;
@@ -34,7 +34,7 @@ import java.util.NoSuchElementException;
  * @param <T> The type of the elements of the iterator.
  */
 public final class RangeOf<T> implements IndexedIterator<T> {
-    private final Collection<T> collection;
+    private final IndexedCollection<T> collection;
     private int cursor;
     private final int to;
 
@@ -43,7 +43,7 @@ public final class RangeOf<T> implements IndexedIterator<T> {
      *
      * @param collection that contains the elements.
      */
-    public RangeOf(Collection<T> collection) {
+    public RangeOf(IndexedCollection<T> collection) {
         this(collection, 0);
     }
 
@@ -53,7 +53,7 @@ public final class RangeOf<T> implements IndexedIterator<T> {
      * @param collection that contains the elements.
      * @param from       range start (inclusive, greater or equal to 0, smaller than to).
      */
-    public RangeOf(Collection<T> collection, int from) {
+    public RangeOf(IndexedCollection<T> collection, int from) {
         this(collection, from, collection.size());
     }
 
@@ -66,7 +66,7 @@ public final class RangeOf<T> implements IndexedIterator<T> {
      *                   taken as the end of the range instead.
      * @throws IllegalArgumentException if from is invalid.
      */
-    public RangeOf(Collection<T> collection, int from, int to) {
+    public RangeOf(IndexedCollection<T> collection, int from, int to) {
         cursor = Math.max(from - 1, -1);
         this.to = Math.min(collection.size(), to);
         this.collection = collection;

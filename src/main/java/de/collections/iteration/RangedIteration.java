@@ -23,7 +23,7 @@
 
 package de.collections.iteration;
 
-import de.collections.Collection;
+import de.indexed.IndexedCollection;
 
 import java.util.function.BiConsumer;
 
@@ -34,7 +34,7 @@ import java.util.function.BiConsumer;
  * @param <T> The type of the elements inside the iteration.
  */
 public class RangedIteration<T> implements IndexedIteration<T> {
-    private final Collection<T> collection;
+    private final IndexedCollection<T> collection;
     private final int from;
     private final int to;
 
@@ -44,7 +44,7 @@ public class RangedIteration<T> implements IndexedIteration<T> {
      * @throws IllegalArgumentException if from or to are invalid.
      * @see IndexedIterationOf
      */
-    public RangedIteration(Collection<T> collection, int to) {
+    public RangedIteration(IndexedCollection<T> collection, int to) {
         this(collection, 0, to);
     }
 
@@ -55,7 +55,7 @@ public class RangedIteration<T> implements IndexedIteration<T> {
      * @throws IllegalArgumentException if from or to are invalid.
      * @see IndexedIterationOf
      */
-    public RangedIteration(Collection<T> collection, int from, int to) {
+    public RangedIteration(IndexedCollection<T> collection, int from, int to) {
         if (from < 0 || collection.size() < to) {
             throw new IllegalArgumentException(
                     "From needs to be greater than 0 and to needs to be smaller than collection.size()." +

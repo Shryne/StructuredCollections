@@ -21,39 +21,14 @@
  * SOFTWARE.
  */
 
-package de.collections.functional;
+package de.indexed.array.base;
 
 import de.indexed.IndexedCollection;
-import de.indexed.array.base.Array;
-import de.indexed.array.base.MutableArrayOf;
-
-import java.util.function.Function;
 
 /**
- * Maps the results to an array.
- * @param <T> The type of the elements.
+ * An immutable view of an array.
+ * @see MutableArray
+ * @param <T> The type of the elements inside the array.
  */
-public final class Mapped<T> {
-    private final IndexedCollection<T> collection;
-
-    /**
-     * @param collection that offers the elements for the results that will be mapped.
-     */
-    public Mapped(IndexedCollection<T> collection) {
-        this.collection = collection;
-    }
-
-    /**
-     * Applies the given function on each element of the collection and mapps the result into an array.
-     * @param function to apply.
-     * @param <R> The type of the elements inside the resulting array.
-     * @return The array with the mapped elements.
-     */
-    public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new MutableArrayOf<R>().resize(collection.size());
-        for (int i = 0; i < collection.size(); i++) {
-            array.set(i, function.apply(collection.get(i)));
-        }
-        return array;
-    }
+public interface Array<T> extends IndexedCollection<T> {
 }

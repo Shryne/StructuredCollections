@@ -22,7 +22,7 @@
  */
 package de.collections.iterable.base;
 
-import de.collections.Collection;
+import de.indexed.IndexedCollection;
 import de.collections.iterator.base.IndexedIterator;
 import de.collections.iterator.base.IndexedIteratorOf;
 import de.indexed.list.base.ListOf;
@@ -36,7 +36,7 @@ import java.util.Objects;
  * @param <T> The element type of the elements in the iteration.
  */
 public final class IterableOf<T> implements IndexedIterable<T> {
-    private final Collection<T> collection;
+    private final IndexedCollection<T> collection;
 
     /**
      * @param elements to iterate through.
@@ -48,7 +48,7 @@ public final class IterableOf<T> implements IndexedIterable<T> {
     /**
      * @param collection to iterate through.
      */
-    public IterableOf(Collection<T> collection) {
+    public IterableOf(IndexedCollection<T> collection) {
         this.collection = collection;
     }
 

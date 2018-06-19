@@ -23,7 +23,7 @@
 
 package de.collections.iterator.base;
 
-import de.collections.Collection;
+import de.indexed.IndexedCollection;
 import de.indexed.list.base.ListOf;
 
 import java.util.ListIterator;
@@ -36,7 +36,7 @@ import java.util.NoSuchElementException;
  * @param <T> The type of the elements of the iterator.
  */
 public final class IndexedIteratorOf<T> implements IndexedIterator<T> {
-    private final Collection<T> collection;
+    private final IndexedCollection<T> collection;
     private int cursor = -1;
 
     public IndexedIteratorOf(T... ts) {
@@ -46,7 +46,7 @@ public final class IndexedIteratorOf<T> implements IndexedIterator<T> {
     /**
      * @param collection that will be iterated.
      */
-    public IndexedIteratorOf(Collection<T> collection) {
+    public IndexedIteratorOf(IndexedCollection<T> collection) {
         this.collection = collection;
     }
 

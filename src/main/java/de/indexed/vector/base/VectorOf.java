@@ -1,17 +1,17 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,40 +20,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package de.collections.functional;
-
-import de.indexed.IndexedCollection;
-import de.indexed.array.base.Array;
-import de.indexed.array.base.MutableArrayOf;
-
-import java.util.function.Function;
+package de.indexed.vector.base;
 
 /**
- * Maps the results to an array.
- * @param <T> The type of the elements.
+ * A view of a {@link MutableVector}.
+ *
+ * <p>This class is immutable.</p>
+ * @param <T> The type of the elements this vector can contain.
  */
-public final class Mapped<T> {
-    private final IndexedCollection<T> collection;
+public final class VectorOf<T> implements Vector<T> {
+    private final MutableVector<T> mutableVector;
 
     /**
-     * @param collection that offers the elements for the results that will be mapped.
+     * Secondary constructor.
+     * @param elements the vector will contain.
      */
-    public Mapped(IndexedCollection<T> collection) {
-        this.collection = collection;
+    public VectorOf(T... elements) {
+        this(new MutableVectorOf<>(elements));
     }
 
     /**
-     * Applies the given function on each element of the collection and mapps the result into an array.
-     * @param function to apply.
-     * @param <R> The type of the elements inside the resulting array.
-     * @return The array with the mapped elements.
+     * Primary constructor.
+     * @param mutableVector that contains the elements for this vector.
      */
-    public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new MutableArrayOf<R>().resize(collection.size());
-        for (int i = 0; i < collection.size(); i++) {
-            array.set(i, function.apply(collection.get(i)));
-        }
-        return array;
+    public VectorOf(MutableVector<T> mutableVector) {
+        this.mutableVector = mutableVector;
+    }
+
+    @Override
+    public T get(int index) {
+        return mutableVector.get(index);
+    }
+
+    @Override
+    public int size() {
+        return mutableVector.size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return mutableVector.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return mutableVector.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return mutableVector.toString();
     }
 }

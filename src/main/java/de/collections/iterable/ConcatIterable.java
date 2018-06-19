@@ -23,7 +23,7 @@
 package de.collections.iterable;
 
 
-import de.collections.Collection;
+import de.indexed.IndexedCollection;
 import de.collections.iterable.base.IndexedIterable;
 import de.collections.iterator.ConcatIterator;
 import de.collections.iterator.base.IndexedIterator;
@@ -42,7 +42,7 @@ public final class ConcatIterable<T> implements IndexedIterable<T> {
      * @param first part of the iterable.
      * @param second part of the iterable.
      */
-    public ConcatIterable(Collection<T> first, Collection<T> second) {
+    public ConcatIterable(IndexedCollection<T> first, IndexedCollection<T> second) {
         this(
                 new IterableOf<>(first),
                 new IterableOf<>(second)

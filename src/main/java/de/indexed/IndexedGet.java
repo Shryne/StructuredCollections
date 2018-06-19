@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,13 +20,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+package de.indexed;
 
 /**
  * Offers a way to get an element based on the index.
  * @param <T> The type of the element.
  */
-public interface WithGet<T> {
+public interface IndexedGet<T> {
     /**
      * Returns the element.
      * @param index The index of the element to return.

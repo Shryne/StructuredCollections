@@ -1,4 +1,4 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,40 +20,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.indexed.list.base;
 
-package de.collections.functional;
-
-import de.indexed.IndexedCollection;
-import de.indexed.array.base.Array;
-import de.indexed.array.base.MutableArrayOf;
-
-import java.util.function.Function;
+import de.collections.WithAdd;
+import de.collections.WithRemove;
 
 /**
- * Maps the results to an array.
- * @param <T> The type of the elements.
+ * A mutable list.
  */
-public final class Mapped<T> {
-    private final IndexedCollection<T> collection;
-
+public interface MutableList<T> extends WithRemove, WithAdd<T>, List<T> {
     /**
-     * @param collection that offers the elements for the results that will be mapped.
+     * Adds the given element to the end of the list.
+     * @param element to add.
      */
-    public Mapped(IndexedCollection<T> collection) {
-        this.collection = collection;
+    default void add(T element) {
+        add(size(), element);
     }
 
     /**
-     * Applies the given function on each element of the collection and mapps the result into an array.
-     * @param function to apply.
-     * @param <R> The type of the elements inside the resulting array.
-     * @return The array with the mapped elements.
+     * Removes the last element of the list.
+     * @throws java.util.NoSuchElementException if there is isn't an element to remove.
      */
-    public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new MutableArrayOf<R>().resize(collection.size());
-        for (int i = 0; i < collection.size(); i++) {
-            array.set(i, function.apply(collection.get(i)));
-        }
-        return array;
+    default void removeLast() {
+        remove(size() - 1);
     }
 }

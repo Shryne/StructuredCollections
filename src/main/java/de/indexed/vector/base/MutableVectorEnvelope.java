@@ -1,17 +1,17 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,40 +20,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.indexed.vector.base;
 
-package de.collections.iteration;
 
-import de.indexed.IndexedCollection;
-
-import java.util.function.BiConsumer;
+import de.collections.functional.Lazy;
 
 /**
- * An alternative to traditional loops, for each loops, iterators and iterables.
- * <p>This class is immutable and thread-safe.</p>
- * @param <T> The type of the elements of the iteration.
+ * An envelope for the MutableVector to get rid of the code duplication from the decorators.
+ * @param <T> The type of the elements of the vector.
  */
-public final class IndexedIterationOf<T> implements IndexedIteration<T> {
-    private final IndexedCollection<T> collection;
+public abstract class MutableVectorEnvelope<T> implements MutableVector<T> {
+    private final Lazy<MutableVector<T>> lazyVector;
 
     /**
-     * @param collection to iterate through.
+     * Primary constructor.
+     * @param lazyVector that contains the functionality inside of Lazy.
      */
-    public IndexedIterationOf(IndexedCollection<T> collection) {
-        this.collection = collection;
+    public MutableVectorEnvelope(Lazy<MutableVector<T>> lazyVector) {
+        this.lazyVector = lazyVector;
     }
 
     @Override
-    public void apply(BiConsumer<T, Integer> consumer) {
-        for (int i = 0; i < collection.size(); i++) {
-            consumer.accept(collection.get(i), i);
-        }
+    public final T get(int index) {
+        return lazyVector.value().get(index);
     }
 
-    /**
-     * @return Format: <Classname>: <collection to iterate through>
-     */
+    @Override
+    public final void set(int index, Iterable<T> elements) {
+        lazyVector.value().set(index, elements);
+    }
+
+    @Override
+    public final int size() {
+        return lazyVector.value().size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return lazyVector.value().equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return lazyVector.value().hashCode();
+    }
+
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ": " + collection.toString();
+        return lazyVector.value().toString();
     }
 }

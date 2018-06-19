@@ -1,17 +1,17 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,40 +20,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package de.collections.iteration;
-
-import de.indexed.IndexedCollection;
-
-import java.util.function.BiConsumer;
+package de.indexed.list.base;
 
 /**
- * An alternative to traditional loops, for each loops, iterators and iterables.
- * <p>This class is immutable and thread-safe.</p>
- * @param <T> The type of the elements of the iteration.
+ * A basic implementation of the list based on an array. This class is immutable.
+ * @param <T> The type of the elements in the list.
  */
-public final class IndexedIterationOf<T> implements IndexedIteration<T> {
-    private final IndexedCollection<T> collection;
+public final class ListOf<T> implements List<T> {
+    private final MutableList<T> mutableList;
 
     /**
-     * @param collection to iterate through.
+     * Secondary constructor.
+     * @param elements The elements that the list should contain.
      */
-    public IndexedIterationOf(IndexedCollection<T> collection) {
-        this.collection = collection;
+    @SafeVarargs
+    public ListOf(T... elements) {
+        this(new MutableListOf<>(elements));
+    }
+
+    /**
+     * Primary constructor.
+     * @param mutableList that contains the elements. Based on the immutable list, this view will be created.
+     */
+    public ListOf(MutableList<T> mutableList) {
+        this.mutableList = mutableList;
+    }
+
+    /**
+     * @throws IndexOutOfBoundsException If not (0 <= index or index < size).
+     */
+    @Override
+    public T get(int index) {
+        return mutableList.get(index);
     }
 
     @Override
-    public void apply(BiConsumer<T, Integer> consumer) {
-        for (int i = 0; i < collection.size(); i++) {
-            consumer.accept(collection.get(i), i);
-        }
+    public int size() {
+        return mutableList.size();
+    }
+
+    @Override
+    public int hashCode() {
+        return mutableList.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return mutableList.equals(obj);
     }
 
     /**
-     * @return Format: <Classname>: <collection to iterate through>
+     * @return Format: List: [...]
      */
     @Override
     public String toString() {
-        return getClass().getSimpleName() + ": " + collection.toString();
+        return mutableList.toString();
     }
 }
