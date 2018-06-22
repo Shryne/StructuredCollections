@@ -19,6 +19,25 @@ a secondary constructor.</li>
 <li>Envelopes are the only classes that are abstract</li>
 <li>Every variable that can be final, is final (except the parameters)</li>
 
+## Immutability  
+A class is immutable if it fulfills the following requirements:
+<ol>
+    <li>By itself doesn't change its state</li>    
+    <li>Doesn't return a reference to its to state so that it can be changed</li>    
+    <li>Is final (no subclasses possible)</li>    
+</ol>
+
+<p>Howevery, a class that accepts a mutable reference from outside and takes it as its own
+state, is considered immutable, even if the user can change the state of the object
+by using this reference that he supplied.  The user is adviced to pass the reference
+without holding it afterwards.</p>
+
+<li>Every class states whether it is immutable or not</li>
+<li>An immutable class is thread-safe</li>
+<li>An immutable class can be mutable, as long as it seems immutable to the outside world,
+by beeing thread-safe and by not appearing mutable. Example: A class that uses
+Lazy, can be made immutable</li>
+
 ## Comments
 
 
