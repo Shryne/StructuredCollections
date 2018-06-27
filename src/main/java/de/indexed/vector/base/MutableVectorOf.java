@@ -111,6 +111,17 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     }
 
     @Override
+    public void shrink(int newSize) {
+        if (newSize >= container.size()) {
+            throw new IllegalArgumentException(
+                    "The newSize has to be smaller, than the current size of the vector. " +
+                            "NewSize: " + newSize + ", size: " + size
+            );
+        }
+        container.resize(newSize);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -119,8 +130,11 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
             return false;
         }
         //noinspection unchecked
-        return new IterableOf<T>((Vector) obj)
-                .equals(new IterableOf<>(this));
+        return new IterableOf<T>(
+                (Vector) obj
+        ).equals(
+                        new IterableOf<>(this)
+                );
     }
 
     @Override

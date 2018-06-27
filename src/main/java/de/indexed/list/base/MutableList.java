@@ -22,26 +22,18 @@
  */
 package de.indexed.list.base;
 
-import de.collections.WithAdd;
-import de.collections.WithRemove;
+import de.indexed.WithAdd;
+import de.indexed.IndexedRemove;
 
 /**
  * A mutable list.
  */
-public interface MutableList<T> extends WithRemove, WithAdd<T>, List<T> {
+public interface MutableList<T> extends WithAdd<T>, List<T>, IndexedRemove {
     /**
      * Adds the given element to the end of the list.
      * @param element to add.
      */
     default void add(T element) {
         add(size(), element);
-    }
-
-    /**
-     * Removes the last element of the list.
-     * @throws java.util.NoSuchElementException if there is isn't an element to remove.
-     */
-    default void removeLast() {
-        remove(size() - 1);
     }
 }

@@ -24,7 +24,7 @@
 package de.indexed.list;
 
 import de.indexed.IndexedCollection;
-import de.collections.ContainsLinear;
+import de.indexed.ContainsLinear;
 import de.collections.functional.Lazy;
 import de.collections.iterator.FilteredIterator;
 import de.indexed.list.base.MutableListEnvelope;

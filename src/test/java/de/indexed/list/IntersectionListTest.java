@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,66 +20,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
 
-import de.indexed.ContainsLinear;
+package de.indexed.list;
+
 import de.indexed.list.base.ListOf;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 
-public class ContainsLinearTest {
+public class IntersectionListTest {
     @Test
-    public void oneApply() {
-        new ContainsLinear<>(
-                new ListOf<>(0),
-                0
-        ).apply(
-                () -> assertTrue(true)
-        );
-        assertFalse(false);
-    }
-
-    @Test
-    public void oneValue() {
-        assertTrue(
-                new ContainsLinear<>(
-                        new ListOf<>(0),
-                        0
-                ).value()
-        );
-    }
-
-    @Test
-    public void oneApplyNot() {
-        new ContainsLinear<>(
-                new ListOf<>(0),
-                1
-        ).apply(
-                () -> assertFalse(false)
-        );
-        assertTrue(true);
-    }
-
-    @Test
-    public void oneValueNot() {
-        assertFalse(
-                new ContainsLinear<>(
-                        new ListOf<>(0),
-                        1
-                ).value()
-        );
-    }
-
-    @Test
-    public void zeroApplyNot() {
-        new ContainsLinear<>(
+    public void empties() {
+        assertEquals(
                 new ListOf<>(),
-                5
-        ).apply(
-                () -> assertFalse(false)
+                new IntersectionList<>(
+                        new ListOf<>(),
+                        new ListOf<>()
+                )
         );
-        assertTrue(true);
+    }
+
+    @Test
+    public void different() {
+        assertEquals(
+                new ListOf<>(),
+                new IntersectionList<>(
+                        new ListOf<>(0, 2, 5, 12, 39),
+                        new ListOf<>(-3, -5, -23, -5, -23, -54)
+                )
+        );
+    }
+
+    @Test
+    public void oneSame() {
+        assertEquals(
+                new ListOf<>(0),
+                new IntersectionList<>(
+                        new ListOf<>(2, 4, 6, 2, 0, 2, 9, 38),
+                        new ListOf<>(-4, -23, -4, 0)
+                )
+        );
+    }
+
+    @Test
+    public void multipleSame() {
+        assertEquals(
+                new ListOf<>(5, 2, 3),
+                new IntersectionList<>(
+                        new ListOf<>(5, 49, 230, 2, 483, 3),
+                        new ListOf<>(17, 5, 328, 2, 3834, 4398, 439, 3)
+                )
+        );
+    }
+
+    @Test
+    public void allSame() {
+        assertEquals(
+                new ListOf<>(4, 29, 32),
+                new IntersectionList<>(
+                        new ListOf<>(4, 29, 32),
+                        new ListOf<>(4, 29, 32)
+                )
+        );
     }
 }

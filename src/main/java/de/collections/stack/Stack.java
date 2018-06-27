@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,17 +20,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+
+package de.collections.stack;
+
+import de.indexed.WithSize;
+import de.indexed.IndexedCollection;
 
 /**
- * An interfaces containing the functionality to add elements to the implementing class.
- * @param <T> Type of the elements to add.
+ * A stack is a "first in, last out" collection. This interface offers no mutable operations.
+ * @param <T> The type of the elements of the stack.
  */
-public interface WithAdd<T> {
+public interface Stack<T> extends WithSize {
     /**
-     * Adds the element to itself.
-     * @param index of the first element.
-     * @param element to add.
+     * @return The top element / first element of the stack without deleting it from the stack.
      */
-    void add(int index, T element);
+    T top();
+
+    /**
+     * @return A view on the elements. By using this, one can create an Iterator and iterate through the elements of the
+     * stack.
+     */
+    IndexedCollection<T> elements();
 }

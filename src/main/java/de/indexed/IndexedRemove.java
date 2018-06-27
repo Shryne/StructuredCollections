@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,26 +20,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
 
-import de.collections.lambda.Action;
+package de.indexed;
+
+import java.util.NoSuchElementException;
 
 /**
- * Defines an interface for classes that check if something is inside of something else (depends on the implementing
- * class).
+ * A remove for index based collections.
  */
-public interface Contains {
-    default boolean value() {
-        return apply(() -> {});
-    }
-
+public interface IndexedRemove extends WithRemove, WithSize {
     /**
-     * Applies the given action only if the containment is fulfilled. Example (pseudo code):
-     * <pre><code>new Contains([1, 2, 3, 4], 3).apply(() -> System.out.println("Hey")); // => Hey</code></pre>
-     * This is an alternative to the traditional way:
-     * <pre><code>if (list.contains(5)) action();</code></pre>
-     * @param action The action to apply.
-     * @return true if the action has been applied, otherwise false.
+     * Removes the last element.
+     * @throws java.util.NoSuchElementException if there is isn't an element to remove.
      */
-    boolean apply(Action action);
+    default void removeLast() {
+        if (isEmpty()) {
+            throw new NoSuchElementException(
+                    "The collection is empty. No elements could be removed."
+            );
+        }
+        remove(size() - 1);
+    }
 }

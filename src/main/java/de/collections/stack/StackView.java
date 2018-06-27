@@ -20,38 +20,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.indexed;
 
-import java.util.NoSuchElementException;
+package de.collections.stack;
+
+import de.indexed.IndexedCollection;
 
 /**
- * Defines all collections that are index based and ordered.
- * @param <T> The type of the elements of the collection.
+ * A view to a mutable stack.
+ * <p>This class is immutable and thread-safe.</p>
+ * @see de.indexed.vector.base.Vector
+ * @param <T> The type of the elements of the stack.
  */
-public interface IndexedCollection<T> extends IndexedGet<T>, WithSize {
+public final class StackView<T> implements Stack<T> {
+    private final Stack<T> stack;
+
     /**
-     * @return The first element of the collection.
-     * @throws NoSuchElementException if the collection is empty.
+     * Uses the {@link VectorStack} to create the view.
+     * @param ts The elements for the stack.
      */
-    default T first() {
-        if (isEmpty()) {
-            throw new NoSuchElementException(
-                    "Collection is empty."
-            );
-        }
-        return get(0);
+    public StackView(T... ts) {
+        this(new VectorStack<>(ts));
     }
 
     /**
-     * @return The last element of the collection.
-     * @throws NoSuchElementException if the collection is empty.
+     * @param stack to create the view on.
      */
-    default T last() {
-        if (isEmpty()) {
-            throw new NoSuchElementException(
-                    "Collection is empty."
-            );
-        }
-        return get(size() - 1);
+    public StackView(MutableStack<T> stack) {
+        this.stack = stack;
+    }
+
+    @Override
+    public T top() {
+        return stack.top();
+    }
+
+    @Override
+    public int size() {
+        return stack.size();
+    }
+
+    @Override
+    public IndexedCollection<T> elements() {
+        return stack.elements();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return stack.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return stack.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return stack.toString();
     }
 }

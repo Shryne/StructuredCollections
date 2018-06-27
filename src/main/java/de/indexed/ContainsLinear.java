@@ -22,36 +22,45 @@
  */
 package de.indexed;
 
-import java.util.NoSuchElementException;
+import de.collections.iterable.base.IterableOf;
+import de.collections.lambda.Action;
+import de.indexed.IndexedCollection;
 
 /**
- * Defines all collections that are index based and ordered.
- * @param <T> The type of the elements of the collection.
+ * Searches linear (from start to end) for the element.
+ * @param <T> The type of the element and the type of the iterables contained type.
  */
-public interface IndexedCollection<T> extends IndexedGet<T>, WithSize {
+public class ContainsLinear<T> implements Contains {
+    private final Iterable<T> iterable;
+    private final T element;
+
     /**
-     * @return The first element of the collection.
-     * @throws NoSuchElementException if the collection is empty.
+     * Secondary constructor.
+     * @param collection Where the element could be.
+     * @param element to search for.
      */
-    default T first() {
-        if (isEmpty()) {
-            throw new NoSuchElementException(
-                    "Collection is empty."
-            );
-        }
-        return get(0);
+    public ContainsLinear(IndexedCollection<T> collection, T element) {
+        this(new IterableOf<>(collection), element);
     }
 
     /**
-     * @return The last element of the collection.
-     * @throws NoSuchElementException if the collection is empty.
+     * Primary constructor.
+     * @param iterable Where the element could be.
+     * @param element To search for.
      */
-    default T last() {
-        if (isEmpty()) {
-            throw new NoSuchElementException(
-                    "Collection is empty."
-            );
+    public ContainsLinear(Iterable<T> iterable, T element) {
+        this.iterable = iterable;
+        this.element = element;
+    }
+
+    @Override
+    public boolean apply(Action action) {
+        for (T t : iterable) {
+            if (element.equals(t)) {
+                action.apply();
+                return true;
+            }
         }
-        return get(size() - 1);
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,15 +20,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+package de.indexed;
 
 /**
- * Offers a way to remove an element based on the index.
+ * An interfaces containing the functionality to add elements to the implementing class.
+ * @param <T> Type of the elements to add.
  */
-public interface WithRemove {
+public interface WithAdd<T> {
     /**
-     * Removes the element from itself.
-     * @param index of the element to be removed.
+     * Adds the element to itself.
+     * @param index of the first element.
+     * @param element to add.
      */
-    void remove(int index);
+    void add(int index, T element);
 }

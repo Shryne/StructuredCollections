@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,23 +20,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections;
+
+package de.indexed.array;
+
+import de.indexed.array.base.ArrayOf;
+import de.collections.iterator.FilteredIterator;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * Offers a way to get the size of a collection.
+ * - mutable
+ *
+ * @param
+ * @return
  */
-public interface WithSize {
-    /**
-     * @return The size of the collection. This includes only elements, that are actually contained by the collection
-     * and not the capacity, that can be greater.
-     */
-    int size();
+public class IteratorAsArrayTest {
+    @Test
+    public void zero() {
+        assertEquals(
+                new ArrayOf<>(),
+                new IteratorAsArray<>(
+                        new FilteredIterator<>()
+                )
+        );
+    }
 
-    /**
-     * For convenience and readability.
-     * @return Whether there are elements inside the implementing object. Equivalent to size() == 0.
-     */
-    default boolean isEmpty() {
-        return size() == 0;
+    @Test
+    public void one() {
+        assertEquals(
+                new ArrayOf<>("Hey"),
+                new IteratorAsArray<>(
+                        new FilteredIterator<>("Hey")
+                )
+        );
+    }
+
+    @Test
+    public void multiple() {
+        assertEquals(
+                new ArrayOf<>("A", "B", "C"),
+                new IteratorAsArray<>(
+                        new FilteredIterator<>("A", "B", "C")
+                )
+        );
     }
 }
