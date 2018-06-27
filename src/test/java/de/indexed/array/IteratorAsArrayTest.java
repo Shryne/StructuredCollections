@@ -23,7 +23,7 @@
 
 package de.indexed.array;
 
-import de.indexed.array.base.ArrayOf;
+import de.indexed.array.base.ArrayView;
 import de.collections.iterator.FilteredIterator;
 import org.junit.Test;
 
@@ -39,7 +39,7 @@ public class IteratorAsArrayTest {
     @Test
     public void zero() {
         assertEquals(
-                new ArrayOf<>(),
+                new ArrayView<>(),
                 new IteratorAsArray<>(
                         new FilteredIterator<>()
                 )
@@ -49,7 +49,7 @@ public class IteratorAsArrayTest {
     @Test
     public void one() {
         assertEquals(
-                new ArrayOf<>("Hey"),
+                new ArrayView<>("Hey"),
                 new IteratorAsArray<>(
                         new FilteredIterator<>("Hey")
                 )
@@ -59,7 +59,7 @@ public class IteratorAsArrayTest {
     @Test
     public void multiple() {
         assertEquals(
-                new ArrayOf<>("A", "B", "C"),
+                new ArrayView<>("A", "B", "C"),
                 new IteratorAsArray<>(
                         new FilteredIterator<>("A", "B", "C")
                 )

@@ -24,7 +24,7 @@ package de.indexed.vector;
 
 import de.collections.functional.Lazy;
 import de.indexed.vector.base.MutableVectorEnvelope;
-import de.indexed.vector.base.MutableVectorOf;
+import de.indexed.vector.base.ArrayVector;
 
 import java.util.Iterator;
 
@@ -53,7 +53,7 @@ public final class IteratorAsMutableVector<T> extends MutableVectorEnvelope<T> {
         super(
                 new Lazy<>(
                         () -> {
-                            @SuppressWarnings("unchecked") final var vector = new MutableVectorOf<T>();
+                            @SuppressWarnings("unchecked") final var vector = new ArrayVector<T>();
                             while (iterator.hasNext()) {
                                 vector.set(vector.size(), iterator.next());
                             }

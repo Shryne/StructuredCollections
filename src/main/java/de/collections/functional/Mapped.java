@@ -25,7 +25,7 @@ package de.collections.functional;
 
 import de.indexed.IndexedCollection;
 import de.indexed.array.base.Array;
-import de.indexed.array.base.MutableArrayOf;
+import de.indexed.array.base.RawArray;
 
 import java.util.function.Function;
 
@@ -50,7 +50,7 @@ public final class Mapped<T> {
      * @return The array with the mapped elements.
      */
     public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new MutableArrayOf<R>().resize(collection.size());
+        final var array = new RawArray<R>().resize(collection.size());
         for (int i = 0; i < collection.size(); i++) {
             array.set(i, function.apply(collection.get(i)));
         }

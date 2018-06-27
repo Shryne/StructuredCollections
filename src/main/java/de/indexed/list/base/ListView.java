@@ -23,10 +23,11 @@
 package de.indexed.list.base;
 
 /**
- * A basic implementation of the list based on an array. This class is immutable.
+ * A basic implementation of the list based on an array.
+ * <p>This class is immutable and Thread-safe.</p>
  * @param <T> The type of the elements in the list.
  */
-public final class ListOf<T> implements List<T> {
+public final class ListView<T> implements List<T> {
     private final MutableList<T> mutableList;
 
     /**
@@ -34,15 +35,15 @@ public final class ListOf<T> implements List<T> {
      * @param elements The elements that the list should contain.
      */
     @SafeVarargs
-    public ListOf(T... elements) {
-        this(new MutableListOf<>(elements));
+    public ListView(T... elements) {
+        this(new VectorList<>(elements));
     }
 
     /**
      * Primary constructor.
      * @param mutableList that contains the elements. Based on the immutable list, this view will be created.
      */
-    public ListOf(MutableList<T> mutableList) {
+    public ListView(MutableList<T> mutableList) {
         this.mutableList = mutableList;
     }
 

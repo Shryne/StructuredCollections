@@ -23,7 +23,7 @@
 package de.collections;
 
 import de.indexed.ContainsLinear;
-import de.indexed.list.base.ListOf;
+import de.indexed.list.base.ListView;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
@@ -33,7 +33,7 @@ public class ContainsLinearTest {
     @Test
     public void oneApply() {
         new ContainsLinear<>(
-                new ListOf<>(0),
+                new ListView<>(0),
                 0
         ).apply(
                 () -> assertTrue(true)
@@ -45,7 +45,7 @@ public class ContainsLinearTest {
     public void oneValue() {
         assertTrue(
                 new ContainsLinear<>(
-                        new ListOf<>(0),
+                        new ListView<>(0),
                         0
                 ).value()
         );
@@ -54,7 +54,7 @@ public class ContainsLinearTest {
     @Test
     public void oneApplyNot() {
         new ContainsLinear<>(
-                new ListOf<>(0),
+                new ListView<>(0),
                 1
         ).apply(
                 () -> assertFalse(false)
@@ -66,7 +66,7 @@ public class ContainsLinearTest {
     public void oneValueNot() {
         assertFalse(
                 new ContainsLinear<>(
-                        new ListOf<>(0),
+                        new ListView<>(0),
                         1
                 ).value()
         );
@@ -75,7 +75,7 @@ public class ContainsLinearTest {
     @Test
     public void zeroApplyNot() {
         new ContainsLinear<>(
-                new ListOf<>(),
+                new ListView<>(),
                 5
         ).apply(
                 () -> assertFalse(false)

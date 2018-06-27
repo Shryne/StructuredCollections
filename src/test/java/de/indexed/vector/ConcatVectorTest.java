@@ -22,7 +22,7 @@
  */
 package de.indexed.vector;
 
-import de.indexed.vector.base.VectorOf;
+import de.indexed.vector.base.VectorView;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -33,8 +33,8 @@ public class ConcatVectorTest {
         assertEquals(
                 0,
                 new ConcatVector<>(
-                        new VectorOf<>(),
-                        new VectorOf<>()
+                        new VectorView<>(),
+                        new VectorView<>()
                 ).size()
         );
     }
@@ -42,16 +42,16 @@ public class ConcatVectorTest {
     @Test(expected = IllegalArgumentException.class)
     public void zeroZeroGet() {
         new ConcatVector<>(
-                new VectorOf<>(),
-                new VectorOf<>()
+                new VectorView<>(),
+                new VectorView<>()
         ).get(0);
     }
 
     @Test
     public void zeroSetZero() {
         final var vector = new ConcatVector<Integer>(
-                new VectorOf<>(),
-                new VectorOf<>()
+                new VectorView<>(),
+                new VectorView<>()
         );
         vector.set(vector.size(), 15);
         assertEquals(
@@ -63,12 +63,12 @@ public class ConcatVectorTest {
     @Test
     public void zeroSetFartherAway() {
         final var vector = new ConcatVector<Integer>(
-                new VectorOf<>(),
-                new VectorOf<>()
+                new VectorView<>(),
+                new VectorView<>()
         );
         vector.set(7, 33);
         assertEquals(
-                new VectorOf<>(
+                new VectorView<>(
                         null, null, null, null, null, null, null, 33
                 ),
                 vector
@@ -80,8 +80,8 @@ public class ConcatVectorTest {
         assertEquals(
                 523,
                 (int) new ConcatVector<>(
-                        new VectorOf<>(),
-                        new VectorOf<>(523)
+                        new VectorView<>(),
+                        new VectorView<>(523)
                 ).get(0)
         );
     }
@@ -91,8 +91,8 @@ public class ConcatVectorTest {
         assertEquals(
                 1,
                 new ConcatVector<>(
-                        new VectorOf<>(),
-                        new VectorOf<>(75)
+                        new VectorView<>(),
+                        new VectorView<>(75)
                 ).size()
         );
     }
@@ -102,8 +102,8 @@ public class ConcatVectorTest {
         assertEquals(
                 13,
                 new ConcatVector<>(
-                        new VectorOf<>(23, 43, 132, 19, -23, 43, 0, -2),
-                        new VectorOf<>(0, 0, 0, -32, 2320)
+                        new VectorView<>(23, 43, 132, 19, -23, 43, 0, -2),
+                        new VectorView<>(0, 0, 0, -32, 2320)
                 ).size()
         );
     }
@@ -111,12 +111,12 @@ public class ConcatVectorTest {
     @Test
     public void multipleGet() {
         assertEquals(
-                new VectorOf<>(
+                new VectorView<>(
                         23, 43, 132, 19, -23, 43, 0, -2, 0, 0, 0, -32, 2320
                 ),
                 new ConcatVector<>(
-                        new VectorOf<>(23, 43, 132, 19, -23, 43, 0, -2),
-                        new VectorOf<>(0, 0, 0, -32, 2320)
+                        new VectorView<>(23, 43, 132, 19, -23, 43, 0, -2),
+                        new VectorView<>(0, 0, 0, -32, 2320)
                 )
         );
     }

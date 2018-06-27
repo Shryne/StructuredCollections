@@ -22,7 +22,7 @@
  */
 package de.collections.iterator;
 
-import de.indexed.list.base.ListOf;
+import de.indexed.list.base.ListView;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
@@ -58,7 +58,7 @@ public class FilteredIteratorTest {
     public void multipleFalseFilterHasNext() {
         assertFalse(
                 new FilteredIterator<>(
-                        new ListOf<>(0, 1, 2, 3, 4, 5),
+                        new ListView<>(0, 1, 2, 3, 4, 5),
                         (element, index) -> false
                 ).hasNext()
         );

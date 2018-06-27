@@ -24,7 +24,7 @@ package de.indexed.array;
 
 import de.indexed.array.base.Array;
 import de.indexed.array.base.MutableArrayEnvelope;
-import de.indexed.array.base.MutableArrayOf;
+import de.indexed.array.base.RawArray;
 import de.collections.functional.Lazy;
 import de.collections.iterable.ConcatIterable;
 
@@ -43,7 +43,7 @@ public class ConcatArray<T> extends MutableArrayEnvelope<T> {
                 new Lazy<>(
                         () -> {
                             //noinspection unchecked
-                            var result = new MutableArrayOf<T>().resize(first.size() + second.size());
+                            var result = new RawArray<T>().resize(first.size() + second.size());
                             result.set(0, new ConcatIterable<>(first, second));
                             return result;
                         }

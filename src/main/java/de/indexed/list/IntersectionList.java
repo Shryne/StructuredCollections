@@ -28,7 +28,7 @@ import de.indexed.ContainsLinear;
 import de.collections.functional.Lazy;
 import de.collections.iterator.FilteredIterator;
 import de.indexed.list.base.MutableListEnvelope;
-import de.indexed.list.base.MutableListOf;
+import de.indexed.list.base.VectorList;
 
 /**
  * An intersection as a list. This means it will only contain the elements that are inside all of the given collections.
@@ -43,7 +43,7 @@ public final class IntersectionList<T> extends MutableListEnvelope<T> {
         super(
                 new Lazy<>(
                         () ->
-                            new MutableListOf<>(
+                            new VectorList<>(
                                     new FilteredIterator<>(
                                             first,
                                             (e, i) ->

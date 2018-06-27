@@ -1,4 +1,4 @@
-/**
+/*
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,29 +20,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.indexed.list.base;
+package de.indexed.list;
 
 
+import de.indexed.list.base.ListView;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ListOfTest {
+public class ListViewTest {
     @Test(expected = IllegalArgumentException.class)
     public void zeroGetOutOfBoundsAbove() {
-        new ListOf<>().get(0);
+        new ListView<>().get(0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void zeroGetOutOfBoundsBelow() {
-        new ListOf<>().get(-1);
+        new ListView<>().get(-1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aboveGetOutOfBoundsAbove() {
-        var list = new ListOf<>(
+        var list = new ListView<>(
                 2, 4, 5, 2, 450, 209, 32, 5
         );
         list.get(list.size());
@@ -52,7 +53,7 @@ public class ListOfTest {
     public void zeroSize() {
         assertEquals(
                 0,
-                new ListOf<>().size()
+                new ListView<>().size()
         );
     }
 
@@ -60,7 +61,7 @@ public class ListOfTest {
     public void oneGet() {
         assertEquals(
                 5,
-                (int) new ListOf<>(5).get(0)
+                (int) new ListView<>(5).get(0)
         );
     }
 
@@ -68,21 +69,21 @@ public class ListOfTest {
     public void oneSize() {
         assertEquals(
                 1,
-                new ListOf<>(22).size()
+                new ListView<>(22).size()
         );
     }
 
     @Test
     public void zeroEmpty() {
         assertTrue(
-                new ListOf<>().isEmpty()
+                new ListView<>().isEmpty()
         );
     }
 
     @Test
     public void notEmpty() {
         assertFalse(
-                new ListOf<>(15).isEmpty()
+                new ListView<>(15).isEmpty()
         );
     }
 
@@ -90,7 +91,7 @@ public class ListOfTest {
     public void multipleGet() {
         assertEquals(
                 22,
-                (int) new ListOf<>(
+                (int) new ListView<>(
                        5, 20, 12, 4, 22, 20, 123, 556
                 ).get(4)
         );
@@ -100,7 +101,7 @@ public class ListOfTest {
     public void multipleSize() {
         assertEquals(
                 4,
-                new ListOf<>(5, 3, 7, 2).size()
+                new ListView<>(5, 3, 7, 2).size()
         );
     }
 
@@ -108,7 +109,7 @@ public class ListOfTest {
     public void multipleToString() {
         assertEquals(
                 "List: [10, 55, 200, 21]",
-                new ListOf<>(
+                new ListView<>(
                         10, 55, 200, 21
                 ).toString()
         );

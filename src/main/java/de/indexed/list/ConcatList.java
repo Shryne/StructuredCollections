@@ -26,7 +26,7 @@ import de.collections.functional.Lazy;
 import de.collections.iterable.ConcatIterable;
 import de.indexed.list.base.List;
 import de.indexed.list.base.MutableListEnvelope;
-import de.indexed.list.base.MutableListOf;
+import de.indexed.list.base.VectorList;
 
 /**
  * A concatenation of two lists. This object doesn't really concatenate lists. Instead it gives a view over the two
@@ -46,7 +46,7 @@ public final class ConcatList<T> extends MutableListEnvelope<T> {
                 new Lazy<>(
                         () -> {
                             //noinspection unchecked
-                            final var list = new MutableListOf<T>();
+                            final var list = new VectorList<T>();
                             for (T element : new ConcatIterable<>(first, second)) {
                                 list.add(element);
                             }

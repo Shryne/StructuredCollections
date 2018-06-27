@@ -24,7 +24,7 @@
 package de.collections.iterator.base;
 
 import de.indexed.IndexedCollection;
-import de.indexed.list.base.ListOf;
+import de.indexed.list.base.ListView;
 
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -40,7 +40,7 @@ public final class IndexedIteratorOf<T> implements IndexedIterator<T> {
     private int cursor = -1;
 
     public IndexedIteratorOf(T... ts) {
-        this(new ListOf<>(ts));
+        this(new ListView<>(ts));
     }
 
     /**

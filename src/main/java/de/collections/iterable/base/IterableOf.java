@@ -25,7 +25,7 @@ package de.collections.iterable.base;
 import de.indexed.IndexedCollection;
 import de.collections.iterator.base.IndexedIterator;
 import de.collections.iterator.base.IndexedIteratorOf;
-import de.indexed.list.base.ListOf;
+import de.indexed.list.base.ListView;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -42,7 +42,7 @@ public final class IterableOf<T> implements IndexedIterable<T> {
      * @param elements to iterate through.
      */
     public IterableOf(T... elements) {
-        this(new ListOf<>(elements));
+        this(new ListView<>(elements));
     }
 
     /**

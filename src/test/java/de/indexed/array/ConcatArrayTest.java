@@ -23,7 +23,7 @@
 
 package de.indexed.array;
 
-import de.indexed.array.base.ArrayOf;
+import de.indexed.array.base.ArrayView;
 import de.collections.iterator.FilteredIterator;
 import org.junit.Test;
 
@@ -33,10 +33,10 @@ public class ConcatArrayTest {
     @Test
     public void zeroZero() {
         assertEquals(
-                new ArrayOf<>(),
+                new ArrayView<>(),
                 new ConcatArray<>(
-                        new ArrayOf<>(),
-                        new ArrayOf<>()
+                        new ArrayView<>(),
+                        new ArrayView<>()
                 )
         );
     }
@@ -44,10 +44,10 @@ public class ConcatArrayTest {
     @Test
     public void oneZero() {
         assertEquals(
-                new ArrayOf<>(15),
+                new ArrayView<>(15),
                 new ConcatArray<>(
-                        new ArrayOf<>(15),
-                        new ArrayOf<>()
+                        new ArrayView<>(15),
+                        new ArrayView<>()
                 )
         );
     }
@@ -55,10 +55,10 @@ public class ConcatArrayTest {
     @Test
     public void zeroOne() {
         assertEquals(
-                new ArrayOf<>(15),
+                new ArrayView<>(15),
                 new ConcatArray<>(
-                        new ArrayOf<>(),
-                        new ArrayOf<>(15)
+                        new ArrayView<>(),
+                        new ArrayView<>(15)
                 )
         );
     }
@@ -66,10 +66,10 @@ public class ConcatArrayTest {
     @Test
     public void oneOne() {
         assertEquals(
-                new ArrayOf<>(2, -3),
+                new ArrayView<>(2, -3),
                 new ConcatArray<>(
-                        new ArrayOf<>(2),
-                        new ArrayOf<>(-3)
+                        new ArrayView<>(2),
+                        new ArrayView<>(-3)
                 )
         );
     }
@@ -77,9 +77,9 @@ public class ConcatArrayTest {
     @Test
     public void multiple() {
         assertEquals(
-                new ArrayOf<>(0, 5, 23, -3, 54, 5, 5),
+                new ArrayView<>(0, 5, 23, -3, 54, 5, 5),
                 new ConcatArray<>(
-                        new ArrayOf<>(0, 5, 23),
+                        new ArrayView<>(0, 5, 23),
                         new IteratorAsArray<>(
                                 new FilteredIterator<>(-3, 54, 5, 5)
                         )

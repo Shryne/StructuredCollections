@@ -26,7 +26,7 @@ package de.collections.stack;
 import de.collections.iterable.base.IterableOf;
 import de.indexed.IndexedCollection;
 import de.indexed.vector.base.MutableVector;
-import de.indexed.vector.base.MutableVectorOf;
+import de.indexed.vector.base.ArrayVector;
 
 import java.util.NoSuchElementException;
 
@@ -43,7 +43,7 @@ public final class VectorStack<T> implements MutableStack<T> {
      * @param ts the elements for the stack.
      */
     public VectorStack(T... ts) {
-        this(new MutableVectorOf<>(ts));
+        this(new ArrayVector<>(ts));
     }
 
     /**

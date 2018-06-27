@@ -26,7 +26,7 @@ import de.collections.functional.Lazy;
 import de.collections.iterable.ConcatIterable;
 import de.indexed.vector.base.MutableVector;
 import de.indexed.vector.base.MutableVectorEnvelope;
-import de.indexed.vector.base.MutableVectorOf;
+import de.indexed.vector.base.ArrayVector;
 import de.indexed.vector.base.Vector;
 
 import java.util.Iterator;
@@ -44,9 +44,9 @@ public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
      */
     public ConcatVector(Iterator<T> front, T middle, Iterator<T> back) {
         this(
-                new MutableVectorOf<>(front),
+                new ArrayVector<>(front),
                 middle,
-                new MutableVectorOf<>(back)
+                new ArrayVector<>(back)
         );
     }
 
@@ -57,8 +57,8 @@ public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
      */
     public ConcatVector(Vector<T> front, Vector<T> back) {
         this(
-                new MutableVectorOf<>(front),
-                new MutableVectorOf<>(back)
+                new ArrayVector<>(front),
+                new ArrayVector<>(back)
         );
     }
 
@@ -73,7 +73,7 @@ public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
         this(
                 new ConcatVector<>(
                         front,
-                        new MutableVectorOf<>(middle)
+                        new ArrayVector<>(middle)
                 ),
                 back
         );
@@ -86,8 +86,8 @@ public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
      */
     public ConcatVector(Iterator<T> first, Iterator<T> second) {
         this(
-                new MutableVectorOf<>(first),
-                new MutableVectorOf<>(second)
+                new ArrayVector<>(first),
+                new ArrayVector<>(second)
         );
     }
 
@@ -101,7 +101,7 @@ public final class ConcatVector<T> extends MutableVectorEnvelope<T> {
                 new Lazy<>(
                         () -> {
                             //noinspection unchecked
-                            final var vector = new MutableVectorOf<T>();
+                            final var vector = new ArrayVector<T>();
                             for (T element : new ConcatIterable<>(first, second)) {
                                 vector.set(vector.size(), element);
                             }

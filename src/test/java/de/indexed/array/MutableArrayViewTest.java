@@ -23,67 +23,67 @@
 
 package de.indexed.array;
 
-import de.indexed.array.base.ArrayOf;
-import de.indexed.array.base.MutableArrayOf;
+import de.indexed.array.base.ArrayView;
+import de.indexed.array.base.RawArray;
 import de.collections.iterable.base.IterableOf;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class MutableArrayOfTest {
+public class MutableArrayViewTest {
     @Test(expected = IllegalArgumentException.class)
     public void zeroSetAbove() {
-        new MutableArrayOf<>().set(0, 15);
+        new RawArray<>().set(0, 15);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void setBelow() {
-        new MutableArrayOf<>(0, 3, 59, 20, -3).set(-1, 15);
+        new RawArray<>(0, 3, 59, 20, -3).set(-1, 15);
     }
 
     @Test
     public void oneSet() {
-        final var list = new MutableArrayOf<>(15);
+        final var list = new RawArray<>(15);
         list.set(0, 22);
         assertEquals(
-                new ArrayOf<>(22),
+                new ArrayView<>(22),
                 list
         );
     }
 
     @Test
     public void multipleSetZero() {
-        final var list = new MutableArrayOf<>(0, 1, 2, 3, 4);
+        final var list = new RawArray<>(0, 1, 2, 3, 4);
         list.set(1, new IterableOf<>());
         assertEquals(
-                new ArrayOf<>(0, 1, 2, 3, 4),
+                new ArrayView<>(0, 1, 2, 3, 4),
                 list
         );
     }
 
     @Test
     public void multipleSet() {
-        final var list = new MutableArrayOf<>(0, 1, 2, 3, 4);
+        final var list = new RawArray<>(0, 1, 2, 3, 4);
         list.set(1, 2);
         assertEquals(
-                new ArrayOf<>(0, 2, 2, 3, 4),
+                new ArrayView<>(0, 2, 2, 3, 4),
                 list
         );
     }
 
     @Test
     public void multipleSetMultiple() {
-        final var list = new MutableArrayOf<>(0, 1, 2, 3, 4);
+        final var list = new RawArray<>(0, 1, 2, 3, 4);
         list.set(1, new IterableOf<>(5, 4, 3));
         assertEquals(
-                new ArrayOf<>(0, 5, 4, 3, 4),
+                new ArrayView<>(0, 5, 4, 3, 4),
                 list
         );
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void multipleSetOutOfBounds() {
-        new MutableArrayOf<>(0, 1, 2).set(
+        new RawArray<>(0, 1, 2).set(
                 0,
                 new IterableOf<>(1, 2, 3, 4, 5)
         );
@@ -92,32 +92,32 @@ public class MutableArrayOfTest {
     @Test
     public void zeroResize() {
         assertEquals(
-                new ArrayOf<>(null, null, null, null, null, null, null, null, null, null),
-                new MutableArrayOf<>().resize(10)
+                new ArrayView<>(null, null, null, null, null, null, null, null, null, null),
+                new RawArray<>().resize(10)
         );
     }
 
     @Test
     public void multipleResizeUp() {
         assertEquals(
-                new ArrayOf<>(1, 2, 3, 4, 5, null, null, null, null),
-                new MutableArrayOf<>(1, 2, 3, 4, 5).resize(9)
+                new ArrayView<>(1, 2, 3, 4, 5, null, null, null, null),
+                new RawArray<>(1, 2, 3, 4, 5).resize(9)
         );
     }
 
     @Test
     public void multipleResizeDown() {
         assertEquals(
-                new ArrayOf<>(5, 23, 59, 23, 458, 23),
-                new MutableArrayOf<>(5, 23, 59, 23, 458, 23, 3, 59, 23, 1239).resize(6)
+                new ArrayView<>(5, 23, 59, 23, 458, 23),
+                new RawArray<>(5, 23, 59, 23, 458, 23, 3, 59, 23, 1239).resize(6)
         );
     }
 
     @Test
     public void multipleResizeSame() {
         assertEquals(
-                new ArrayOf<>(5, 4, 3, 2, 1),
-                new MutableArrayOf<>(5, 4, 3, 2, 1).resize(5)
+                new ArrayView<>(5, 4, 3, 2, 1),
+                new RawArray<>(5, 4, 3, 2, 1).resize(5)
         );
     }
 }

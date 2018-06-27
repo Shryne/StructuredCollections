@@ -24,7 +24,7 @@
 package de.indexed;
 
 import de.collections.iterable.base.IterableOf;
-import de.indexed.array.base.ArrayOf;
+import de.indexed.array.base.ArrayView;
 
 /**
  * Defines a range of an indexed collection.
@@ -43,7 +43,7 @@ public final class Range<T> implements IndexedCollection<T> {
      */
     public Range(int from, int to, T... ts) {
         this(
-                new ArrayOf<>(ts),
+                new ArrayView<>(ts),
                 from,
                 to
         );

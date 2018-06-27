@@ -45,7 +45,7 @@ public final class IteratorAsArray<T> extends MutableArrayEnvelope<T> {
                 new Lazy<>(
                         () -> {
                             //noinspection unchecked
-                            MutableArray<T> result = new MutableArrayOf<T>().resize(INITIAL_SIZE);
+                            MutableArray<T> result = new RawArray<T>().resize(INITIAL_SIZE);
                             int cursor = -1;
                             while (iterator.hasNext()) {
                                 if (cursor + 1 == result.size()) {

@@ -24,7 +24,7 @@ package de.collections.iterator;
 
 import de.indexed.IndexedCollection;
 import de.collections.iterator.base.IndexedIterator;
-import de.indexed.list.base.ListOf;
+import de.indexed.list.base.ListView;
 
 import java.util.NoSuchElementException;
 import java.util.function.BiPredicate;
@@ -42,7 +42,7 @@ public final class FilteredIterator<T> implements IndexedIterator<T> {
      * @param elements that are to be iterated through.
      */
     public FilteredIterator(T... elements) {
-        this(new ListOf<>(elements));
+        this(new ListView<>(elements));
     }
 
     /**

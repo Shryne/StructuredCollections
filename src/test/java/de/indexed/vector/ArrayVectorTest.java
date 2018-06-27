@@ -20,75 +20,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.indexed.array;
+package de.indexed.vector;
 
-import de.indexed.array.base.ArrayOf;
+import de.collections.iterable.base.IterableOf;
+import de.indexed.vector.base.ArrayVector;
+import de.indexed.vector.base.VectorView;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
-public class ArrayOfTest {
-    @Test(expected = IllegalArgumentException.class)
-    public void zeroGet() {
-        new ArrayOf<>().get(0);
-    }
-
+public class ArrayVectorTest {
     @Test
-    public void zeroSize() {
-        assertEquals(
-                0,
-                new ArrayOf<>().size()
-        );
-    }
-
-    @Test
-    public void oneGet() {
-        assertEquals(
-                10,
-                (int) new ArrayOf<>(10).get(0)
-        );
-    }
-
-    @Test
-    public void oneSize() {
+    public void zeroSetZero() {
+        final var vector = new ArrayVector<>();
+        vector.set(0, 25);
         assertEquals(
                 1,
-                new ArrayOf<>(524).size()
+                vector.size()
         );
     }
 
     @Test
-    public void oneEquals() {
+    public void zeroSetFartherAway() {
+        final var vector = new ArrayVector<Integer>();
+        vector.set(4, 12);
         assertEquals(
-                new ArrayOf<>(5),
-                new ArrayOf<>(5)
+                new IterableOf<>(null, null, null, null, 12),
+                new IterableOf<>(vector)
         );
     }
 
     @Test
-    public void oneEqualsNot() {
-        assertThat(
-                new ArrayOf<>(23),
-                not(equalTo(new ArrayOf<>(35)))
-        );
-    }
-
-    @Test
-    public void multipleEquals() {
+    public void someShrink() {
+        final var vector = new ArrayVector<>(0, 1, 2, 3, 4, 5);
+        vector.shrink(4);
         assertEquals(
-                new ArrayOf<>(5, 10, -10, 23, 54),
-                new ArrayOf<>(5, 10, -10, 23, 54)
-        );
-    }
-
-    @Test
-    public void multipleEqualsNot() {
-        assertThat(
-                new ArrayOf<>(5, 0, 29, 12),
-                not(equalTo(new ArrayOf<>(5, 0, 29, -5)))
+                new VectorView<>(0, 1, 2, 3),
+                vector
         );
     }
 }

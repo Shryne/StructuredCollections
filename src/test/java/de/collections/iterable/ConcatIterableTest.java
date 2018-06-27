@@ -23,7 +23,7 @@
 package de.collections.iterable;
 
 import de.indexed.array.IteratorAsArray;
-import de.indexed.array.base.ArrayOf;
+import de.indexed.array.base.ArrayView;
 import de.collections.iterable.base.IterableOf;
 import org.junit.Test;
 
@@ -79,7 +79,7 @@ public class ConcatIterableTest {
     @Test
     public void multipleAsArray() {
         assertEquals(
-                new ArrayOf<>(1, 6, 23, 94, 3, 59, 2, 6),
+                new ArrayView<>(1, 6, 23, 94, 3, 59, 2, 6),
                 new IteratorAsArray<>(
                         new ConcatIterable<>(
                                 new IterableOf<>(1, 6, 23, 94),

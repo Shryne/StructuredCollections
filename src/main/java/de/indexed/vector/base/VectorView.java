@@ -28,22 +28,22 @@ package de.indexed.vector.base;
  * <p>This class is immutable.</p>
  * @param <T> The type of the elements this vector can contain.
  */
-public final class VectorOf<T> implements Vector<T> {
+public final class VectorView<T> implements Vector<T> {
     private final MutableVector<T> mutableVector;
 
     /**
      * Secondary constructor.
      * @param elements the vector will contain.
      */
-    public VectorOf(T... elements) {
-        this(new MutableVectorOf<>(elements));
+    public VectorView(T... elements) {
+        this(new ArrayVector<>(elements));
     }
 
     /**
      * Primary constructor.
      * @param mutableVector that contains the elements for this vector.
      */
-    public VectorOf(MutableVector<T> mutableVector) {
+    public VectorView(MutableVector<T> mutableVector) {
         this.mutableVector = mutableVector;
     }
 

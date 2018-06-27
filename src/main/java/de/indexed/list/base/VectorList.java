@@ -29,7 +29,7 @@ import de.collections.iterator.RangeOf;
 import de.indexed.vector.ConcatVector;
 import de.indexed.vector.IteratorAsMutableVector;
 import de.indexed.vector.base.MutableVector;
-import de.indexed.vector.base.MutableVectorOf;
+import de.indexed.vector.base.ArrayVector;
 
 import java.util.Iterator;
 
@@ -40,35 +40,35 @@ import java.util.Iterator;
  *
  * @param <T> The type of the elements this list shall contain.
  */
-public final class MutableListOf<T> implements MutableList<T> {
+public final class VectorList<T> implements MutableList<T> {
     private MutableVector<T> container;
 
     /**
      * @param iterator that has the elements for the list.
      */
-    public MutableListOf(Iterator<T> iterator) {
+    public VectorList(Iterator<T> iterator) {
         this(new IteratorAsMutableVector<>(iterator));
     }
 
     /**
      * @param elements the list shall contain.
      */
-    public MutableListOf(T... elements) {
-        this(new MutableVectorOf<>(elements));
+    public VectorList(T... elements) {
+        this(new ArrayVector<>(elements));
     }
 
     /**
      * @param collection containing the elements for this list.
      */
-    public MutableListOf(IndexedCollection<T> collection) {
-        this(new MutableVectorOf<>(collection));
+    public VectorList(IndexedCollection<T> collection) {
+        this(new ArrayVector<>(collection));
     }
 
     /**
      * @param mutableVector containing the elements for this list. If the user changes the list, the vector will be
      *                      changed, too.
      */
-    public MutableListOf(MutableVector<T> mutableVector) {
+    public VectorList(MutableVector<T> mutableVector) {
         container = mutableVector;
     }
 

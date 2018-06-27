@@ -22,7 +22,7 @@
  */
 package de.indexed.list;
 
-import de.indexed.list.base.ListOf;
+import de.indexed.list.base.ListView;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -33,8 +33,8 @@ public class ConcatListTest {
         assertEquals(
                 12,
                 (int) new ConcatList<>(
-                        new ListOf<>(12),
-                        new ListOf<>()
+                        new ListView<>(12),
+                        new ListView<>()
                 ).get(0)
         );
     }
@@ -44,8 +44,8 @@ public class ConcatListTest {
         assertEquals(
                 1,
                 new ConcatList<>(
-                        new ListOf<>(12),
-                        new ListOf<>()
+                        new ListView<>(12),
+                        new ListView<>()
                 ).size()
         );
     }
@@ -55,8 +55,8 @@ public class ConcatListTest {
         assertEquals(
                 5,
                 (int) new ConcatList<>(
-                        new ListOf<>(),
-                        new ListOf<>(5)
+                        new ListView<>(),
+                        new ListView<>(5)
                 ).get(0)
         );
     }
@@ -66,8 +66,8 @@ public class ConcatListTest {
         assertEquals(
                 1,
                 new ConcatList<>(
-                        new ListOf<>(),
-                        new ListOf<>(2)
+                        new ListView<>(),
+                        new ListView<>(2)
                 ).size()
         );
     }
@@ -77,8 +77,8 @@ public class ConcatListTest {
         assertEquals(
                 2,
                 new ConcatList<>(
-                        new ListOf<>(55),
-                        new ListOf<>(21)
+                        new ListView<>(55),
+                        new ListView<>(21)
                 ).size()
         );
     }
@@ -86,8 +86,8 @@ public class ConcatListTest {
     @Test
     public void OneOneGet() {
         final var list = new ConcatList<>(
-                new ListOf<>(22),
-                new ListOf<>(-42)
+                new ListView<>(22),
+                new ListView<>(-42)
         );
         assertEquals(
                 22,
@@ -104,8 +104,8 @@ public class ConcatListTest {
         assertEquals(
                 "List: [66, 22, 14, 4, 2]",
                 new ConcatList<>(
-                        new ListOf<>(66, 22, 14),
-                        new ListOf<>(4, 2)
+                        new ListView<>(66, 22, 14),
+                        new ListView<>(4, 2)
                 ).toString()
         );
     }

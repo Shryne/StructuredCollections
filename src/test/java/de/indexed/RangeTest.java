@@ -24,7 +24,7 @@
 package de.indexed;
 
 import de.collections.iterable.base.IterableOf;
-import de.indexed.array.base.ArrayOf;
+import de.indexed.array.base.ArrayView;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -38,7 +38,7 @@ public class RangeTest {
                 ),
                 new IterableOf<>(
                         new Range<>(
-                                new ArrayOf<>(
+                                new ArrayView<>(
                                         0, 1, 2, 3
                                 ),
                                 1
@@ -55,7 +55,7 @@ public class RangeTest {
                 ),
                 new IterableOf<>(
                         new Range<>(
-                                new ArrayOf<>(
+                                new ArrayView<>(
                                         0, 1, 2, 3
                                 ),
                                 0,

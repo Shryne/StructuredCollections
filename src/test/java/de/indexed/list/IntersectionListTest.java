@@ -23,7 +23,7 @@
 
 package de.indexed.list;
 
-import de.indexed.list.base.ListOf;
+import de.indexed.list.base.ListView;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -32,10 +32,10 @@ public class IntersectionListTest {
     @Test
     public void empties() {
         assertEquals(
-                new ListOf<>(),
+                new ListView<>(),
                 new IntersectionList<>(
-                        new ListOf<>(),
-                        new ListOf<>()
+                        new ListView<>(),
+                        new ListView<>()
                 )
         );
     }
@@ -43,10 +43,10 @@ public class IntersectionListTest {
     @Test
     public void different() {
         assertEquals(
-                new ListOf<>(),
+                new ListView<>(),
                 new IntersectionList<>(
-                        new ListOf<>(0, 2, 5, 12, 39),
-                        new ListOf<>(-3, -5, -23, -5, -23, -54)
+                        new ListView<>(0, 2, 5, 12, 39),
+                        new ListView<>(-3, -5, -23, -5, -23, -54)
                 )
         );
     }
@@ -54,10 +54,10 @@ public class IntersectionListTest {
     @Test
     public void oneSame() {
         assertEquals(
-                new ListOf<>(0),
+                new ListView<>(0),
                 new IntersectionList<>(
-                        new ListOf<>(2, 4, 6, 2, 0, 2, 9, 38),
-                        new ListOf<>(-4, -23, -4, 0)
+                        new ListView<>(2, 4, 6, 2, 0, 2, 9, 38),
+                        new ListView<>(-4, -23, -4, 0)
                 )
         );
     }
@@ -65,10 +65,10 @@ public class IntersectionListTest {
     @Test
     public void multipleSame() {
         assertEquals(
-                new ListOf<>(5, 2, 3),
+                new ListView<>(5, 2, 3),
                 new IntersectionList<>(
-                        new ListOf<>(5, 49, 230, 2, 483, 3),
-                        new ListOf<>(17, 5, 328, 2, 3834, 4398, 439, 3)
+                        new ListView<>(5, 49, 230, 2, 483, 3),
+                        new ListView<>(17, 5, 328, 2, 3834, 4398, 439, 3)
                 )
         );
     }
@@ -76,10 +76,10 @@ public class IntersectionListTest {
     @Test
     public void allSame() {
         assertEquals(
-                new ListOf<>(4, 29, 32),
+                new ListView<>(4, 29, 32),
                 new IntersectionList<>(
-                        new ListOf<>(4, 29, 32),
-                        new ListOf<>(4, 29, 32)
+                        new ListView<>(4, 29, 32),
+                        new ListView<>(4, 29, 32)
                 )
         );
     }

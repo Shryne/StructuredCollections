@@ -23,7 +23,7 @@
 
 package de.collections.iterator;
 
-import de.indexed.array.base.ArrayOf;
+import de.indexed.array.base.ArrayView;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +34,7 @@ public class RangeOfTest {
     public void emptyHasNext() {
         assertFalse(
                 new RangeOf<>(
-                        new ArrayOf<>()
+                        new ArrayView<>()
                 ).hasNext()
         );
     }
@@ -43,7 +43,7 @@ public class RangeOfTest {
     public void multipleBelowBoundsNext() {
         final var elements = new Integer[] {22, 23, 24, 70, 82};
         final var iterator = new RangeOf<>(
-                new ArrayOf<>(elements),
+                new ArrayView<>(elements),
                 -5
         );
         for (Integer element : elements) {
@@ -56,7 +56,7 @@ public class RangeOfTest {
     public void multipleAboveBoundsNext() {
         final var elements = new Integer[] {52, 53, 54};
         final var iterator = new RangeOf<>(
-                new ArrayOf<>(elements),
+                new ArrayView<>(elements),
                 0, 20
         );
         for (Integer element : elements) {
@@ -71,7 +71,7 @@ public class RangeOfTest {
         final var start = 3;
         final var end = 7;
         final var iterator = new RangeOf<>(
-                new ArrayOf<>(elements),
+                new ArrayView<>(elements),
                 start, end
 
         );
@@ -85,7 +85,7 @@ public class RangeOfTest {
     public void multipleAllNext() {
         final var elements = new Integer[] {1, 2, 3, 4};
         final var iterator = new RangeOf<>(
-                new ArrayOf<>(elements),
+                new ArrayView<>(elements),
                 0, 4
         );
         for (Integer element : elements) {

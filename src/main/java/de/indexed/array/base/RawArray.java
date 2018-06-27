@@ -31,20 +31,20 @@ import java.util.Arrays;
  * Mutable array implementation.
  * @param <T> The type of the element inside the array.
  */
-public final class MutableArrayOf<T> implements MutableArray<T> {
+public final class RawArray<T> implements MutableArray<T> {
     private final T[] container;
 
     /**
      * @param elements the array shall contain.
      */
     @SafeVarargs
-    public MutableArrayOf(T... elements) {
+    public RawArray(T... elements) {
         container = elements;
     }
 
     @Override
     public MutableArray<T> resize(int size) {
-        return new MutableArrayOf<>(
+        return new RawArray<>(
                 Arrays.copyOf(container, size)
         );
     }

@@ -25,7 +25,7 @@ package de.indexed.vector.base;
 import de.indexed.IndexedCollection;
 import de.indexed.array.IteratorAsArray;
 import de.indexed.array.base.MutableArray;
-import de.indexed.array.base.MutableArrayOf;
+import de.indexed.array.base.RawArray;
 import de.collections.iterable.base.IterableOf;
 
 import java.util.Iterator;
@@ -37,7 +37,7 @@ import java.util.Iterator;
  *
  * @param <T> The type of the elements this vector can contain.
  */
-public final class MutableVectorOf<T> implements MutableVector<T> {
+public final class ArrayVector<T> implements MutableVector<T> {
     private static final double RESIZE_FACTOR = 1.5;
     private static final int MIN_SIZE = 10;
 
@@ -47,21 +47,21 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
     /**
      * @param collection that contains the elements for the vector.
      */
-    public MutableVectorOf(IndexedCollection<T> collection) {
+    public ArrayVector(IndexedCollection<T> collection) {
         this(new IterableOf<>(collection));
     }
 
     /**
      * @param iterable to create the iterator from that has the elements for the vector.
      */
-    public MutableVectorOf(Iterable<T> iterable) {
+    public ArrayVector(Iterable<T> iterable) {
         this(new IteratorAsArray<>(iterable.iterator()));
     }
 
     /**
      * @param iterator containing the elements for the vector.
      */
-    public MutableVectorOf(Iterator<T> iterator) {
+    public ArrayVector(Iterator<T> iterator) {
         this(new IteratorAsArray<>(iterator));
     }
 
@@ -69,14 +69,14 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
      * @param elements the vector will contain.
      */
     @SafeVarargs
-    public MutableVectorOf(T... elements) {
-        this(new MutableArrayOf<>(elements));
+    public ArrayVector(T... elements) {
+        this(new RawArray<>(elements));
     }
 
     /**
      * @param container that contains the elements for this vector.
      */
-    public MutableVectorOf(MutableArray<T> container) {
+    public ArrayVector(MutableArray<T> container) {
         this.container = (container.size() < MIN_SIZE) ? container.resize(MIN_SIZE) : container;
         size = container.size();
     }
