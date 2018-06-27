@@ -23,7 +23,7 @@
 package de.collections.iterator;
 
 
-import de.indexed.IndexedCollection;
+import de.collections.indexed.IndexedCollection;
 import de.collections.iterator.base.IndexedIterator;
 
 import java.util.NoSuchElementException;

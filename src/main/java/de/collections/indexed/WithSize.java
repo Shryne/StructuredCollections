@@ -20,62 +20,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package de.collections.stack;
-
-import de.collections.indexed.IndexedCollection;
+package de.collections.indexed;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * Offers a way to get the size of a collection.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
+public interface WithSize {
+    /**
+     * @return The size of the collection. This includes only elements, that are actually contained by the collection
+     * and not the capacity, that can be greater.
+     */
+    int size();
 
     /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
+     * For convenience and readability.
+     * @return Whether there are elements inside the implementing object. Equivalent to size() == 0.
      */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
-    }
-
-    @Override
-    public T top() {
-        return stack.top();
-    }
-
-    @Override
-    public int size() {
-        return stack.size();
-    }
-
-    @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return stack.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return stack.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return stack.toString();
+    default boolean isEmpty() {
+        return size() == 0;
     }
 }

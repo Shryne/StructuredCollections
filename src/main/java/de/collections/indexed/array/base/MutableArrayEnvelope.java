@@ -21,61 +21,33 @@
  * SOFTWARE.
  */
 
-package de.collections.stack;
+package de.collections.indexed.array.base;
 
-import de.collections.indexed.IndexedCollection;
+import de.collections.functional.Lazy;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * A class to get rid of the code duplication that occurs using the decorator pattern.
+ * @param <T> The type of the elements of the array.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
+public abstract class MutableArrayEnvelope<T> extends ArrayEnvelope<T> implements MutableArray<T> {
+    private final Lazy<MutableArray<T>> lazyArray;
 
     /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
+     * Primary constructor.
+     * @param lazyArray that has the functionality for this class.
      */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
+    public MutableArrayEnvelope(Lazy<MutableArray<T>> lazyArray) {
+        super(lazyArray);
+        this.lazyArray = lazyArray;
     }
 
     @Override
-    public T top() {
-        return stack.top();
+    public final void set(int index, Iterable<T> elements) {
+        lazyArray.value().set(index, elements);
     }
 
     @Override
-    public int size() {
-        return stack.size();
-    }
-
-    @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return stack.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return stack.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return stack.toString();
+    public MutableArray<T> resize(int size) {
+        return lazyArray.value().resize(size);
     }
 }

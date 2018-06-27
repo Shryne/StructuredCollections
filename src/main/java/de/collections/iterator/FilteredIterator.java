@@ -22,9 +22,9 @@
  */
 package de.collections.iterator;
 
-import de.indexed.IndexedCollection;
+import de.collections.indexed.IndexedCollection;
 import de.collections.iterator.base.IndexedIterator;
-import de.indexed.list.base.ListView;
+import de.collections.indexed.list.base.ListView;
 
 import java.util.NoSuchElementException;
 import java.util.function.BiPredicate;

@@ -21,61 +21,24 @@
  * SOFTWARE.
  */
 
-package de.collections.stack;
+package de.collections.indexed;
 
-import de.collections.indexed.IndexedCollection;
+import java.util.NoSuchElementException;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * A remove for index based collections.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
-
+public interface IndexedRemove extends WithRemove, WithSize {
     /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
+     * Removes the last element.
+     * @throws java.util.NoSuchElementException if there is isn't an element to remove.
      */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
-    }
-
-    @Override
-    public T top() {
-        return stack.top();
-    }
-
-    @Override
-    public int size() {
-        return stack.size();
-    }
-
-    @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return stack.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return stack.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return stack.toString();
+    default void removeLast() {
+        if (isEmpty()) {
+            throw new NoSuchElementException(
+                    "The collection is empty. No elements could be removed."
+            );
+        }
+        remove(size() - 1);
     }
 }

@@ -1,4 +1,4 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,40 +20,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.collections.indexed.list.base;
 
-package de.collections.functional;
-
-import de.collections.indexed.IndexedCollection;
-import de.collections.indexed.array.base.Array;
-import de.collections.indexed.array.base.RawArray;
-
-import java.util.function.Function;
+import de.collections.indexed.WithAdd;
+import de.collections.indexed.IndexedRemove;
 
 /**
- * Maps the results to an array.
- * @param <T> The type of the elements.
+ * A mutable list.
  */
-public final class Mapped<T> {
-    private final IndexedCollection<T> collection;
-
+public interface MutableList<T> extends WithAdd<T>, List<T>, IndexedRemove {
     /**
-     * @param collection that offers the elements for the results that will be mapped.
+     * Adds the given element to the end of the list.
+     * @param element to add.
      */
-    public Mapped(IndexedCollection<T> collection) {
-        this.collection = collection;
-    }
-
-    /**
-     * Applies the given function on each element of the collection and mapps the result into an array.
-     * @param function to apply.
-     * @param <R> The type of the elements inside the resulting array.
-     * @return The array with the mapped elements.
-     */
-    public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new RawArray<R>().resize(collection.size());
-        for (int i = 0; i < collection.size(); i++) {
-            array.set(i, function.apply(collection.get(i)));
-        }
-        return array;
+    default void add(T element) {
+        add(size(), element);
     }
 }

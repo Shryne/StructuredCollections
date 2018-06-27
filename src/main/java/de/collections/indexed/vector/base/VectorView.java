@@ -20,50 +20,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
-
-
-import de.collections.indexed.IndexedCollection;
-import de.collections.iterable.base.IndexedIterable;
-import de.collections.iterator.ConcatIterator;
-import de.collections.iterator.base.IndexedIterator;
-import de.collections.iterable.base.IterableOf;
+package de.collections.indexed.vector.base;
 
 /**
- * Combines iterables to one.
- * @param <T> The type of the elements inside of the iterables.
+ * A view of a {@link MutableVector}.
+ *
+ * <p>This class is immutable.</p>
+ * @param <T> The type of the elements this vector can contain.
  */
-public final class ConcatIterable<T> implements IndexedIterable<T> {
-    private final IndexedIterable<T> first;
-    private final IndexedIterable<T> second;
+public final class VectorView<T> implements Vector<T> {
+    private final MutableVector<T> mutableVector;
 
     /**
-     * Secondary constructor;
-     * @param first part of the iterable.
-     * @param second part of the iterable.
+     * Secondary constructor.
+     * @param elements the vector will contain.
      */
-    public ConcatIterable(IndexedCollection<T> first, IndexedCollection<T> second) {
-        this(
-                new IterableOf<>(first),
-                new IterableOf<>(second)
-        );
+    public VectorView(T... elements) {
+        this(new ArrayVector<>(elements));
     }
 
     /**
      * Primary constructor.
-     * @param first part of the iterable.
-     * @param second part of the iterable.
+     * @param mutableVector that contains the elements for this vector.
      */
-    public ConcatIterable(IndexedIterable<T> first, IndexedIterable<T> second) {
-        this.first = first;
-        this.second = second;
+    public VectorView(MutableVector<T> mutableVector) {
+        this.mutableVector = mutableVector;
     }
 
     @Override
-    public IndexedIterator<T> indexedIterator() {
-        return new ConcatIterator<>(
-                first.indexedIterator(),
-                second.indexedIterator()
-        );
+    public T get(int index) {
+        return mutableVector.get(index);
+    }
+
+    @Override
+    public int size() {
+        return mutableVector.size();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return mutableVector.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return mutableVector.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return mutableVector.toString();
     }
 }

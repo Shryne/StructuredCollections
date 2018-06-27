@@ -20,62 +20,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.collections.indexed;
 
-package de.collections.stack;
-
-import de.collections.indexed.IndexedCollection;
+import java.util.NoSuchElementException;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * Defines all collections that are index based and ordered.
+ * @param <T> The type of the elements of the collection.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
+public interface IndexedCollection<T> extends IndexedGet<T>, WithSize {
+    /**
+     * @return The first element of the collection.
+     * @throws NoSuchElementException if the collection is empty.
+     */
+    default T first() {
+        if (isEmpty()) {
+            throw new NoSuchElementException(
+                    "Collection is empty."
+            );
+        }
+        return get(0);
+    }
 
     /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
+     * @return The last element of the collection.
+     * @throws NoSuchElementException if the collection is empty.
      */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
-    }
-
-    @Override
-    public T top() {
-        return stack.top();
-    }
-
-    @Override
-    public int size() {
-        return stack.size();
-    }
-
-    @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return stack.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return stack.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return stack.toString();
+    default T last() {
+        if (isEmpty()) {
+            throw new NoSuchElementException(
+                    "Collection is empty."
+            );
+        }
+        return get(size() - 1);
     }
 }

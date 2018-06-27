@@ -1,4 +1,4 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
  *
@@ -20,62 +20,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.collections.indexed.list.base;
 
-package de.collections.stack;
-
-import de.collections.indexed.IndexedCollection;
+import de.collections.functional.Lazy;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * This class prevents code duplication from using decorators.
+ * @param <T> The type of the elements inside the list.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
+public abstract class MutableListEnvelope<T> implements MutableList<T> {
+    private final Lazy<MutableList<T>> lazyList;
 
     /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
+     * Primary constructor.
+     * @param lazyList The list to be used for the methods inside of lazy.
      */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
+    public MutableListEnvelope(Lazy<MutableList<T>> lazyList) {
+        this.lazyList = lazyList;
     }
 
     @Override
-    public T top() {
-        return stack.top();
+    public final void add(int index, T element) {
+        lazyList.value().add(index, element);
     }
 
     @Override
-    public int size() {
-        return stack.size();
+    public final T get(int index) {
+        return lazyList.value().get(index);
     }
 
     @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
+    public final void remove(int index) {
+        lazyList.value().remove(index);
+    }
+
+    @Override
+    public final int size() {
+        return lazyList.value().size();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return stack.equals(obj);
+        return lazyList.value().equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return stack.hashCode();
+        return lazyList.value().hashCode();
     }
 
+    /**
+     * @return Format: List: [...]
+     */
     @Override
     public String toString() {
-        return stack.toString();
+        return lazyList.value().toString();
     }
 }

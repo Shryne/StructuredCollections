@@ -21,61 +21,14 @@
  * SOFTWARE.
  */
 
-package de.collections.stack;
+package de.collections.indexed.array.base;
 
 import de.collections.indexed.IndexedCollection;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * An immutable view of an array.
+ * @see MutableArray
+ * @param <T> The type of the elements inside the array.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
-
-    /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
-     */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
-    }
-
-    @Override
-    public T top() {
-        return stack.top();
-    }
-
-    @Override
-    public int size() {
-        return stack.size();
-    }
-
-    @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return stack.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return stack.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return stack.toString();
-    }
+public interface Array<T> extends IndexedCollection<T> {
 }

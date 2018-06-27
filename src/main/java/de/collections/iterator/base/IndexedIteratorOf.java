@@ -23,8 +23,8 @@
 
 package de.collections.iterator.base;
 
-import de.indexed.IndexedCollection;
-import de.indexed.list.base.ListView;
+import de.collections.indexed.IndexedCollection;
+import de.collections.indexed.list.base.ListView;
 
 import java.util.ListIterator;
 import java.util.NoSuchElementException;

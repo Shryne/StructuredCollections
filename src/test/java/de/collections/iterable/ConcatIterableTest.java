@@ -22,8 +22,8 @@
  */
 package de.collections.iterable;
 
-import de.indexed.array.IteratorAsArray;
-import de.indexed.array.base.ArrayView;
+import de.collections.indexed.array.IteratorAsArray;
+import de.collections.indexed.array.base.ArrayView;
 import de.collections.iterable.base.IterableOf;
 import org.junit.Test;
 

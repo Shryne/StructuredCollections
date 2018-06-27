@@ -23,8 +23,8 @@
 
 package de.collections.stack;
 
-import de.indexed.WithSize;
-import de.indexed.IndexedCollection;
+import de.collections.indexed.WithSize;
+import de.collections.indexed.IndexedCollection;
 
 /**
  * A stack is a "first in, last out" collection. This interface offers no mutable operations.

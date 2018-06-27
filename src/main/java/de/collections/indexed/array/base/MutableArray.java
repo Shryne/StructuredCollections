@@ -1,17 +1,17 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,40 +20,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.collections.indexed.array.base;
 
-package de.collections.functional;
-
-import de.collections.indexed.IndexedCollection;
-import de.collections.indexed.array.base.Array;
-import de.collections.indexed.array.base.RawArray;
-
-import java.util.function.Function;
+import de.collections.indexed.IndexedSet;
 
 /**
- * Maps the results to an array.
- * @param <T> The type of the elements.
+ * A wrapper for the array. This is needed because I can't just convert a Object[] to a generic array.
+ * @param <T> The type of the elements inside the array.
  */
-public final class Mapped<T> {
-    private final IndexedCollection<T> collection;
-
+public interface MutableArray<T> extends IndexedSet<T>, Array<T> {
     /**
-     * @param collection that offers the elements for the results that will be mapped.
+     * Creates an array with the given size and the elements inside this array.
+     * @param size the array shall have.
+     * @return the new array.
      */
-    public Mapped(IndexedCollection<T> collection) {
-        this.collection = collection;
-    }
-
-    /**
-     * Applies the given function on each element of the collection and mapps the result into an array.
-     * @param function to apply.
-     * @param <R> The type of the elements inside the resulting array.
-     * @return The array with the mapped elements.
-     */
-    public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new RawArray<R>().resize(collection.size());
-        for (int i = 0; i < collection.size(); i++) {
-            array.set(i, function.apply(collection.get(i)));
-        }
-        return array;
-    }
+    MutableArray<T> resize(int size);
 }

@@ -22,8 +22,8 @@
  */
 package de.collections;
 
-import de.indexed.ContainsLinear;
-import de.indexed.list.base.ListView;
+import de.collections.indexed.ContainsLinear;
+import de.collections.indexed.list.base.ListView;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;

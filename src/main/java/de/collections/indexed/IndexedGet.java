@@ -20,40 +20,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package de.collections.functional;
-
-import de.collections.indexed.IndexedCollection;
-import de.collections.indexed.array.base.Array;
-import de.collections.indexed.array.base.RawArray;
-
-import java.util.function.Function;
+package de.collections.indexed;
 
 /**
- * Maps the results to an array.
- * @param <T> The type of the elements.
+ * Offers a way to get an element based on the index.
+ * @param <T> The type of the element.
  */
-public final class Mapped<T> {
-    private final IndexedCollection<T> collection;
-
+public interface IndexedGet<T> {
     /**
-     * @param collection that offers the elements for the results that will be mapped.
+     * Returns the element.
+     * @param index The index of the element to return.
+     * @return The element on the given index.
      */
-    public Mapped(IndexedCollection<T> collection) {
-        this.collection = collection;
-    }
-
-    /**
-     * Applies the given function on each element of the collection and mapps the result into an array.
-     * @param function to apply.
-     * @param <R> The type of the elements inside the resulting array.
-     * @return The array with the mapped elements.
-     */
-    public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new RawArray<R>().resize(collection.size());
-        for (int i = 0; i < collection.size(); i++) {
-            array.set(i, function.apply(collection.get(i)));
-        }
-        return array;
-    }
+    T get(int index);
 }

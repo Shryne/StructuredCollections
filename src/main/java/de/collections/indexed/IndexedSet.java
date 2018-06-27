@@ -20,62 +20,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.collections.indexed;
 
-package de.collections.stack;
-
-import de.collections.indexed.IndexedCollection;
+import de.collections.iterable.base.IterableOf;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * Offers the functionality to set an element.
+ * @param <T> Type of the element to set.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
+public interface IndexedSet<T> {
+    /**
+     * Sets (/replaces) the element on the given index with the given element.
+     * @param index of the element.
+     * @param elements that will take the place.
+     */
+    void set(int index, Iterable<T> elements);
 
     /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
+     * A method for convenience. Offers a possibility to add just one element.
+     * @param index of the element to be inserted.
+     * @param element to be inserted.
      */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
-    }
-
-    @Override
-    public T top() {
-        return stack.top();
-    }
-
-    @Override
-    public int size() {
-        return stack.size();
-    }
-
-    @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return stack.equals(obj);
-    }
-
-    @Override
-    public int hashCode() {
-        return stack.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return stack.toString();
+    default void set(int index, T element) {
+        //noinspection unchecked
+        set(index, new IterableOf<>(element));
     }
 }

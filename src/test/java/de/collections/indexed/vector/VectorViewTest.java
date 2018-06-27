@@ -21,39 +21,32 @@
  * SOFTWARE.
  */
 
-package de.collections.functional;
+package de.collections.indexed.vector;
 
-import de.collections.indexed.IndexedCollection;
-import de.collections.indexed.array.base.Array;
-import de.collections.indexed.array.base.RawArray;
+import de.collections.indexed.vector.base.VectorView;
+import org.junit.Test;
 
-import java.util.function.Function;
+import static org.junit.Assert.assertEquals;
 
-/**
- * Maps the results to an array.
- * @param <T> The type of the elements.
- */
-public final class Mapped<T> {
-    private final IndexedCollection<T> collection;
-
-    /**
-     * @param collection that offers the elements for the results that will be mapped.
-     */
-    public Mapped(IndexedCollection<T> collection) {
-        this.collection = collection;
+public class VectorViewTest {
+    @Test(expected = IllegalArgumentException.class)
+    public void zeroGet() {
+        new VectorView<>().get(0);
     }
 
-    /**
-     * Applies the given function on each element of the collection and mapps the result into an array.
-     * @param function to apply.
-     * @param <R> The type of the elements inside the resulting array.
-     * @return The array with the mapped elements.
-     */
-    public <R> Array<R> apply(Function<T, R> function) {
-        final var array = new RawArray<R>().resize(collection.size());
-        for (int i = 0; i < collection.size(); i++) {
-            array.set(i, function.apply(collection.get(i)));
-        }
-        return array;
+    @Test
+    public void oneGet() {
+        assertEquals(
+                25,
+                (int) new VectorView<>(25).get(0)
+        );
+    }
+
+    @Test
+    public void someSize() {
+        assertEquals(
+                4,
+                new VectorView<>(0, 1, 2, 3).size()
+        );
     }
 }

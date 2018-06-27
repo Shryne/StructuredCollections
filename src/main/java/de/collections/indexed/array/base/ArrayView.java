@@ -20,50 +20,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterable;
-
-
-import de.collections.indexed.IndexedCollection;
-import de.collections.iterable.base.IndexedIterable;
-import de.collections.iterator.ConcatIterator;
-import de.collections.iterator.base.IndexedIterator;
-import de.collections.iterable.base.IterableOf;
+package de.collections.indexed.array.base;
 
 /**
- * Combines iterables to one.
- * @param <T> The type of the elements inside of the iterables.
+ * Implementation of the array.
+ * <p>This class is mutable and not thread-safe.</p>
+ * @param <T> The type of the elements inside the array.
  */
-public final class ConcatIterable<T> implements IndexedIterable<T> {
-    private final IndexedIterable<T> first;
-    private final IndexedIterable<T> second;
+public final class ArrayView<T> implements Array<T> {
+    private MutableArray<T> mutableArray;
 
     /**
-     * Secondary constructor;
-     * @param first part of the iterable.
-     * @param second part of the iterable.
+     * Secondary constructor.
+     * @param elements the array shall contain.
      */
-    public ConcatIterable(IndexedCollection<T> first, IndexedCollection<T> second) {
-        this(
-                new IterableOf<>(first),
-                new IterableOf<>(second)
-        );
+    public ArrayView(T... elements) {
+        this(new RawArray<>(elements));
     }
 
     /**
      * Primary constructor.
-     * @param first part of the iterable.
-     * @param second part of the iterable.
+     * @param mutableArray upon which this view is based on.
      */
-    public ConcatIterable(IndexedIterable<T> first, IndexedIterable<T> second) {
-        this.first = first;
-        this.second = second;
+    public ArrayView(MutableArray<T> mutableArray) {
+        this.mutableArray = mutableArray;
+    }
+
+
+    @Override
+    public T get(int index) {
+        //noinspection unchecked
+        return mutableArray.get(index);
     }
 
     @Override
-    public IndexedIterator<T> indexedIterator() {
-        return new ConcatIterator<>(
-                first.indexedIterator(),
-                second.indexedIterator()
-        );
+    public int size() {
+        return mutableArray.size();
+    }
+
+    /**
+     * An array is only equal to other arrays.
+     * @see Array
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return mutableArray.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return mutableArray.hashCode();
+    }
+
+    /**
+     * @return Format: Array: [elements]
+     */
+    @Override
+    public String toString() {
+        return mutableArray.toString();
     }
 }

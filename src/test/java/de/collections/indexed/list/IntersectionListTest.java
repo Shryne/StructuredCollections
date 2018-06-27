@@ -20,61 +20,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package de.collections.iterator;
+
+package de.collections.indexed.list;
 
 import de.collections.indexed.list.base.ListView;
 import org.junit.Test;
 
-import java.util.NoSuchElementException;
-
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
-public class FilteredIteratorTest {
+public class IntersectionListTest {
     @Test
-    public void zeroFirstHasNextNot() {
-        assertFalse(
-                new FilteredIterator<>().hasNext()
-        );
-    }
-
-    @Test
-    public void oneFirstHasNext() {
-        assertTrue(
-                new FilteredIterator<>(5).hasNext()
-        );
-    }
-
-    @Test
-    public void oneFirstNext() {
+    public void empties() {
         assertEquals(
-                22,
-                (int) new FilteredIterator<>(22).next()
+                new ListView<>(),
+                new IntersectionList<>(
+                        new ListView<>(),
+                        new ListView<>()
+                )
         );
     }
 
     @Test
-    public void multipleFalseFilterHasNext() {
-        assertFalse(
-                new FilteredIterator<>(
-                        new ListView<>(0, 1, 2, 3, 4, 5),
-                        (element, index) -> false
-                ).hasNext()
+    public void different() {
+        assertEquals(
+                new ListView<>(),
+                new IntersectionList<>(
+                        new ListView<>(0, 2, 5, 12, 39),
+                        new ListView<>(-3, -5, -23, -5, -23, -54)
+                )
         );
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void zeroOutOfBoundsNext() {
-        new FilteredIterator<>().next();
+    @Test
+    public void oneSame() {
+        assertEquals(
+                new ListView<>(0),
+                new IntersectionList<>(
+                        new ListView<>(2, 4, 6, 2, 0, 2, 9, 38),
+                        new ListView<>(-4, -23, -4, 0)
+                )
+        );
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void multipleOutOfBoundsNext() {
-        final var iterator = new FilteredIterator<>(1, 2, 3, 4, 5);
-        while (iterator.hasNext()) {
-            iterator.next();
-        }
-        iterator.next();
+    @Test
+    public void multipleSame() {
+        assertEquals(
+                new ListView<>(5, 2, 3),
+                new IntersectionList<>(
+                        new ListView<>(5, 49, 230, 2, 483, 3),
+                        new ListView<>(17, 5, 328, 2, 3834, 4398, 439, 3)
+                )
+        );
+    }
+
+    @Test
+    public void allSame() {
+        assertEquals(
+                new ListView<>(4, 29, 32),
+                new IntersectionList<>(
+                        new ListView<>(4, 29, 32),
+                        new ListView<>(4, 29, 32)
+                )
+        );
     }
 }

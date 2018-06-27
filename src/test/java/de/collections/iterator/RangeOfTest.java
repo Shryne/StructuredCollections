@@ -23,7 +23,7 @@
 
 package de.collections.iterator;
 
-import de.indexed.array.base.ArrayView;
+import de.collections.indexed.array.base.ArrayView;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

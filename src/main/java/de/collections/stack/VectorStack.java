@@ -24,9 +24,9 @@
 package de.collections.stack;
 
 import de.collections.iterable.base.IterableOf;
-import de.indexed.IndexedCollection;
-import de.indexed.vector.base.MutableVector;
-import de.indexed.vector.base.ArrayVector;
+import de.collections.indexed.IndexedCollection;
+import de.collections.indexed.vector.base.MutableVector;
+import de.collections.indexed.vector.base.ArrayVector;
 
 import java.util.NoSuchElementException;
 

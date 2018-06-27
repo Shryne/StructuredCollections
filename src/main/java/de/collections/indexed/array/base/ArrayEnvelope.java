@@ -1,17 +1,17 @@
-/*
+/**
  * MIT Licence
  * Copyright (c) 2018 Eugen Deutsch
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,62 +20,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package de.collections.indexed.array.base;
 
-package de.collections.stack;
 
-import de.collections.indexed.IndexedCollection;
+import de.collections.functional.Lazy;
 
 /**
- * A view to a mutable stack.
- * <p>This class is immutable and thread-safe.</p>
- * @see de.collections.indexed.vector.base.Vector
- * @param <T> The type of the elements of the stack.
+ * A class to get rid of the code duplication that occurs using the decorator pattern.
+ * @param <T> The type of the elements of the array.
  */
-public final class StackView<T> implements Stack<T> {
-    private final Stack<T> stack;
+public abstract class ArrayEnvelope<T> implements Array<T> {
+    private final Lazy<? extends Array<T>> lazyArray;
 
     /**
-     * Uses the {@link VectorStack} to create the view.
-     * @param ts The elements for the stack.
+     * Primary constructor.
+     * @param lazyArray that has the functionality for this class.
      */
-    public StackView(T... ts) {
-        this(new VectorStack<>(ts));
-    }
-
-    /**
-     * @param stack to create the view on.
-     */
-    public StackView(MutableStack<T> stack) {
-        this.stack = stack;
+    public ArrayEnvelope(Lazy<? extends Array<T>> lazyArray) {
+        this.lazyArray = lazyArray;
     }
 
     @Override
-    public T top() {
-        return stack.top();
+    public final T get(int index) {
+        return lazyArray.value().get(index);
     }
 
     @Override
-    public int size() {
-        return stack.size();
+    public final int size() {
+        return lazyArray.value().size();
     }
 
     @Override
-    public IndexedCollection<T> elements() {
-        return stack.elements();
+    public final boolean equals(Object obj) {
+        return lazyArray.value().equals(obj);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return stack.equals(obj);
+    public final int hashCode() {
+        return lazyArray.value().hashCode();
     }
 
     @Override
-    public int hashCode() {
-        return stack.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return stack.toString();
+    public final String toString() {
+        return lazyArray.value().toString();
     }
 }
