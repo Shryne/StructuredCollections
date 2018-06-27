@@ -56,6 +56,11 @@ public abstract class MutableVectorEnvelope<T> implements MutableVector<T> {
     }
 
     @Override
+    public final void shrink(int newSize) {
+        lazyVector.value().shrink(newSize);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         return lazyVector.value().equals(obj);
     }

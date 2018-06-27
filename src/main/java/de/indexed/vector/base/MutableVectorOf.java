@@ -118,7 +118,8 @@ public final class MutableVectorOf<T> implements MutableVector<T> {
                             "NewSize: " + newSize + ", size: " + size
             );
         }
-        container.resize(newSize);
+        container = container.resize(newSize);
+        size = newSize;
     }
 
     @Override

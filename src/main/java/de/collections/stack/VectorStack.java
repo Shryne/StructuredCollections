@@ -64,7 +64,7 @@ public final class VectorStack<T> implements MutableStack<T> {
             );
         }
         final T element = vector.last();
-        vector.remove(size() - 1);
+        vector.shrink(size() - 1);
         return element;
     }
 

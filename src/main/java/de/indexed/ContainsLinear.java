@@ -22,9 +22,9 @@
  */
 package de.indexed;
 
+import de.collections.functional.Contains;
 import de.collections.iterable.base.IterableOf;
 import de.collections.lambda.Action;
-import de.indexed.IndexedCollection;
 
 /**
  * Searches linear (from start to end) for the element.

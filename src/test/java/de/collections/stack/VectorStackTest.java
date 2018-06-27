@@ -25,6 +25,8 @@ package de.collections.stack;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.Assert.assertEquals;
 
 public class VectorStackTest {
@@ -47,6 +49,21 @@ public class VectorStackTest {
         );
         assertEquals(
                 new StackView<>(0, 1, 2, 3),
+                stack
+        );
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void emptyPop() {
+        new VectorStack<>().pop();
+    }
+
+    @Test
+    public void onePop() {
+        final var stack = new VectorStack<>(1);
+        assertEquals(1, (int) stack.pop());
+        assertEquals(
+                new VectorStack<>(),
                 stack
         );
     }

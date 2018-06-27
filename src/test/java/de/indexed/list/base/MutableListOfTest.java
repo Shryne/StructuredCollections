@@ -26,6 +26,8 @@ package de.indexed.list.base;
 import de.collections.iterable.base.IterableOf;
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -39,7 +41,7 @@ public class MutableListOfTest {
         );
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NoSuchElementException.class)
     public void zeroRemove() {
         new MutableListOf<>().removeLast();
     }
